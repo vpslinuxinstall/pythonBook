@@ -1,0 +1,738 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Packaging and testing &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Useful modules in the Standard Library" href="Useful_Libraries.html" />
+    <link rel="prev" title="Object-oriented programming" href="Object_Oriented_Programming.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Useful_Libraries.html" title="Useful modules in the Standard Library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Object_Oriented_Programming.html" title="Object-oriented programming"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="packaging-and-testing">
+<h1>Packaging and testing<a class="headerlink" href="#packaging-and-testing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<p>All software projects start out small, and you are likely to start off by writing all of your program’s code in a single file.  As your project grows, it will become increasingly inconvenient to do this – it’s difficult to find anything in a single file of code, and eventually you are likely to encounter a problem if you want to call two different classes by the same name.  At some point it will be a good idea to tidy up the project by splitting it up into several files, putting related classes or functions together in the same file.</p>
+<p>Sometimes there will be a natural way to split things up from the start of the project – for example, if your program has a database backend, a business logic layer and a graphical user interface, it is a good idea to put these three things into three separate files from the start instead of mixing them up.</p>
+<p>How do we access code in one file from another file?  Python provides a mechanism for creating a <em>module</em> from each file of source code.  You can use code which is defined inside a module by <em>importing</em> the module using the <code class="docutils literal notranslate"><span class="pre">import</span></code> keyword – we have already done this with some built-in modules in previous examples.</p>
+<p>Each module has its own namespace, so it’s OK to have two classes which have the same name, as long as they are in different modules.  If we import the whole module, we can access properties defined inside that module with the <code class="docutils literal notranslate"><span class="pre">.</span></code> operator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We can also import specific classes or functions from the module using the <code class="docutils literal notranslate"><span class="pre">from</span></code> keyword, and use their names independently:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">date</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Creating a module is as simple as writing code into a Python file. A module which has the same name as the file (without the <code class="docutils literal notranslate"><span class="pre">.py</span></code> suffix) will automatically be created – we will be able to import it if we run Python from the directory where the file is stored, or a script which is in the same directory as the other Python files.  If you want to be able to import your modules no matter where you run Python, you should package your code and install it – we will look at this in the next chapter.</p>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">as</span></code> keyword to give an imported name an alias in our code – we can use this to shorten a frequently used module name, or to import a class which has the same name as a class which is already in our namespace, without overriding it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">mymodule</span> <span class="k">import</span> <span class="n">MyClass</span> <span class="k">as</span> <span class="n">FirstClass</span>
+<span class="kn">from</span> <span class="nn">myothermodule</span> <span class="k">import</span> <span class="n">MyClass</span> <span class="k">as</span> <span class="n">OtherClass</span>
+</pre></div>
+</div>
+<p>We can also import everything from a module using <code class="docutils literal notranslate"><span class="pre">*</span></code>, but this is not recommended, since we might accidentally import things which redefine names in our namespace and not realise it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mymodule</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="packages">
+<h2>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h2>
+<p>Just as a module is a collection of classes or functions, a package is a collection of modules.  We can organise several module files into a directory structure.  There are various tools which can then convert the directory into a special format (also called a “package”) which we can use to install the code cleanly on our computer (or other people’s computers).  This is called <em>packaging</em>.</p>
+<div class="section" id="packaging-a-program-with-distribute">
+<h3>Packaging a program with Distribute<a class="headerlink" href="#packaging-a-program-with-distribute" title="Permalink to this headline">¶</a></h3>
+<p>A library called Distribute is currently the most popular tool for creating Python packages, and is recommended for use with Python 3.  It isn’t a built-in library, but can be installed with a tool like <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">easy_install</span></code>.  Distribute is a more modern version of an older packaging library called Setuptools, and has been designed to replace it.  The original Setuptools doesn’t support Python 3, but you may encounter it if you work on Python 2 code.  The two libraries have almost identical interfaces, and Distribute’s module name, which you import in your code, is also <code class="docutils literal notranslate"><span class="pre">setuptools</span></code>.</p>
+<p>Let’s say that we have split up our large program, which we will call “ourprog”, into three files: <code class="docutils literal notranslate"><span class="pre">db.py</span></code> for the database backend, <code class="docutils literal notranslate"><span class="pre">rules.py</span></code> for the business logic, and <code class="docutils literal notranslate"><span class="pre">gui.py</span></code> for the graphical user interface.  First, we should arrange our files into the typical directory structure which packaging tools expect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ourprog</span><span class="o">/</span>
+    <span class="n">ourprog</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">gui</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">rules</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">setup</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>We have created two new files. <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> is a special file which marks the inner <code class="docutils literal notranslate"><span class="pre">ourprog</span></code> directory as a package, and also allows us to import all of <code class="docutils literal notranslate"><span class="pre">ourprog</span></code> as a module.  We can use this file to import classes or functions from our modules (<code class="docutils literal notranslate"><span class="pre">db</span></code>, <code class="docutils literal notranslate"><span class="pre">gui</span></code> and <code class="docutils literal notranslate"><span class="pre">rules</span></code>) into the package’s namespace, so that they can be imported directly from <code class="docutils literal notranslate"><span class="pre">ourprog</span></code> instead of from <code class="docutils literal notranslate"><span class="pre">ourprog.db</span></code>, and so on – but for now we will leave this file blank.</p>
+<p>The other file, <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>, is the specification for our package.  Here is a minimal example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">setuptools</span> <span class="k">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ourprog&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.1&#39;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Our first program&#39;</span><span class="p">,</span>
+    <span class="n">url</span><span class="o">=</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s1">&#39;Jane Smith&#39;</span><span class="p">,</span>
+    <span class="n">author_email</span><span class="o">=</span><span class="s1">&#39;jane.smith@example.com&#39;</span><span class="p">,</span>
+    <span class="n">license</span><span class="o">=</span><span class="s1">&#39;GPL&#39;</span><span class="p">,</span>
+    <span class="n">packages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ourprog&#39;</span><span class="p">],</span>
+    <span class="n">zip_safe</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>We create the package with a single call of the <code class="docutils literal notranslate"><span class="pre">setup</span></code> function, which we import from the <code class="docutils literal notranslate"><span class="pre">setuptools</span></code> module.  We pass in several parameters which describe our package.</p>
+</div>
+<div class="section" id="installing-and-importing-our-modules">
+<h3>Installing and importing our modules<a class="headerlink" href="#installing-and-importing-our-modules" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have written a <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> file, we can run it in order to install our package on our system.  Although this isn’t obvious, <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> is a script which takes various command-line parameters – we got all this functionality when we imported <code class="docutils literal notranslate"><span class="pre">setuptools</span></code>.  We have to pass an <code class="docutils literal notranslate"><span class="pre">install</span></code> parameter to the script to install the code.  We need to input this command on the commandline, while we are in the same directory as <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>If everything has gone well, we should now be able to import <code class="docutils literal notranslate"><span class="pre">ourprog</span></code> from anywhere on our system.</p>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Code documentation is often treated as an afterthought.  While we are writing a program, it can seem to us that what our functions and classes do is obvious, and that writing down a lengthy explanation for each one is a waste of time.  We may feel very differently when we look at our code again after a break of several months, or when we are forced to read and understand somebody else’s undocumented code!</p>
+<p>We have already seen how we can insert comments into Python code using the <code class="docutils literal notranslate"><span class="pre">#</span></code> symbol.  Comments like this are useful for annotating individual lines, but they are not well-suited to longer explanations, or systematic documentation of all structures in our code.  For that, we use <em>docstrings</em>.</p>
+<div class="section" id="docstrings">
+<h3>Docstrings<a class="headerlink" href="#docstrings" title="Permalink to this headline">¶</a></h3>
+<p>A docstring is just an ordinary string – it is usually written between triple quotes, because triple quotes are good for defining multiline string literals.  What makes a docstring special is its position in the code.  There are many tools which can parse Python code for strings which appear immediately after the definition of a module, class, function or method and aggregate them into an automatically generated body of documentation.</p>
+<p>Documentation written like this can be easier to maintain than a completely separate document which is written by hand.  The docstring for each individual class or function is defined next to the function in our code, where we are likely to see it and notice if it is out of sync and needs to be updated.  Docstrings can also function as comments – other people will be able to see them while reading our source code.  Interactive shells which use Python can also display docstrings when the user queries the usage of a function or class.</p>
+<p>There are several different tools which parse docstrings – the one which is currently used the most is called Sphinx.  In this course we won’t go into detail about how to use Sphinx to generate documents, but we will see how to write docstrings in a format which is compatible with Sphinx.</p>
+</div>
+<div class="section" id="docstring-examples">
+<h3>Docstring examples<a class="headerlink" href="#docstring-examples" title="Permalink to this headline">¶</a></h3>
+<p>The Sphinx markup language is a variant of reStructuredText (reST) with some extra keywords defined. There is no set, compulsory Sphinx docstring format – we can put any kind of Sphinx syntax inside the docstrings.  A docstring should at the very least contain a basic description of the structure being documented.</p>
+<p>If the structure is a function, it is helpful to describe all the parameters and the return value, and also mention if the function can raise any exceptions.  Because Python isn’t statically typed, it is important to provide information about the parameters that a function accepts.</p>
+<p>We can also provide a much longer explanation after summarising all the basic information – we can go into as much detail as we like; there is no length limit.</p>
+<p>Here are some examples of docstrings form various objects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This is a module for our Person class.</span>
+<span class="sd">.. moduleauthor: Jane Smith &lt;jane.smith@example.com&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;This is a class which represents a person. It is a bit of a silly class.</span>
+<span class="sd">    It stores some personal information, and can calculate a person&#39;s age.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">birthdate</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">telephone</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method creates a new person.</span>
+
+<span class="sd">        :param name: first name</span>
+<span class="sd">        :type name: str</span>
+<span class="sd">        :param surname: surname</span>
+<span class="sd">        :type surname: str</span>
+<span class="sd">        :param birthdate: date of birth</span>
+<span class="sd">        :type birthdate: datetime.date</span>
+<span class="sd">        :param address: physical address</span>
+<span class="sd">        :type address: str</span>
+<span class="sd">        :param telephone: telephone number</span>
+<span class="sd">        :type telephone: str</span>
+<span class="sd">        :param email: email address</span>
+<span class="sd">        :type email: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span> <span class="o">=</span> <span class="n">birthdate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">telephone</span> <span class="o">=</span> <span class="n">telephone</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+
+    <span class="k">def</span> <span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method calculates the person&#39;s age from the birthdate and the current date.</span>
+
+<span class="sd">        :returns: int -- the person&#39;s age in years</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">year</span>
+
+        <span class="k">if</span> <span class="n">today</span> <span class="o">&lt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">day</span><span class="p">):</span>
+            <span class="n">age</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">age</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>Automated tests are a beneficial addition to any program. They not only help us to discover errors, but also make it easier for us to modify code – we can run the tests after making a change to make sure that we haven’t broken anything.  This is vital in any large project, especially if there are many people working on the same code.  Without tests, it can be very difficult for anyone to find out what other parts of the system a change could affect, and introducing any modification is thus a potential risk.  This makes development on the project move very slowly, and changes often introduce bugs.</p>
+<p>Adding automated tests can seem like a waste of time in a small project, but they can prove invaluable if the project becomes larger or if we have to return to it to make a small change after a long absence.  They can also serve as a form of documentation – by reading through test cases we can get an idea of how our program is supposed to behave. Some people even advocate writing tests <em>first</em>, thereby creating a specification for what the program is supposed to do, and filling in the actual program code afterwards.</p>
+<p>We may find this approach a little extreme, but we shouldn’t go too far in the opposite direction – if we wait until we have written the entire program before writing any tests, we probably won’t bother writing them at all.  It is a good idea to write portions of our code and the tests for them at approximately the same time – then we can test our code while we are developing it.  Most programmers write at least temporary tests during development to make sure that a new function is working correctly – we saw in a previous chapter how we can use print statements as a quick, but impermanent form of debugging.  It is better practice to write a permanent test instead – once we have set up the testing framework, it really doesn’t require a lot more effort.</p>
+<p>In order for our code to be suitable for automated testing, we need to organise it in logical subunits which are easy to import and use independently from outside the program.  We should already be doing this by using functions and classes, and avoiding reliance on global variables.  If a function relies only on its input parameters to produce some kind of result, we can easily import this function into a separate testing module, and check that various examples of input produce the expected results.  Each matching set of input and expected output is called a <em>test case</em>.</p>
+<p>Tests which are applied to individual components in our code are known as <em>unit tests</em> – they verify that each of the components is working correctly.  Testing the interaction between different components in a system is known as <em>integration testing</em>.  A test can be called a <em>functional test</em> if it tests a particular feature, or <em>function</em> of the code – this is usually a relatively high-level specification of a requirement, not an actual single function.</p>
+<p>In this section we will mostly look at unit testing, but we can apply similar techniques at any level of automated tests.  When we are writing unit tests, as a rule of thumb, we should have a test for every function in our code (including each method of each class).</p>
+<p>It is also good practice to write a new test whenever we fix a bug – the test should specifically check for the bug which we have just fixed.  If the bug was caused by something which is a common mistake, it’s possible that someone will make the same mistake again in the future – our test will help to prevent that.  This is a form of <em>regression testing</em>, which aims to ensure that our code doesn’t break when we add changes.</p>
+<div class="section" id="selecting-test-cases">
+<h3>Selecting test cases<a class="headerlink" href="#selecting-test-cases" title="Permalink to this headline">¶</a></h3>
+<p>How do we select test cases?  There are two major approaches that we can follow: <em>black-box</em> or <em>glass-box</em> testing.  We can also use a combination of the two.</p>
+<p>In black-box testing, we treat our function like an opaque “black box”.  We don’t use our knowledge of how the function is written to pick test cases – we only think about what the function is supposed to do.  A strategy commonly used in black-box testing is is <em>equivalence testing</em> and <em>boundary value analysis</em>.</p>
+<p>An <em>equivalence class</em> is a set of input values which should all produce similar output, and there are <em>boundaries</em> between neighbouring equivalence classes.  Input values which lie near these boundaries are the most likely to produce incorrect output, because it’s easy for a programmer to use <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code> or start counting from <code class="docutils literal notranslate"><span class="pre">1</span></code> instead of <code class="docutils literal notranslate"><span class="pre">0</span></code>, both of which could cause an <em>off-by-one</em> error.  If we test an input value from inside each equivalence class, and additionally test values just before, just after and on each boundary, we can be reasonably sure that we have covered all the bases.</p>
+<p>For example, consider a simple function which calculates a grade from a percentage mark.  If we were to use equivalence testing and boundary analysis on this function, we would pick the test cases like this:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="8%" />
+<col width="19%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Equivalence class</th>
+<th class="head">sample</th>
+<th class="head">lower boundary</th>
+<th class="head">just above boundary</th>
+<th class="head">just below boundary</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>mark &gt; 100</td>
+<td>150</td>
+<td>100</td>
+<td>101</td>
+<td>99</td>
+</tr>
+<tr class="row-odd"><td>80 &lt;= mark &lt;= 100</td>
+<td>90</td>
+<td>80</td>
+<td>81</td>
+<td>79</td>
+</tr>
+<tr class="row-even"><td>70 &lt;= mark &lt; 80</td>
+<td>75</td>
+<td>70</td>
+<td>71</td>
+<td>69</td>
+</tr>
+<tr class="row-odd"><td>60 &lt;= mark &lt; 70</td>
+<td>65</td>
+<td>60</td>
+<td>61</td>
+<td>59</td>
+</tr>
+<tr class="row-even"><td>50 &lt;= mark &lt; 60</td>
+<td>55</td>
+<td>50</td>
+<td>51</td>
+<td>49</td>
+</tr>
+<tr class="row-odd"><td>0 &lt;= mark &lt; 50</td>
+<td>25</td>
+<td>0</td>
+<td>1</td>
+<td>-1</td>
+</tr>
+<tr class="row-even"><td>mark &lt; 0</td>
+<td>-50</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<p>In glass-box testing, we pick our test cases by analysing the code inside our function.  The most extensive form of this strategy is <em>path coverage</em>, which aims to test every possible path through the function.</p>
+<p>A function without any selection or loop statements has only one path. Testing such a function is relatively easy – if it runs correctly once, it will probably run correctly every time.  If the function contains a selection or loop statement, there will be more than one possible path passing through it: something different will happen if an <em>if</em> condition is true or if it is false, and a loop will execute a variable number of times.  For a function like this, a single test case might not execute every statement in the code.</p>
+<p>We could construct a separate test case for every possible path, but this rapidly becomes impractical. Each <em>if</em> statement doubles the number of paths – if our function had 10 <em>if</em> statements, we would need more than a thousand test cases, and if it had 20, we would need over a million!  A more viable alternative is the <em>statement coverage</em> strategy, which only requires us to pick enough test cases to ensure that each <em>statement</em> inside our function is executed at least once.</p>
+</div>
+<div class="section" id="writing-unit-tests">
+<h3>Writing unit tests<a class="headerlink" href="#writing-unit-tests" title="Permalink to this headline">¶</a></h3>
+<p>We can write unit tests in Python using the built-in <code class="docutils literal notranslate"><span class="pre">unittest</span></code> module.  We typically put all our tests in a file hierarchy which is separate from our main program.  For example, if we were to add tests to our packaging example above, we would probably create a test module for each of our three program modules, and put them all in a separate test directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ourprog</span><span class="o">/</span>
+    <span class="n">ourprog</span><span class="o">/</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">gui</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">rules</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">test</span><span class="o">/</span>
+            <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+            <span class="n">test_db</span><span class="o">.</span><span class="n">py</span>
+            <span class="n">test_gui</span><span class="o">.</span><span class="n">py</span>
+            <span class="n">test_rules</span><span class="o">.</span><span class="n">py</span>
+    <span class="n">setup</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Suppose that our <code class="docutils literal notranslate"><span class="pre">rules.py</span></code> file contains a single class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="n">TITLES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Dr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mrs&#39;</span><span class="p">,</span> <span class="s1">&#39;Ms&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">TITLES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unrecognised title: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">title</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Our <code class="docutils literal notranslate"><span class="pre">test_rules.py</span></code> file should look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">ourprog.rules</span> <span class="k">import</span> <span class="n">Person</span>
+
+<span class="k">class</span> <span class="nc">TestPerson</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">surname</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">fullname</span><span class="p">(</span><span class="s2">&quot;Ms&quot;</span><span class="p">),</span> <span class="s2">&quot;Ms Jane Smith&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">fullname</span><span class="p">(</span><span class="s2">&quot;Mrs&quot;</span><span class="p">),</span> <span class="s2">&quot;Mrs Jane Smith&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">fullname</span><span class="p">,</span> <span class="s2">&quot;HRH&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We import the <code class="docutils literal notranslate"><span class="pre">unittest</span></code> module, and also the class which we are going to test.  This example assumes that we have packaged our code and installed it on our system, so that Python can find <code class="docutils literal notranslate"><span class="pre">ourprog.rules</span></code>.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">unittest</span></code> package, the <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> class serves as a container for tests which need to share some data.  For each collection of tests that we want to write, we define a class which inherits from <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> and define all our tests as methods on that class.</p>
+<p>In this example, all the tests in this <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> test the same class, and there is one test per method (including the initialisation method) – but there is no compulsory mapping.  You can use multiple <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> classes to test each of your own classes, or perhaps have one <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> for each set of related functionality.</p>
+<p>We set up the class which we are going to test in the <code class="docutils literal notranslate"><span class="pre">setUp</span></code> method – this special method will be executed before each test is run.  There is also a <code class="docutils literal notranslate"><span class="pre">tearDown</span></code> method, which we can use if we need to do something <em>after</em> each test.</p>
+<p>Inside each test, we use the <em>assertion</em> methods of <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> to check if certain things are true about our program’s behaviour.  As soon as one assertion statement fails, the whole test fails.  We will often use <code class="docutils literal notranslate"><span class="pre">assertEqual</span></code>, but there are many other assertion methods like <code class="docutils literal notranslate"><span class="pre">assertNotEqual</span></code>, <code class="docutils literal notranslate"><span class="pre">assertTrue</span></code> or <code class="docutils literal notranslate"><span class="pre">assertIn</span></code>.  <code class="docutils literal notranslate"><span class="pre">assertRaises</span></code> lets us check that a function raises an exception.  Note that when we use this assertion method we don’t call the function (because it would raise an exception!) – we just pass in the function name and its parameters.</p>
+<p>There are many ways of running the tests once we have written them.  Here is a simple way of running all the tests from a single file: at the bottom of <code class="docutils literal notranslate"><span class="pre">test_rules.py</span></code>, we can add:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now if we execute <code class="docutils literal notranslate"><span class="pre">test_rules.py</span></code> with Python, <code class="docutils literal notranslate"><span class="pre">unittest</span></code> will run the <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> which we have defined. The condition in the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement detects whether we are running the file as a script, and prevents the <code class="docutils literal notranslate"><span class="pre">main</span></code> function from being executed if we import this module from another file.  We will learn more about writing scripts in the next chapter.</p>
+<p>We can also execute the unittest module on the commandline and use it to import and run some or all of our tests.  By default the module will try to <em>discover</em> all the tests that can be imported from the current directory, but we can also specify one or more module, class or test method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># these commands will try to find all our tests</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">discover</span>
+
+<span class="c1"># but we can be more specific</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">ourprog</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">test_rules</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">ourprog</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">test_rules</span><span class="o">.</span><span class="n">TestPerson</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">ourprog</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">test_rules</span><span class="o">.</span><span class="n">TestPerson</span><span class="o">.</span><span class="n">test_fullname</span>
+
+<span class="c1"># we can also turn on verbose output with -v</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="o">-</span><span class="n">v</span> <span class="n">test_rules</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">unittest</span></code> package also allows us to group some or all of our tests into <em>suites</em>, so that we can run many related tests at once.  One way to add all the tests from our <code class="docutils literal notranslate"><span class="pre">TestPerson</span></code> class to a suite is to add this function to the <code class="docutils literal notranslate"><span class="pre">test_rules.py</span></code> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">suite</span><span class="p">():</span>
+    <span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestSuite</span><span class="p">()</span>
+    <span class="n">suite</span><span class="o">.</span><span class="n">addTest</span><span class="p">(</span><span class="n">TestPerson</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">suite</span>
+</pre></div>
+</div>
+<p>We could define a suite in <code class="docutils literal notranslate"><span class="pre">ourprog/test/__init__py</span></code> which contains all the tests from all our modules, either by combining suites from all the modules or just adding all the tests directly. The <code class="docutils literal notranslate"><span class="pre">TestSuite</span></code> class and the <code class="docutils literal notranslate"><span class="pre">TestLoader</span></code> class, which we can use to build suites, are both very flexible.  They allow us to construct test suites in many different ways.</p>
+<p>We can integrate our tests with our packaging code by adding a <code class="docutils literal notranslate"><span class="pre">test_suite</span></code> parameter to our <code class="docutils literal notranslate"><span class="pre">setup</span></code> call in <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>.  Despite its name, this parameter doesn’t have to be a suite – we can just specify the full name of our <code class="docutils literal notranslate"><span class="pre">test</span></code> module to include all our tests:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ourprog&#39;</span><span class="p">,</span>
+    <span class="c1"># (...)</span>
+    <span class="n">test_suite</span><span class="o">=</span><span class="s1">&#39;ourprog.test&#39;</span><span class="p">,</span>
+    <span class="c1"># (...)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we can build our package and run all our tests by passing the <code class="docutils literal notranslate"><span class="pre">test</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span>
+
+<span class="c1"># We can override what to run using -s</span>
+<span class="c1"># For example, we can run a single module</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span> <span class="o">-</span><span class="n">s</span> <span class="n">ourprog</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">test_rules</span>
+</pre></div>
+</div>
+<p>In previous versions of Python, we would have needed to define a test suite just to run all our tests at once, but in newer versions it is no longer necessary to define our own suites for simple test organisation.  We can now easily run all the tests, or a single module, class or method just by using <code class="docutils literal notranslate"><span class="pre">unittest</span></code> on the commandline or <code class="docutils literal notranslate"><span class="pre">setup.py</span> <span class="pre">test</span></code>.  We may still find it useful to write custom suites for more complex tasks – we may wish to group tests which are spread across multiple modules or classes, but which are all related to the same feature.</p>
+</div>
+<div class="section" id="checking-for-test-coverage">
+<h3>Checking for test coverage<a class="headerlink" href="#checking-for-test-coverage" title="Permalink to this headline">¶</a></h3>
+<p>How do we know if our test cases cover all the statements in our code?  There are many third-party unit testing libraries which include functionality for calculating coverage, but we can perform a very simple check by using <code class="docutils literal notranslate"><span class="pre">unittest</span></code> together with the built-in <code class="docutils literal notranslate"><span class="pre">trace</span></code> module.  We can modify our test module like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">trace</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="c1"># all our test code</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">Trace</span><span class="p">(</span><span class="n">ignoredirs</span><span class="o">=</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exec_prefix</span><span class="p">],</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">runfunc</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><span class="n">show_missing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first line in the <code class="docutils literal notranslate"><span class="pre">if</span></code> block creates a <code class="docutils literal notranslate"><span class="pre">Trace</span></code> object which is going to trace the execution of our program – across all the source files in which code is found. We use the <code class="docutils literal notranslate"><span class="pre">ignoredirs</span></code> parameter to ignore any code in Python’s installed modules – now we should only see results from our program file and our test file.  Setting the <code class="docutils literal notranslate"><span class="pre">count</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">1</span></code> makes the <code class="docutils literal notranslate"><span class="pre">Trace</span></code> object count the number of times that each line is executed, and setting <code class="docutils literal notranslate"><span class="pre">trace</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code> prevents it from printing out lines as they are executed.</p>
+<p>The second line specifies that we should run our test suite’s main function.  The third line retrieves the results from the object – the results are another kind of object, which is based on a dictionary.  This object has a convenient <code class="docutils literal notranslate"><span class="pre">write_results</span></code> method which we use in the fourth line to output a file of line counts for each of our source files. They will be written to the current directory by default, but we could also specify another directory with an optional parameter.  The <code class="docutils literal notranslate"><span class="pre">show_missing</span></code> parameter ensures that lines which were <em>never</em> executed are included in the files and clearly marked.</p>
+<p>We need to run the test file directly to make sure that the code inside the <code class="docutils literal notranslate"><span class="pre">if</span></code> block is executed.  Afterwards, we should find two files which end in <code class="docutils literal notranslate"><span class="pre">.cover</span></code> in the current directory – one for our program file and one for our test file.  Each line should be annotated with the number of times that it was executed when we ran our test code.</p>
+</div>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>In this exercise you will write a program which estimates the cost of a telephone call, and design and implement unit tests for the program.</p>
+<p>The phone company applies the following rules to a phone call to calculate the charge:</p>
+<ul class="simple">
+<li>The minimum before-tax charge of 59.400 cents applies to all calls to any destination up to 50km away and 89.000 cents for any destination further than 50km away.</li>
+<li>Calls are charged on a per-second basis at 0.759 cents per second (&lt;= 50km) and 1.761 cents per second (&gt; 50km)</li>
+<li>Off-peak seconds (from 19:00:00 to 06:59:59 the next day) are given a discount of 40% off (&lt;= 50km) and 50% off (&gt; 50km) off the above rate</li>
+<li>If the type of call was share-call AND the destination is more than 50km away, there is a discount of 50% off after any off-peak discount (minimum charge still applies). However, share-calls over shorter distances are not discounted.</li>
+<li>Finally, VAT of 14% is added to give the final cost.</li>
+</ul>
+<p>Your program should ask for the following input:</p>
+<ul class="simple">
+<li>The starting time of the call (to be split up into hours, minutes and seconds)</li>
+<li>The duration of the call (to be split up into minutes and seconds)</li>
+<li>Whether the duration was more than 50km away</li>
+<li>Whether the call was share-call</li>
+</ul>
+<p>Hint: you can prompt the user to input hours, minutes and seconds at once by asking for a format like <em>HH:MM:SS</em> and splitting the resulting string by the delimiter.  You may assume that the user will enter valid input, and that no call will exceed 59 minutes and 59 seconds.</p>
+<p>Your program should output the following information:</p>
+<ul class="simple">
+<li>The basic cost</li>
+<li>The off-peak discount</li>
+<li>The share-call discount</li>
+<li>The net cost</li>
+<li>The VAT</li>
+<li>The total cost</li>
+</ul>
+<ol class="arabic simple">
+<li>Before you write the program, identify the equivalence classes and boundaries that you will need to use in equivalence testing and boundary analysis when writing black-box tests. This may help you to design the program itself, and not just the tests!</li>
+<li>Write the program.  Remember that you will need to write unit tests for this program, and design it accordingly – the calculation that you need to test should be placed in some kind of unit, like a function, which can be imported from outside of the program and used independently of the rest of the code (like the user input)!</li>
+<li>Now implement the black-box tests which you have designed by writing a unit test module for your program. Run all the tests, and make sure that they pass!  Then use the <code class="docutils literal notranslate"><span class="pre">trace</span></code> module to check how well your tests cover your function code.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Peak and off-peak times provide an obvious source of equivalence classes for the start and duration of the call.  A call could start during peak or off-peak hours, and it could end in peak or off-peak hours (because the maximum duration of a call is just under an hour, a call can cross the peak/off-peak boundary once, but not twice).  A call could also cross over the boundary between days, and this wrapping must be handled correctly.</p>
+<p>A good set of boundaries for the start of the call would be: 00:00, 06:00, 07:00, 18:00 and 19:00.  A good set of boundaries for the duration of the call would be the minimum and maximum durations – 00:00 and 59:59.  We don’t need to test every combination of start time and duration – the duration of the call is only really important if the call starts within an hour of the peak/off-peak switch.  We can test the remaining start times with a single duration.</p>
+<p>The other input values entered by the user are boolean, so only a true value and a false value needs to be tested for each.  Again, we don’t need to test each boolean option with every possible combination of the previous options – one or two cases should be sufficient.</p>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c1"># The first value in each tuple is for distances &lt;= 50km</span>
+<span class="c1"># The second value is for distances &gt; 50km</span>
+<span class="n">MIN_CHARGE</span> <span class="o">=</span> <span class="p">(</span><span class="mf">59.400</span><span class="p">,</span> <span class="mf">89.000</span><span class="p">)</span>
+<span class="n">CHARGE_PER_SEC</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.759</span><span class="p">,</span> <span class="mf">1.761</span><span class="p">)</span>
+<span class="n">OFFPEAK_DISCOUNT</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">SHARECALL_DISCOUNT</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">NEAR</span><span class="p">,</span> <span class="n">FAR</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+
+<span class="n">OFF_PEAK_START</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">HOUR_BEFORE_OFF_PEAK_START</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">OFF_PEAK_END</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">HOUR_BEFORE_OFF_PEAK_END</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">VAT_RATE</span> <span class="o">=</span> <span class="mf">0.14</span>
+
+<span class="k">def</span> <span class="nf">price_estimate</span><span class="p">(</span><span class="n">start_str</span><span class="p">,</span> <span class="n">duration_str</span><span class="p">,</span> <span class="n">destination_str</span><span class="p">,</span> <span class="n">share_call_str</span><span class="p">):</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">start_str</span><span class="p">,</span> <span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">d_m</span><span class="p">,</span> <span class="n">d_s</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">duration_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)]</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="n">d_m</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="n">d_s</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+    <span class="c1"># We set the destination to an index value we can use with the tuple constants</span>
+    <span class="n">destination</span> <span class="o">=</span> <span class="n">FAR</span> <span class="k">if</span> <span class="n">destination_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span> <span class="k">else</span> <span class="n">NEAR</span>
+    <span class="n">share_call</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">share_call_str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span> <span class="k">else</span> <span class="kc">False</span>
+
+    <span class="n">peak_seconds</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">off_peak_seconds</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;=</span> <span class="n">OFF_PEAK_END</span> <span class="ow">and</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">HOUR_BEFORE_OFF_PEAK_START</span><span class="p">:</span>
+        <span class="c1"># whole call fits in peak time</span>
+        <span class="n">peak_seconds</span> <span class="o">=</span> <span class="n">duration</span>
+    <span class="k">elif</span> <span class="n">start</span> <span class="o">&gt;=</span> <span class="n">OFF_PEAK_START</span> <span class="ow">or</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">HOUR_BEFORE_OFF_PEAK_END</span><span class="p">:</span>
+        <span class="c1"># whole call fits in off-peak time</span>
+        <span class="n">off_peak_seconds</span> <span class="o">=</span> <span class="n">duration</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># call starts within hour of peak/off-peak boundary</span>
+        <span class="n">secs_left_in_hour</span> <span class="o">=</span> <span class="mi">3600</span> <span class="o">-</span> <span class="n">start</span><span class="o">.</span><span class="n">minute</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">start</span><span class="o">.</span><span class="n">second</span>
+
+        <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">OFF_PEAK_END</span><span class="p">:</span>
+            <span class="c1"># call starts in off-peak time</span>
+            <span class="k">if</span> <span class="n">duration</span> <span class="o">&gt;</span> <span class="n">secs_left_in_hour</span><span class="p">:</span>
+                <span class="n">peak_seconds</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">-</span> <span class="n">secs_left_in_hour</span>
+            <span class="n">off_peak_seconds</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">-</span> <span class="n">peak_seconds</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># call starts in peak time</span>
+            <span class="k">if</span> <span class="n">duration</span> <span class="o">&gt;</span> <span class="n">secs_left_in_hour</span><span class="p">:</span>
+                <span class="n">off_peak_seconds</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">-</span> <span class="n">secs_left_in_hour</span>
+            <span class="n">peak_seconds</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">-</span> <span class="n">off_peak_seconds</span>
+
+    <span class="n">basic</span> <span class="o">=</span> <span class="n">CHARGE_PER_SEC</span><span class="p">[</span><span class="n">destination</span><span class="p">]</span> <span class="o">*</span> <span class="n">duration</span>
+    <span class="n">offpeak_discount</span> <span class="o">=</span> <span class="n">OFFPEAK_DISCOUNT</span><span class="p">[</span><span class="n">destination</span><span class="p">]</span> <span class="o">*</span> <span class="n">CHARGE_PER_SEC</span><span class="p">[</span><span class="n">destination</span><span class="p">]</span> <span class="o">*</span> <span class="n">off_peak_seconds</span>
+    <span class="k">if</span> <span class="n">share_call</span><span class="p">:</span>
+        <span class="n">share_call_discount</span> <span class="o">=</span>  <span class="n">SHARECALL_DISCOUNT</span><span class="p">[</span><span class="n">destination</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">basic</span> <span class="o">-</span> <span class="n">offpeak_discount</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">share_call_discount</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="n">basic</span> <span class="o">-</span> <span class="n">offpeak_discount</span> <span class="o">-</span> <span class="n">share_call_discount</span>
+
+    <span class="k">if</span> <span class="n">net</span> <span class="o">&lt;</span> <span class="n">MIN_CHARGE</span><span class="p">[</span><span class="n">destination</span><span class="p">]:</span>
+        <span class="n">net</span> <span class="o">=</span> <span class="n">MIN_CHARGE</span><span class="p">[</span><span class="n">destination</span><span class="p">]</span>
+
+    <span class="n">vat</span> <span class="o">=</span> <span class="n">VAT_RATE</span> <span class="o">*</span> <span class="n">net</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">net</span> <span class="o">+</span> <span class="n">vat</span>
+
+    <span class="k">return</span> <span class="n">basic</span><span class="p">,</span> <span class="n">offpeak_discount</span><span class="p">,</span> <span class="n">share_call_discount</span><span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">vat</span><span class="p">,</span> <span class="n">total</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">start_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the starting time of the call (HH:MM:SS): &quot;</span><span class="p">)</span>
+    <span class="n">duration_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the duration of the call (MM:SS): &quot;</span><span class="p">)</span>
+    <span class="n">destination_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Was the destination more than 50km away? (Y/N): &quot;</span><span class="p">)</span>
+    <span class="n">share_call_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Was the call a share-call? (Y/N): &quot;</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">price_estimate</span><span class="p">(</span><span class="n">start_str</span><span class="p">,</span> <span class="n">duration_str</span><span class="p">,</span> <span class="n">destination_str</span><span class="p">,</span> <span class="n">share_call_str</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;Basic cost: </span><span class="si">%g</span><span class="s2"></span>
+<span class="s2">    Off-peak discount: </span><span class="si">%g</span><span class="s2"></span>
+<span class="s2">    Share-call discount: </span><span class="si">%g</span><span class="s2"></span>
+<span class="s2">    Net cost: </span><span class="si">%g</span><span class="s2"></span>
+<span class="s2">    VAT: </span><span class="si">%g</span><span class="s2"></span>
+<span class="s2">    Total cost: </span><span class="si">%g</span><span class="s2"></span>
+<span class="s2">    &quot;&quot;&quot;</span> <span class="o">%</span> <span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program, including a coverage test:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">trace</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">estimate</span> <span class="k">import</span> <span class="n">price_estimate</span>
+
+<span class="k">class</span> <span class="nc">TestEstimate</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_off_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># all these cases should fall within off-peak hours and have the same result</span>
+        <span class="n">test_cases</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;23:59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;00:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;00:00:01&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;05:59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;06:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;06:00:01&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;19:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;19:00:01&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">far_away</span><span class="p">,</span> <span class="n">share_call</span> <span class="ow">in</span> <span class="n">test_cases</span><span class="p">:</span>
+            <span class="n">basic</span><span class="p">,</span> <span class="n">op_discount</span><span class="p">,</span> <span class="n">sc_discount</span><span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">vat</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="n">price_estimate</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">far_away</span><span class="p">,</span> <span class="n">share_call</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span> <span class="mf">455.4</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">op_discount</span><span class="p">,</span> <span class="mf">182.16</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sc_discount</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="mf">273.24</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">vat</span><span class="p">,</span> <span class="mf">38.2536</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="mf">311.4936</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># all these cases should fall within peak hours and have the same result</span>
+        <span class="n">test_cases</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;07:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;07:00:01&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;17:59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;18:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;18:00:01&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">far_away</span><span class="p">,</span> <span class="n">share_call</span> <span class="ow">in</span> <span class="n">test_cases</span><span class="p">:</span>
+            <span class="n">basic</span><span class="p">,</span> <span class="n">op_discount</span><span class="p">,</span> <span class="n">sc_discount</span><span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">vat</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="n">price_estimate</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">far_away</span><span class="p">,</span> <span class="n">share_call</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span> <span class="mf">455.4</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">op_discount</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sc_discount</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="mf">455.4</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">vat</span><span class="p">,</span> <span class="mf">63.756</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="mf">519.156</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_peak_and_off_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># these test cases cross the peak / off-peak boundary, and all have different results.</span>
+        <span class="n">test_cases</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;06:59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;07:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;07:00:01&quot;</span><span class="p">,</span> <span class="s2">&quot;59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+
+            <span class="p">(</span><span class="s2">&quot;18:59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;19:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;19:00:01&quot;</span><span class="p">,</span> <span class="s2">&quot;59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+
+            <span class="p">(</span><span class="s2">&quot;06:30:00&quot;</span><span class="p">,</span> <span class="s2">&quot;00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;06:30:00&quot;</span><span class="p">,</span> <span class="s2">&quot;00:01&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;06:30:00&quot;</span><span class="p">,</span> <span class="s2">&quot;59:58&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;06:30:00&quot;</span><span class="p">,</span> <span class="s2">&quot;59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="n">expected_results</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="mf">2731.641</span><span class="p">,</span> <span class="mf">36.128400000000006</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2695.5126</span><span class="p">,</span> <span class="mf">377.371764</span><span class="p">,</span> <span class="mf">3072.884364</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">2731.641</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2731.641</span><span class="p">,</span> <span class="mf">382.42974</span><span class="p">,</span> <span class="mf">3114.07074</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">2731.641</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2731.641</span><span class="p">,</span> <span class="mf">382.42974</span><span class="p">,</span> <span class="mf">3114.07074</span><span class="p">),</span>
+
+            <span class="p">(</span><span class="mf">2731.641</span><span class="p">,</span> <span class="mf">1056.528</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1675.113</span><span class="p">,</span> <span class="mf">234.51582</span><span class="p">,</span> <span class="mf">1909.62882</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">2731.641</span><span class="p">,</span> <span class="mf">1092.6564</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1638.9846</span><span class="p">,</span> <span class="mf">229.457844</span><span class="p">,</span> <span class="mf">1868.442444</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">2731.641</span><span class="p">,</span> <span class="mf">1092.6564</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1638.9846</span><span class="p">,</span> <span class="mf">229.457844</span><span class="p">,</span> <span class="mf">1868.442444</span><span class="p">),</span>
+
+            <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">59.4</span><span class="p">,</span> <span class="mf">8.316</span><span class="p">,</span> <span class="mf">67.716</span><span class="p">),</span> <span class="c1"># minimum charge</span>
+            <span class="p">(</span><span class="mf">0.759</span><span class="p">,</span> <span class="mf">0.3036</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">59.4</span><span class="p">,</span> <span class="mf">8.316</span><span class="p">,</span> <span class="mf">67.716</span><span class="p">),</span> <span class="c1"># minimum charge</span>
+            <span class="p">(</span><span class="mf">2730.882</span><span class="p">,</span> <span class="mf">546.48</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2184.402</span><span class="p">,</span> <span class="mf">305.81628</span><span class="p">,</span> <span class="mf">2490.21828</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">2731.641</span><span class="p">,</span> <span class="mf">546.48</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2185.161</span><span class="p">,</span> <span class="mf">305.92254</span><span class="p">,</span> <span class="mf">2491.08354</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">results</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">test_cases</span><span class="p">,</span> <span class="n">expected_results</span><span class="p">):</span>
+            <span class="n">basic</span><span class="p">,</span> <span class="n">op_discount</span><span class="p">,</span> <span class="n">sc_discount</span><span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">vat</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="n">price_estimate</span><span class="p">(</span><span class="o">*</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">exp_basic</span><span class="p">,</span> <span class="n">exp_op_discount</span><span class="p">,</span> <span class="n">exp_sc_discount</span><span class="p">,</span> <span class="n">exp_net</span><span class="p">,</span> <span class="n">exp_vat</span><span class="p">,</span> <span class="n">exp_total</span> <span class="o">=</span> <span class="n">results</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span> <span class="n">exp_basic</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">op_discount</span><span class="p">,</span> <span class="n">exp_op_discount</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sc_discount</span><span class="p">,</span> <span class="n">exp_sc_discount</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">exp_net</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">vat</span><span class="p">,</span> <span class="n">exp_vat</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">exp_total</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_far_destination_share_call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># now we repeat some basic test cases with a far destination and/or share-call</span>
+
+        <span class="n">test_cases</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># off-peak</span>
+            <span class="p">(</span><span class="s2">&quot;23:59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;23:59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;23:59:59&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">),</span>
+            <span class="c1"># peak</span>
+            <span class="p">(</span><span class="s2">&quot;07:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;07:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;07:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;10:00&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="n">expected_results</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="mf">1056.6</span><span class="p">,</span> <span class="mf">528.3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">528.3</span><span class="p">,</span> <span class="mf">73.962</span><span class="p">,</span> <span class="mf">602.262</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">1056.6</span><span class="p">,</span> <span class="mf">528.3</span><span class="p">,</span> <span class="mf">264.15</span><span class="p">,</span> <span class="mf">264.15</span><span class="p">,</span> <span class="mf">36.981</span><span class="p">,</span> <span class="mf">301.131</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">455.4</span><span class="p">,</span> <span class="mf">182.16</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">273.24</span><span class="p">,</span> <span class="mf">38.2536</span><span class="p">,</span> <span class="mf">311.4936</span><span class="p">),</span>
+
+            <span class="p">(</span><span class="mf">1056.6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1056.6</span><span class="p">,</span> <span class="mf">147.924</span><span class="p">,</span> <span class="mf">1204.524</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">1056.6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">528.3</span><span class="p">,</span> <span class="mf">528.3</span><span class="p">,</span> <span class="mf">73.962</span><span class="p">,</span> <span class="mf">602.262</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">455.4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">455.4</span><span class="p">,</span> <span class="mf">63.756</span><span class="p">,</span> <span class="mf">519.156</span><span class="p">),</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">results</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">test_cases</span><span class="p">,</span> <span class="n">expected_results</span><span class="p">):</span>
+            <span class="n">basic</span><span class="p">,</span> <span class="n">op_discount</span><span class="p">,</span> <span class="n">sc_discount</span><span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">vat</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="n">price_estimate</span><span class="p">(</span><span class="o">*</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="n">exp_basic</span><span class="p">,</span> <span class="n">exp_op_discount</span><span class="p">,</span> <span class="n">exp_sc_discount</span><span class="p">,</span> <span class="n">exp_net</span><span class="p">,</span> <span class="n">exp_vat</span><span class="p">,</span> <span class="n">exp_total</span> <span class="o">=</span> <span class="n">results</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span> <span class="n">exp_basic</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">op_discount</span><span class="p">,</span> <span class="n">exp_op_discount</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">sc_discount</span><span class="p">,</span> <span class="n">exp_sc_discount</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">exp_net</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">vat</span><span class="p">,</span> <span class="n">exp_vat</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">exp_total</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">Trace</span><span class="p">(</span><span class="n">ignoredirs</span><span class="o">=</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exec_prefix</span><span class="p">],</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">trace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">runfunc</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><span class="n">show_missing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Packaging and testing</a><ul>
+<li><a class="reference internal" href="#modules">Modules</a></li>
+<li><a class="reference internal" href="#packages">Packages</a><ul>
+<li><a class="reference internal" href="#packaging-a-program-with-distribute">Packaging a program with Distribute</a></li>
+<li><a class="reference internal" href="#installing-and-importing-our-modules">Installing and importing our modules</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#documentation">Documentation</a><ul>
+<li><a class="reference internal" href="#docstrings">Docstrings</a></li>
+<li><a class="reference internal" href="#docstring-examples">Docstring examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing">Testing</a><ul>
+<li><a class="reference internal" href="#selecting-test-cases">Selecting test cases</a></li>
+<li><a class="reference internal" href="#writing-unit-tests">Writing unit tests</a></li>
+<li><a class="reference internal" href="#checking-for-test-coverage">Checking for test coverage</a></li>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Object_Oriented_Programming.html"
+                        title="previous chapter">Object-oriented programming</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Useful_Libraries.html"
+                        title="next chapter">Useful modules in the Standard Library</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Packaging_and_Testing.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Useful_Libraries.html" title="Useful modules in the Standard Library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Object_Oriented_Programming.html" title="Object-oriented programming"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

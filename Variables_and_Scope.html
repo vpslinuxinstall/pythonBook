@@ -1,0 +1,731 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Variables and scope &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Selection control statements" href="Selection_Control_Statements.html" />
+    <link rel="prev" title="Python basics" href="Python_Basics.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Selection_Control_Statements.html" title="Selection control statements"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Python_Basics.html" title="Python basics"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="variables-and-scope">
+<h1>Variables and scope<a class="headerlink" href="#variables-and-scope" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<p>Recall that a variable is a label for a location in memory.  It can be used to hold a value.  In statically typed languages, variables have predetermined types, and a variable can only be used to hold values of that type.  In Python, we may reuse the same variable to store values of any type.</p>
+<p>A variable is similar to the memory functionality found in most calculators, in that it holds one value which can be retrieved many times, and that storing a new value erases the old. A variable differs from a calculator’s memory in that one can have many variables storing different values, and that each variable is referred to by name.</p>
+<div class="section" id="defining-variables">
+<h3>Defining variables<a class="headerlink" href="#defining-variables" title="Permalink to this headline">¶</a></h3>
+<p>To define a new variable in Python, we simply assign a value to a label.  For example, this is how we create a variable called <code class="docutils literal notranslate"><span class="pre">count</span></code>, which contains an integer value of zero:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>This is exactly the same syntax as assigning a new value to an existing variable called <code class="docutils literal notranslate"><span class="pre">count</span></code>.  Later in this chapter we will discuss under what circumstances this statement will cause a new variable to be created.</p>
+<p>If we try to access the value of a variable which hasn’t been defined anywhere yet, the interpreter will exit with a name error.</p>
+<p>We can define several variables in one line, but this is usually considered bad style:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define three variables at once:</span>
+<span class="n">count</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+<span class="c1"># This is equivalent to:</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>In keeping with good programming style, we should make use of meaningful names for variables.</p>
+</div>
+<div class="section" id="variable-scope-and-lifetime">
+<h3>Variable scope and lifetime<a class="headerlink" href="#variable-scope-and-lifetime" title="Permalink to this headline">¶</a></h3>
+<p>Not all variables are accessible from all parts of our program, and not all variables exist for the same amount of time.  Where a variable is accessible and how long it exists depend on how it is defined.  We call the part of a program where a variable is accessible its <em>scope</em>, and the duration for which the variable exists its <em>lifetime</em>.</p>
+<p>A variable which is defined in the main body of a file is called a <em>global</em> variable.  It will be visible throughout the file, and also inside any file which imports that file.  Global variables can have unintended consequences because of their wide-ranging effects – that is why we should almost never use them.  Only objects which are intended to be used globally, like functions and classes, should be put in the global namespace.</p>
+<p>A variable which is defined inside a function is <em>local</em> to that function.  It is accessible from the point at which it is defined until the end of the function, and exists for as long as the function is executing.  The parameter names in the function definition behave like local variables, but they contain the values that we pass into the function when we call it.  When we use the assignment operator (<code class="docutils literal notranslate"><span class="pre">=</span></code>) inside a function, its default behaviour is to create a new local variable – unless a variable with the same name is already defined in the local scope.</p>
+<p>Here is an example of variables in different scopes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a global variable</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="c1"># This is still a global variable</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="c1"># this is a local variable</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<span class="c1"># Now we call the function, passing the value 7 as the first and only parameter</span>
+<span class="n">my_function</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="c1"># a and b still exist</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># c and d don&#39;t exist anymore -- these statements will give us name errors!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The inside of a class body is also a new local variable scope.  Variables which are defined in the class body (but outside any class method) are called <em>class attributes</em>.  They can be referenced by their bare names within the same scope, but they can also be accessed from outside this scope if we use the attribute access operator (<code class="docutils literal notranslate"><span class="pre">.</span></code>) on a class or an instance (an object which uses that class as its type).  An attribute can also be set explicitly on an instance or class from inside a method.  Attributes set on instances are called <em>instance attributes</em>.  Class attributes are shared between all instances of a class, but each instance has its own separate instance attributes.  We will look at this in greater detail in the chapter about classes.</p>
+</div>
+</div>
+<div class="section" id="the-assignment-operator">
+<h3>The assignment operator<a class="headerlink" href="#the-assignment-operator" title="Permalink to this headline">¶</a></h3>
+<p>As we saw in the previous sections, the assignment operator in Python is a single equals sign (<code class="docutils literal notranslate"><span class="pre">=</span></code>).  This operator assigns the value on the right hand side to the variable on the left hand side, sometimes creating the variable first.  If the right hand side is an expression (such as an arithmetic expression), it will be evaluated before the assignment occurs.  Here are a few examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a_number</span> <span class="o">=</span> <span class="mi">5</span>              <span class="c1"># a_number becomes 5</span>
+<span class="n">a_number</span> <span class="o">=</span> <span class="n">total</span>          <span class="c1"># a_number becomes the value of total</span>
+<span class="n">a_number</span> <span class="o">=</span> <span class="n">total</span> <span class="o">+</span> <span class="mi">5</span>      <span class="c1"># a_number becomes the value of total + 5</span>
+<span class="n">a_number</span> <span class="o">=</span> <span class="n">a_number</span> <span class="o">+</span> <span class="mi">1</span>   <span class="c1"># a_number becomes the value of a_number + 1</span>
+</pre></div>
+</div>
+<p>The last statement might look a bit strange if we were to interpret <code class="docutils literal notranslate"><span class="pre">=</span></code> as a mathematical equals sign – clearly a number cannot be equal to the same number plus one!  Remember that <code class="docutils literal notranslate"><span class="pre">=</span></code> is an assignment operator – this statement is assigning a <em>new</em> value to the variable <code class="docutils literal notranslate"><span class="pre">a_number</span></code> which is equal to the <em>old</em> value of <code class="docutils literal notranslate"><span class="pre">a_number</span></code> plus one.</p>
+<p>Assigning an initial value to variable is called <em>initialising</em> the variable.  In some languages defining a variable can be done in a separate step before the first value assignment.  It is thus possible in those languages for a variable to be defined but not have a value – which could lead to errors or unexpected behaviour if we try to use the value before it has been assigned.  In Python a variable is defined and assigned a value in a single step, so we will almost never encounter situations like this.</p>
+<p>The left hand side of the assignment statement must be a valid target:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is fine:</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># these are all illegal:</span>
+<span class="mi">3</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="mi">3</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>An assignment statement may have multiple targets separated by equals signs.  The expression on the right hand side of the last equals sign will be assigned to all the targets.  All the targets must be valid:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># both a and b will be set to zero:</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># this is illegal, because we can&#39;t set 0 to b:</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">=</span> <span class="n">b</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="compound-assignment-operators">
+<h3>Compound assignment operators<a class="headerlink" href="#compound-assignment-operators" title="Permalink to this headline">¶</a></h3>
+<p>We have already seen that we can assign the result of an arithmetic expression to a variable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">50</span>
+</pre></div>
+</div>
+<p>Counting is something that is done often in a program. For example, we might want to keep count of how many times a certain event occurs by using a variable called <code class="docutils literal notranslate"><span class="pre">count</span></code>.   We would initialise this variable to zero and add one to it every time the event occurs.  We would perform the addition with this statement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>This is in fact a very common operation.  Python has a shorthand operator, <code class="docutils literal notranslate"><span class="pre">+=</span></code>, which lets us express it more cleanly, without having to write the name of the variable twice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># These statements mean exactly the same thing:</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># We can increment a variable by any number we like.</span>
+<span class="n">count</span> <span class="o">+=</span> <span class="mi">2</span>
+<span class="n">count</span> <span class="o">+=</span> <span class="mi">7</span>
+<span class="n">count</span> <span class="o">+=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>There is a similar operator, <code class="docutils literal notranslate"><span class="pre">-=</span></code>, which lets us decrement numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># These statements mean exactly the same thing:</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">3</span>
+<span class="n">count</span> <span class="o">-=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>Other common compound assignment operators are given in the table below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="32%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operator</th>
+<th class="head">Example</th>
+<th class="head">Equivalent to</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">+=</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+=</span> <span class="pre">5</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">5</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">-=</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">-=</span> <span class="pre">5</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">-</span> <span class="pre">5</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">*=</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">*=</span> <span class="pre">5</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">5</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">/=</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">/=</span> <span class="pre">5</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">/</span> <span class="pre">5</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">%=</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">%=</span> <span class="pre">5</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">%</span> <span class="pre">5</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="more-about-scope-crossing-boundaries">
+<h3>More about scope: crossing boundaries<a class="headerlink" href="#more-about-scope-crossing-boundaries" title="Permalink to this headline">¶</a></h3>
+<p>What if we want to access a global variable from inside a function?  It is possible, but doing so comes with a few caveats:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">my_function</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The print statement will output <code class="docutils literal notranslate"><span class="pre">0</span></code>, the value of the global variable <code class="docutils literal notranslate"><span class="pre">a</span></code>, as you probably expected.  But what about this program?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">my_function</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When we call the function, the print statement inside outputs <code class="docutils literal notranslate"><span class="pre">3</span></code> – but why does the print statement at the end of the program output <code class="docutils literal notranslate"><span class="pre">0</span></code>?</p>
+<p>By default, the assignment statement creates variables in the local scope.  So the assignment inside the function does not modify the global variable <code class="docutils literal notranslate"><span class="pre">a</span></code> – it creates a new local variable called <code class="docutils literal notranslate"><span class="pre">a</span></code>, and assigns the value <code class="docutils literal notranslate"><span class="pre">3</span></code> to that variable.  The first print statement outputs the value of the new local variable – because if a local variable has the same name as a global variable the local variable will always take precedence.  The last print statement prints out the global variable, which has remained unchanged.</p>
+<p>What if we really want to modify a global variable from inside a function?  We can use the <code class="docutils literal notranslate"><span class="pre">global</span></code> keyword:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">a</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">my_function</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We may not refer to both a global variable and a local variable by the same name inside the same function.  This program will give us an error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">my_function</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Because we haven’t declared <code class="docutils literal notranslate"><span class="pre">a</span></code> to be global, the assignment in the second line of the function will create a local variable <code class="docutils literal notranslate"><span class="pre">a</span></code>.  This means that we can’t refer to the global variable <code class="docutils literal notranslate"><span class="pre">a</span></code> elsewhere in the function, even before this line!  The first print statement now refers to the local variable <code class="docutils literal notranslate"><span class="pre">a</span></code> – but this variable doesn’t have a value in the first line, because we haven’t assigned it yet!</p>
+<p>Note that it is usually very bad practice to access global variables from inside functions, and even worse practice to modify them.  This makes it difficult to arrange our program into logically encapsulated parts which do not affect each other in unexpected ways.  If a function needs to access some external value, we should pass the value into the function as a parameter.  If the function is a method of an object, it is sometimes appropriate to make the value an attribute of the same object – we will discuss this in the chapter about object orientation.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is also a <code class="docutils literal notranslate"><span class="pre">nonlocal</span></code> keyword in Python – when we nest a function inside another function, it allows us to modify a variable in the outer function from inside the inner function (or, if the function is nested multiple times, a variable in one of the outer functions).  If we use the <code class="docutils literal notranslate"><span class="pre">global</span></code> keyword, the assignment statement will create the variable in the global scope if it does not exist already.  If we use the <code class="docutils literal notranslate"><span class="pre">nonlocal</span></code> keyword, however, the variable must be defined, because it is impossible for Python to determine in which scope it should be created.</p>
+</div>
+</div>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Describe the scope of the variables <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code> in this example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">b</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">if</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">my_function</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">What is the lifetime of these variables?  When will they be created and destroyed?</p>
+</li>
+<li><p class="first">Can you guess what would happen if we were to assign <code class="docutils literal notranslate"><span class="pre">c</span></code> a value of <code class="docutils literal notranslate"><span class="pre">1</span></code> instead?</p>
+</li>
+<li><p class="first">Why would this be a problem?  Can you think of a way to avoid it?</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="modifying-values">
+<h2>Modifying values<a class="headerlink" href="#modifying-values" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="constants">
+<h3>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h3>
+<p>In some languages, it is possible to define special variables which can be assigned a value only once – once their values have been set, they cannot be changed.  We call these kinds of variables <em>constants</em>.  Python does not allow us to set such a restriction on variables, but there is a widely used convention for marking certain variables to indicate that their values are not meant to change: we write their names in all caps, with underscores separating words:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># These variables are &quot;constants&quot; by convention:</span>
+<span class="n">NUMBER_OF_DAYS_IN_A_WEEK</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">NUMBER_OF_MONTHS_IN_A_YEAR</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="c1"># Nothing is actually stopping us from redefining them...</span>
+<span class="n">NUMBER_OF_DAYS_IN_A_WEEK</span> <span class="o">=</span> <span class="mi">8</span>
+
+<span class="c1"># ...but it&#39;s probably not a good idea.</span>
+</pre></div>
+</div>
+<p>Why do we bother defining variables that we don’t intend to change?  Consider this example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAXIMUM_MARK</span> <span class="o">=</span> <span class="mi">80</span>
+
+<span class="n">tom_mark</span> <span class="o">=</span> <span class="mi">58</span>
+<span class="nb">print</span><span class="p">((</span><span class="s2">&quot;Tom&#39;s mark is </span><span class="si">%.2f%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">tom_mark</span> <span class="o">/</span> <span class="n">MAXIMUM_MARK</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)))</span>
+<span class="c1"># %% is how we escape a literal % inside a string</span>
+</pre></div>
+</div>
+<p>There are several good reasons to define <code class="docutils literal notranslate"><span class="pre">MAXIMUM_MARK</span></code> instead of just writing <code class="docutils literal notranslate"><span class="pre">80</span></code> inside the print statement.  First, this gives the number a descriptive label which explains what it is – this makes the code more understandable.  Second, we may eventually need to refer to this number in our program more than once.  If we ever need to update our code with a new value for the maximum mark, we will only have to change it in one place, instead of finding every place where it is used – such replacements are often error-prone.</p>
+<p>Literal numbers scattered throughout a program are known as “magic numbers” – using them is considered poor coding style.  This does not apply to small numbers which are considered self-explanatory – it’s easy to understand why a total is initialised to zero or incremented by one.</p>
+<p>Sometimes we want to use a variable to distinguish between several discrete options.  It is useful to refer to the option values using constants instead of using them directly if the values themselves have no intrinsic meaning:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># We define some options</span>
+<span class="n">LOWER</span><span class="p">,</span> <span class="n">UPPER</span><span class="p">,</span> <span class="n">CAPITAL</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+
+<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;jane&quot;</span>
+<span class="c1"># We use our constants when assigning these values...</span>
+<span class="n">print_style</span> <span class="o">=</span> <span class="n">UPPER</span>
+
+<span class="c1"># ...and when checking them:</span>
+<span class="k">if</span> <span class="n">print_style</span> <span class="o">==</span> <span class="n">LOWER</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+<span class="k">elif</span> <span class="n">print_style</span> <span class="o">==</span> <span class="n">UPPER</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+<span class="k">elif</span> <span class="n">print_style</span> <span class="o">==</span> <span class="n">CAPITAL</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Nothing prevents us from accidentally setting print_style to 4, 90 or</span>
+    <span class="c1"># &quot;spoon&quot;, so we put in this fallback just in case:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown style option!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the above example, the values <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code> and <code class="docutils literal notranslate"><span class="pre">3</span></code> are not important – they are completely meaningless.  We could equally well use <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code> and <code class="docutils literal notranslate"><span class="pre">6</span></code> or the strings <code class="docutils literal notranslate"><span class="pre">'lower'</span></code>, <code class="docutils literal notranslate"><span class="pre">'upper'</span></code> and <code class="docutils literal notranslate"><span class="pre">'capital'</span></code>.  The only important thing is that the three values must be different.  If we used the numbers directly instead of the constants the program would be much more confusing to read.  Using meaningful strings would make the code more readable, but we could accidentally make a spelling mistake while setting one of the values and not notice – if we mistype the name of one of the constants we are more likely to get an error straight away.</p>
+<p>Some Python libraries define common constants for our convenience, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># we need to import these libraries before we use them</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># All the lowercase ASCII letters: &#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">)</span>
+
+<span class="c1"># The mathematical constants pi and e, both floating-point numbers</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="c1"># ratio of circumference of a circle to its diameter</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">)</span> <span class="c1"># natural base of logarithms</span>
+
+<span class="c1"># This integer is an option which we can pass to functions in the re</span>
+<span class="c1"># (regular expression) library.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that many built-in constants don’t follow the all-caps naming convention.</p>
+</div>
+<div class="section" id="mutable-and-immutable-types">
+<h3>Mutable and immutable types<a class="headerlink" href="#mutable-and-immutable-types" title="Permalink to this headline">¶</a></h3>
+<p>Some <em>values</em> in python can be modified, and some cannot.  This does not ever mean that we can’t change the value of a variable – but if a variable contains a value of an <em>immutable type</em>, we can only assign it a <em>new value</em>.  We cannot <em>alter the existing value</em> in any way.</p>
+<p>Integers, floating-point numbers and strings are all immutable types – in all the previous examples, when we changed the values of existing variables we used the assignment operator to assign them new values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="s2">&quot;jane&quot;</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s2">&quot;bob&quot;</span>
+</pre></div>
+</div>
+<p>Even this operator doesn’t modify the value of <code class="docutils literal notranslate"><span class="pre">total</span></code> in-place – it also assigns a new value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">+=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<p>We haven’t encountered any mutable types yet, but we will use them extensively in later chapters.  Lists and dictionaries are mutable, and so are most objects that we are likely to write ourselves:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a list of numbers</span>
+<span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">my_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># we can change just the first element of the list</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span> <span class="c1"># this is a very silly class</span>
+
+<span class="c1"># Now we make a very simple object using our class as a type</span>
+<span class="n">my_object</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+
+<span class="c1"># We can change the values of attributes on the object</span>
+<span class="n">my_object</span><span class="o">.</span><span class="n">some_property</span> <span class="o">=</span> <span class="mi">42</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="more-about-input">
+<h3>More about input<a class="headerlink" href="#more-about-input" title="Permalink to this headline">¶</a></h3>
+<p>In the earlier sections of this unit we learned how to make a program display a message using the <code class="docutils literal notranslate"><span class="pre">print</span></code> function or read a string value from the user using the <code class="docutils literal notranslate"><span class="pre">input</span></code> function.  What if we want the user to input numbers or other types of variables?  We still use the <code class="docutils literal notranslate"><span class="pre">input</span></code> function, but we must convert the string values returned by <code class="docutils literal notranslate"><span class="pre">input</span></code> to the types that we want.  Here is a simple example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter height of rectangle: &quot;</span><span class="p">))</span>
+<span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter width of rectangle: &quot;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The area of the rectangle is </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">width</span> <span class="o">*</span> <span class="n">height</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">int</span></code> is a function which converts values of various types to ints.  We will discuss type conversion in greater detail in the next section, but for now it is important to know that <code class="docutils literal notranslate"><span class="pre">int</span></code> will not be able to convert a string to an integer if it contains anything except digits.  The program above will exit with an error if the user enters <code class="docutils literal notranslate"><span class="pre">&quot;aaa&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;zzz10&quot;</span></code> or even <code class="docutils literal notranslate"><span class="pre">&quot;7.5&quot;</span></code>.  When we write a program which relies on user input, which can be incorrect, we need to add some safeguards so that we can recover if the user makes a mistake.  For example, we can detect if the user entered bad input and exit with a nicer error message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter height of rectangle: &quot;</span><span class="p">))</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter width of rectangle: &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="c1"># if a value error occurs, we will skip to this point</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error reading height and width: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This program will still only attempt to read in the input once, and exit if it is incorrect.  If we want to keep asking the user for input until it is correct, we can do something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">correct_input</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># this is a boolean value -- it can be either true or false.</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">correct_input</span><span class="p">:</span> <span class="c1"># this is a while loop</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter height of rectangle: &quot;</span><span class="p">))</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter width of rectangle: &quot;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter valid integers for the height and width.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># this will be executed if there is no value error</span>
+        <span class="n">correct_input</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>We will learn more about boolean values, loops and exceptions later.</p>
+</div>
+<div class="section" id="example-calculating-petrol-consumption-of-a-car">
+<h3>Example: calculating petrol consumption of a car<a class="headerlink" href="#example-calculating-petrol-consumption-of-a-car" title="Permalink to this headline">¶</a></h3>
+<p>In this example, we will write a simple program which asks the user for the distance travelled by a car, and the monetary value of the petrol that was used to cover that distance. From this information, together with the price per litre of petrol, the program will calculate the efficiency of the car, both in litres per 100 kilometres and and kilometres per litre.</p>
+<p>First we will define the petrol price as a constant at the top. This will make it easy for us to update the price when it changes on the first Wednesday of every month:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PETROL_PRICE_PER_LITRE</span> <span class="o">=</span> <span class="mf">4.50</span>
+</pre></div>
+</div>
+<p>When the program starts,we want to print out a welcome message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*** Welcome to the fuel efficiency calculator! ***</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># we add an extra blank line after the message with \n</span>
+</pre></div>
+</div>
+<p>Ask the user for his or her name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter your name: &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ask the user for the distance travelled:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># float is a function which converts values to floating-point numbers.</span>
+<span class="n">distance_travelled</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter distance travelled in km: &quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Then ask the user for the amount paid:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">amount_paid</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter monetary value of fuel bought for the trip: R&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Now we will do the calculations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fuel_consumed</span> <span class="o">=</span> <span class="n">amount_paid</span> <span class="o">/</span> <span class="n">PETROL_PRICE_PER_LITRE</span>
+
+<span class="n">efficiency_l_per_100_km</span> <span class="o">=</span> <span class="n">fuel_consumed</span> <span class="o">/</span> <span class="n">distance_travelled</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">efficiency_km_per_l</span> <span class="o">=</span> <span class="n">distance_travelled</span> <span class="o">/</span> <span class="n">fuel_consumed</span>
+</pre></div>
+</div>
+<p>Finally, we output the results:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hi, </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Your car&#39;s efficiency is </span><span class="si">%.2f</span><span class="s2"> litres per 100 km.&quot;</span> <span class="o">%</span> <span class="n">efficiency_l_per_100_km</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This means that you can travel </span><span class="si">%.2f</span><span class="s2"> km on a litre of petrol.&quot;</span> <span class="o">%</span> <span class="n">efficiency_km_per_l</span><span class="p">)</span>
+
+<span class="c1"># we add an extra blank line before the message with \n</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Thanks for using the program.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a Python program to convert a temperature given in degrees Fahrenheit to its equivalent in degrees Celsius.  You can assume that <strong>T_c = (5/9) x (T_f - 32)</strong>, where <strong>T_c</strong> is the temperature in °C and <strong>T_f</strong> is the temperature in °F.  Your program should ask the user for an input value, and print the output.  The input and output values should be floating-point numbers.</li>
+<li>What could make this program crash? What would we need to do to handle this situation more gracefully?</li>
+</ol>
+</div>
+</div>
+<div class="section" id="type-conversion">
+<h2>Type conversion<a class="headerlink" href="#type-conversion" title="Permalink to this headline">¶</a></h2>
+<p>As we write more programs, we will often find that we need to convert data from one type to another, for example from a string to an integer or from an integer to a floating-point number.  There are two kinds of type conversions in Python: implicit and explicit conversions.</p>
+<div class="section" id="implicit-conversion">
+<h3>Implicit conversion<a class="headerlink" href="#implicit-conversion" title="Permalink to this headline">¶</a></h3>
+<p>Recall from the section about floating-point operators that we can arbitrarily combine integers and floating-point numbers in an arithmetic expression – and that the result of any such expression will always be a floating-point number.  This is because Python will convert the integers to floating-point numbers before evaluating the expression.  This is an <em>implicit conversion</em> – we don’t have to convert anything ourselves.  There is usually no loss of precision when an integer is converted to a floating-point number.</p>
+<p>For example, the integer <code class="docutils literal notranslate"><span class="pre">2</span></code> will automatically be converted to a floating-point number in the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="mf">8.5</span> <span class="o">*</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">8.5</span></code> is a <code class="docutils literal notranslate"><span class="pre">float</span></code> while <code class="docutils literal notranslate"><span class="pre">2</span></code> is an <code class="docutils literal notranslate"><span class="pre">int</span></code>.  Python will automatically convert operands so that they are of the same type.  In this case this is achieved if the integer <code class="docutils literal notranslate"><span class="pre">2</span></code> is converted to the floating-point equivalent <code class="docutils literal notranslate"><span class="pre">2.0</span></code>.  Then the two floating-point numbers can be multiplied.</p>
+<p>Let’s have a look at a more complex example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="mf">8.5</span> <span class="o">+</span> <span class="mi">7</span> <span class="o">//</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">2.5</span>
+</pre></div>
+</div>
+<p>Python performs operations according to the order of precedence, and decides whether a conversion is needed on a per-operation basis. In our example <code class="docutils literal notranslate"><span class="pre">//</span></code> has the highest precedence, so it will be processed first.  <code class="docutils literal notranslate"><span class="pre">7</span></code> and <code class="docutils literal notranslate"><span class="pre">3</span></code> are both integers and <code class="docutils literal notranslate"><span class="pre">//</span></code> is the integer division operator – the result of this operation is the integer <code class="docutils literal notranslate"><span class="pre">2</span></code>. Now we are left with <code class="docutils literal notranslate"><span class="pre">8.5</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">-</span> <span class="pre">2.5</span></code>.  The addition and subtraction are at the same level of precedence, so they are evaluated left-to-right, starting with addition.  First <code class="docutils literal notranslate"><span class="pre">2</span></code> is converted to the floating-point number <code class="docutils literal notranslate"><span class="pre">2.0</span></code>, and the two floating-point numbers are added, which leaves us with <code class="docutils literal notranslate"><span class="pre">10.5</span> <span class="pre">-</span> <span class="pre">2.5</span></code>.  The result of this floating-point subtraction is <code class="docutils literal notranslate"><span class="pre">2.0</span></code>, which is assigned to <code class="docutils literal notranslate"><span class="pre">result</span></code>.</p>
+</div>
+<div class="section" id="explicit-conversion">
+<h3>Explicit conversion<a class="headerlink" href="#explicit-conversion" title="Permalink to this headline">¶</a></h3>
+<p>Converting numbers from <code class="docutils literal notranslate"><span class="pre">float</span></code> to <code class="docutils literal notranslate"><span class="pre">int</span></code> will result in a loss of precision. For example, try to convert <code class="docutils literal notranslate"><span class="pre">5.834</span></code> to an <code class="docutils literal notranslate"><span class="pre">int</span></code> – it is not possible to do this without losing precision. In order for this to happen, we must explicitly tell Python that we are aware that precision will be lost. For example, we need to tell the compiler to convert a <code class="docutils literal notranslate"><span class="pre">float</span></code> to an <code class="docutils literal notranslate"><span class="pre">int</span></code> like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">5.834</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">int</span></code> function converts a <code class="docutils literal notranslate"><span class="pre">float</span></code> to an <code class="docutils literal notranslate"><span class="pre">int</span></code> by discarding the fractional part – it will always round down!  If we want more control over the way in which the number is rounded, we will need to use a different function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the floor and ceil functions are in the math module</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="c1"># ceil returns the closest integer greater than or equal to the number</span>
+<span class="c1"># (so it always rounds up)</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">5.834</span><span class="p">)</span>
+
+<span class="c1"># floor returns the closest integer less than or equal to the number</span>
+<span class="c1"># (so it always rounds down)</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mf">5.834</span><span class="p">)</span>
+
+<span class="c1"># round returns the closest integer to the number</span>
+<span class="c1"># (so it rounds up or down)</span>
+<span class="c1"># Note that this is a built-in function -- we don&#39;t need to import math to use it.</span>
+<span class="n">i</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">5.834</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Explicit conversion is sometimes also called <em>casting</em> – we may read about a <code class="docutils literal notranslate"><span class="pre">float</span></code> being <em>cast</em> to <code class="docutils literal notranslate"><span class="pre">int</span></code> or vice-versa.</p>
+</div>
+<div class="section" id="converting-to-and-from-strings">
+<h3>Converting to and from strings<a class="headerlink" href="#converting-to-and-from-strings" title="Permalink to this headline">¶</a></h3>
+<p>As we saw in the earlier sections, Python seldom performs implicit conversions to and from <code class="docutils literal notranslate"><span class="pre">str</span></code> – we usually have to convert values explicitly.  If we pass a single number (or any other value) to the <code class="docutils literal notranslate"><span class="pre">print</span></code> function, it will be converted to a string automatically – but if we try to add a number and a string, we will get an error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is OK</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mf">6.7</span><span class="p">)</span>
+
+<span class="c1"># This is not OK</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3&quot;</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># Do you mean this...</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="c1"># concatenate &quot;3&quot; and &quot;4&quot; to get &quot;34&quot;</span>
+
+<span class="c1"># Or this?</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span> <span class="c1"># add 3 and 4 to get 7</span>
+</pre></div>
+</div>
+<p>To convert numbers to strings, we can use string formatting – this is usually the cleanest and most readable way to insert multiple values into a message.  If we want to convert a single number to a string, we can also use the <code class="docutils literal notranslate"><span class="pre">str</span></code> function explicitly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># These lines will do the same thing</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="more-about-conversions">
+<h3>More about conversions<a class="headerlink" href="#more-about-conversions" title="Permalink to this headline">¶</a></h3>
+<p>In Python, functions like <code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code> will try to convert <em>anything</em> to their respective types – for example, we can use the <code class="docutils literal notranslate"><span class="pre">int</span></code> function to convert strings to integers or to convert floating-point numbers to integers.  Note that although <code class="docutils literal notranslate"><span class="pre">int</span></code> can convert a float to an integer it can’t convert a string containing a float to an integer directly!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is OK</span>
+<span class="nb">int</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">)</span>
+
+<span class="c1"># This is OK</span>
+<span class="nb">int</span><span class="p">(</span><span class="mf">3.7</span><span class="p">)</span>
+
+<span class="c1"># This is not OK</span>
+<span class="nb">int</span><span class="p">(</span><span class="s2">&quot;3.7&quot;</span><span class="p">)</span> <span class="c1"># This is a string representation of a float, not an integer!</span>
+
+<span class="c1"># We have to convert the string to a float first</span>
+<span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;3.7&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Values of type <code class="docutils literal notranslate"><span class="pre">bool</span></code> can contain the value <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>.  These values are used extensively in conditional statements, which execute or do not execute parts of our program depending on some binary condition:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_flag</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="k">if</span> <span class="n">my_flag</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The condition is often an expression which evaluates to a boolean value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="mi">3</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This will not be printed.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>However, almost any value can implicitly be converted to a boolean if it is used in a statement like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_number</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">if</span> <span class="n">my_number</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;My number is non-zero!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This usually behaves in the way that you would expect: non-zero numbers are <code class="docutils literal notranslate"><span class="pre">True</span></code> values and zero is <code class="docutils literal notranslate"><span class="pre">False</span></code>.  However, we need to be careful when using strings – the empty string is treated as <code class="docutils literal notranslate"><span class="pre">False</span></code>, but any other string is <code class="docutils literal notranslate"><span class="pre">True</span></code> – even <code class="docutils literal notranslate"><span class="pre">&quot;0&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;False&quot;</span></code>!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># bool is a function which converts values to booleans</span>
+<span class="nb">bool</span><span class="p">(</span><span class="mi">34</span><span class="p">)</span> <span class="c1"># True</span>
+<span class="nb">bool</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># False</span>
+<span class="nb">bool</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># True</span>
+
+<span class="nb">bool</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1"># False</span>
+<span class="nb">bool</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">)</span> <span class="c1"># True</span>
+<span class="nb">bool</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">)</span> <span class="c1"># True!</span>
+<span class="nb">bool</span><span class="p">(</span><span class="s2">&quot;False&quot;</span><span class="p">)</span> <span class="c1"># Also True!</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Convert <code class="docutils literal notranslate"><span class="pre">&quot;8.8&quot;</span></code> to a float.</li>
+<li>Convert <code class="docutils literal notranslate"><span class="pre">8.8</span></code> to an integer (with rounding).</li>
+<li>Convert <code class="docutils literal notranslate"><span class="pre">&quot;8.8&quot;</span></code> to an integer (with rounding).</li>
+<li>Convert <code class="docutils literal notranslate"><span class="pre">8.8</span></code> to a string.</li>
+<li>Convert <code class="docutils literal notranslate"><span class="pre">8</span></code> to a string.</li>
+<li>Convert <code class="docutils literal notranslate"><span class="pre">8</span></code> to a float.</li>
+<li>Convert <code class="docutils literal notranslate"><span class="pre">8</span></code> to a boolean.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">a</span></code> is a local variable in the scope of <code class="docutils literal notranslate"><span class="pre">my_function</span></code> because it is an argument name.  <code class="docutils literal notranslate"><span class="pre">b</span></code> is also a local variable inside <code class="docutils literal notranslate"><span class="pre">my_function</span></code>, because it is assigned a value inside <code class="docutils literal notranslate"><span class="pre">my_function</span></code>. <code class="docutils literal notranslate"><span class="pre">c</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code> are both global variables.  It doesn’t matter that <code class="docutils literal notranslate"><span class="pre">d</span></code> is created inside an <code class="docutils literal notranslate"><span class="pre">if</span></code> block, because the inside of an <code class="docutils literal notranslate"><span class="pre">if</span></code> block is not a new scope – everything inside the block is part of the same scope as the outside (in this case the global scope).  Only function definitions (which start with <code class="docutils literal notranslate"><span class="pre">def</span></code>) and class definitions (which start with <code class="docutils literal notranslate"><span class="pre">class</span></code>) indicate the start of a new level of scope.</li>
+<li>Both <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> will be created every time <code class="docutils literal notranslate"><span class="pre">my_function</span></code> is called and destroyed when <code class="docutils literal notranslate"><span class="pre">my_function</span></code> has finished executing.  <code class="docutils literal notranslate"><span class="pre">c</span></code> is created when it is assigned the value <code class="docutils literal notranslate"><span class="pre">3</span></code>, and exists for the remainder of the program’s execution.  <code class="docutils literal notranslate"><span class="pre">d</span></code> is created inside the <code class="docutils literal notranslate"><span class="pre">if</span></code> block (when it is assigned the value which is returned from the function), and also exists for the remainder of the program’s execution.</li>
+<li>As we will learn in the next chapter, <code class="docutils literal notranslate"><span class="pre">if</span></code> blocks are executed <em>conditionally</em>.  If <code class="docutils literal notranslate"><span class="pre">c</span></code> were not greater than <code class="docutils literal notranslate"><span class="pre">3</span></code> in this program, the <code class="docutils literal notranslate"><span class="pre">if</span></code> block would not be executed, and if that were to happen the variable <code class="docutils literal notranslate"><span class="pre">d</span></code> would never be created.</li>
+<li>We may use the variable later in the code, assuming that it always exists, and have our program crash unexpectedly if it doesn’t.  It is considered poor coding practice to allow a variable to be defined or undefined depending on the outcome of a conditional statement.  It is better to ensure that is always defined, no matter what – for example, by assigning it some default value at the start.  It is much easier and cleaner to check if a variable has the default value than to check whether it exists at all.</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">T_f</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter a temperature in °F: &quot;</span><span class="p">))</span>
+<span class="n">T_c</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="o">/</span><span class="mi">9</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">T_f</span> <span class="o">-</span> <span class="mi">32</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%g</span><span class="s2">°F = </span><span class="si">%g</span><span class="s2">°C&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">T_f</span><span class="p">,</span> <span class="n">T_c</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The formatting symbol <code class="docutils literal notranslate"><span class="pre">%g</span></code> is used with floats, and instructs Python to pick a sensible human-readable way to display the float.</p>
+</div>
+</li>
+<li><p class="first">The program could crash if the user enters a value which cannot be converted to a floating-point number.  We would need to add some kind of error checking to make sure that this doesn’t happen – for example, by storing the string value and checking its contents.  If we find that the entered value is invalid, we can either print an error message and exit or keep prompting the user for input until valid input is entered.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<p>Here are example answers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">a_1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;8.8&quot;</span><span class="p">)</span>
+<span class="n">a_2</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mf">8.8</span><span class="p">)</span>
+<span class="n">a_3</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="s2">&quot;8.8&quot;</span><span class="p">)</span>
+<span class="n">a_4</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="mf">8.8</span>
+<span class="n">a_5</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="mi">8</span>
+<span class="n">a_6</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">a_7</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Variables and scope</a><ul>
+<li><a class="reference internal" href="#variables">Variables</a><ul>
+<li><a class="reference internal" href="#defining-variables">Defining variables</a></li>
+<li><a class="reference internal" href="#variable-scope-and-lifetime">Variable scope and lifetime</a></li>
+<li><a class="reference internal" href="#the-assignment-operator">The assignment operator</a></li>
+<li><a class="reference internal" href="#compound-assignment-operators">Compound assignment operators</a></li>
+<li><a class="reference internal" href="#more-about-scope-crossing-boundaries">More about scope: crossing boundaries</a></li>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#modifying-values">Modifying values</a><ul>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+<li><a class="reference internal" href="#mutable-and-immutable-types">Mutable and immutable types</a></li>
+<li><a class="reference internal" href="#more-about-input">More about input</a></li>
+<li><a class="reference internal" href="#example-calculating-petrol-consumption-of-a-car">Example: calculating petrol consumption of a car</a></li>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#type-conversion">Type conversion</a><ul>
+<li><a class="reference internal" href="#implicit-conversion">Implicit conversion</a></li>
+<li><a class="reference internal" href="#explicit-conversion">Explicit conversion</a></li>
+<li><a class="reference internal" href="#converting-to-and-from-strings">Converting to and from strings</a></li>
+<li><a class="reference internal" href="#more-about-conversions">More about conversions</a></li>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Python_Basics.html"
+                        title="previous chapter">Python basics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Selection_Control_Statements.html"
+                        title="next chapter">Selection control statements</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Variables_and_Scope.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Selection_Control_Statements.html" title="Selection control statements"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Python_Basics.html" title="Python basics"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

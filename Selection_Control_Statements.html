@@ -1,0 +1,1036 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Selection control statements &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Collections" href="Collections.html" />
+    <link rel="prev" title="Variables and scope" href="Variables_and_Scope.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Collections.html" title="Collections"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Variables_and_Scope.html" title="Variables and scope"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="selection-control-statements">
+<h1>Selection control statements<a class="headerlink" href="#selection-control-statements" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In the last chapter, you were introduced to the concept of flow of control: the sequence of statements that the computer executes. In procedurally written code, the computer usually executes instructions in the order that they appear.  However, this is not always the case.  One of the ways in which programmers can change the flow of control is the use of selection control statements.</p>
+<p>In this chapter we will learn about selection statements, which allow a program to choose when to execute certain instructions. For example, a program might choose how to proceed on the basis of the user’s input. As you will be able to see, such statements make a program more versatile.</p>
+<p>We will also look at different kinds of programming errors and discuss strategies for finding and correcting them.</p>
+</div>
+<div class="section" id="selection-if-statement">
+<h2>Selection: <code class="docutils literal notranslate"><span class="pre">if</span></code> statement<a class="headerlink" href="#selection-if-statement" title="Permalink to this headline">¶</a></h2>
+<p>People make decisions on a daily basis. What should I have for lunch? What should I do this weekend? Every time you make a decision you base it on some criterion. For example, you might decide what to have for lunch based on your mood at the time, or whether you are on some kind of diet. After making this decision, you act on it. Thus decision-making is a two step process – first deciding what to do based on a criterion, and secondly taking an action.</p>
+<p>Decision-making by a computer is based on the same two-step process. In Python, decisions are made with the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, also known as the selection statement. When processing an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, the computer first evaluates some criterion or condition.  If it is met, the specified action is performed. Here is the syntax for the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="n">if_body</span>
+</pre></div>
+</div>
+<p>When it reaches an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, the computer only executes the body of the statement only if the condition is true. Here is an example in Python, with a corresponding flowchart:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot vote&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div><img height="360" src="_images/blockdiag-7b40ab1e9ee678d8ffde602edc4f0ec1ffe7e4ad.png" width="256" /></div><p>As we can see from the flowchart, the instructions in the <code class="docutils literal notranslate"><span class="pre">if</span></code> body are only executed if the condition is met (i.e. if it is true). If the condition is not met (i.e. false), the instructions in the <code class="docutils literal notranslate"><span class="pre">if</span></code> body are skipped.</p>
+<div class="section" id="relational-operators">
+<h3>Relational operators<a class="headerlink" href="#relational-operators" title="Permalink to this headline">¶</a></h3>
+<p>Many <code class="docutils literal notranslate"><span class="pre">if</span></code> statements compare two values in order to make a decision. In the last example, we compared the variable <code class="docutils literal notranslate"><span class="pre">age</span></code> to the integer <code class="docutils literal notranslate"><span class="pre">18</span></code> to test if age less than 18. We used the operator <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> for the comparison. This operator is one of the relational operators that can be used in Python. The table below shows Python’s relational operators.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="46%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operator</th>
+<th class="head">Description</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>==</td>
+<td>equal to</td>
+<td>if (age == 18)</td>
+</tr>
+<tr class="row-odd"><td>!=</td>
+<td>not equal to</td>
+<td>if (score != 10)</td>
+</tr>
+<tr class="row-even"><td>&gt;</td>
+<td>greater than</td>
+<td>if (num_people &gt; 50)</td>
+</tr>
+<tr class="row-odd"><td>&lt;</td>
+<td>less than</td>
+<td>if (price &lt; 25)</td>
+</tr>
+<tr class="row-even"><td>&gt;=</td>
+<td>greater than or equal to</td>
+<td>if (total &gt;= 50)</td>
+</tr>
+<tr class="row-odd"><td>&lt;=</td>
+<td>less than or equal to</td>
+<td>if (value &lt;= 30)</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the condition statement can either be true or false. Also note that the operator for equality is <code class="docutils literal notranslate"><span class="pre">==</span></code> – a double equals sign.  Remember that <code class="docutils literal notranslate"><span class="pre">=</span></code>, the single equals sign, is the assignment operator.  If we accidentally use <code class="docutils literal notranslate"><span class="pre">=</span></code> when we mean <code class="docutils literal notranslate"><span class="pre">==</span></code>, we are likely to get a syntax error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">choice</span> <span class="o">=</span> <span class="mi">3</span><span class="p">:</span>
+<span class="go">File &quot;&lt;stdin&gt;&quot;, line 1</span>
+<span class="go">  if choice = 3:</span>
+<span class="go">            ^</span>
+<span class="go">SyntaxError: invalid syntax</span>
+</pre></div>
+</div>
+<p>This is correct:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Thank you for using this program.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">in some languages, an assignment statement <em>is</em> a valid conditional expression: it is evaluated as true if the assignment is executed successfully, and as false if it is not. In such languages, it is easier to use the wrong operator by accident and not notice!</p>
+</div>
+</div>
+<div class="section" id="value-vs-identity">
+<h3>Value vs identity<a class="headerlink" href="#value-vs-identity" title="Permalink to this headline">¶</a></h3>
+<p>So far, we have only compared integers in our examples.  We can also use any of the above relational operators to compare floating-point numbers, strings and many other types:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># we can compare the values of strings</span>
+<span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Jane&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, Jane!&quot;</span><span class="p">)</span>
+
+<span class="c1"># ... or floats</span>
+<span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="mf">10.5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When comparing variables using <code class="docutils literal notranslate"><span class="pre">==</span></code>, we are doing a <em>value</em> comparison: we are checking whether the two variables have the same value.  In contrast to this, we might want to know if two objects such as lists, dictionaries or custom objects that we have created ourselves are <em>the exact same object</em>.  This is a test of <em>identity</em>.  Two objects might have identical contents, but be two different objects.  We compare identity with the <code class="docutils literal notranslate"><span class="pre">is</span></code> operator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;These lists have the same value.&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;These lists are the same list.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is generally the case (with some caveats) that if two variables are the same object, they are also equal.  The reverse is not true – two variables could be equal in value, but not the same object.</p>
+<p>To test whether two objects are <em>not</em> the same object, we can use the <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span></code> operator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">a</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">b</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a and b are not the same object.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In many cases, variables of built-in immutable types which have the same value will also be identical.  In some cases this is because the Python interpreter saves memory (and comparison time) by representing multiple values which are equal by the same object.  You shouldn’t rely on this behaviour and make value comparisons using <code class="docutils literal notranslate"><span class="pre">is</span></code> – if you want to compare values, always use <code class="docutils literal notranslate"><span class="pre">==</span></code>.</p>
+</div>
+</div>
+<div class="section" id="using-indentation">
+<h3>Using indentation<a class="headerlink" href="#using-indentation" title="Permalink to this headline">¶</a></h3>
+<p>In the examples which have appeared in this chapter so far, there has only been one statement appearing in the <code class="docutils literal notranslate"><span class="pre">if</span></code> body. Of course it is possible to have more than one statement there; for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Thank you for using this program.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Always print this.&quot;</span><span class="p">)</span> <span class="c1"># this is outside the if block</span>
+</pre></div>
+</div>
+<p>The interpreter will treat all the statements inside the indented block as one statement – it will process all the instructions in the block before moving on to the next instruction.  This allows us to specify multiple instructions to be executed when the condition is met.</p>
+<p><code class="docutils literal notranslate"><span class="pre">if</span></code> is referred to as a <em>compound statement</em> in Python because it combines multiple other statements together.  A compound statement comprises one or more <em>clauses</em>, each of which has a <em>header</em> (like <code class="docutils literal notranslate"><span class="pre">if</span></code>) and a <em>suite</em> (which is a list of statements, like the <code class="docutils literal notranslate"><span class="pre">if</span></code> body).  The contents of the suite are delimited with indentation – we have to indent lines to the same level to put them in the same block.</p>
+</div>
+<div class="section" id="the-else-clause">
+<h3>The <code class="docutils literal notranslate"><span class="pre">else</span></code> clause<a class="headerlink" href="#the-else-clause" title="Permalink to this headline">¶</a></h3>
+<p>An optional part of an if statement is the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause. It allows us to specify an alternative instruction (or set of instructions) to be executed if the condition is <em>not</em> met:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
+    <span class="n">if_body</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">else_body</span>
+</pre></div>
+</div>
+<p>To put it another way, the computer will execute the <code class="docutils literal notranslate"><span class="pre">if</span></code> body if the condition is true, otherwise it will execute the        <code class="docutils literal notranslate"><span class="pre">else</span></code> body. In the example below, the computer will add 1 to x if it is zero, otherwise it will subtract 1 from x:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>This flowchart represents the same statement:</p>
+<div><img height="360" src="_images/blockdiag-a3f6ccead6041e6751bb4dd9eef3c8af7b3f2663.png" width="448" /></div><p>The computer will execute one of the branches before proceeding to the next instruction.</p>
+</div>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Which of these fragments are valid and invalid first lines of <code class="docutils literal notranslate"><span class="pre">if</span></code> statements?  Explain why:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">4)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x</span> <span class="pre">==</span> <span class="pre">2</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(y</span> <span class="pre">=&lt;</span> <span class="pre">4)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(y</span> <span class="pre">=</span> <span class="pre">5)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(3</span> <span class="pre">&lt;=</span> <span class="pre">a)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">1)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">((1</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">&lt;=</span> <span class="pre">0)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(name</span> <span class="pre">==</span> <span class="pre">&quot;James&quot;)</span></code></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">What is the output of the following code fragment? Explain why.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This number&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;is greater&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;than 3.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">How can we simplify these code fragments?</p>
+<blockquote>
+<div><ol class="arabic">
+<li><div class="first highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a is true&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><div class="first highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+    <span class="n">b</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">b</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="more-on-the-if-statement">
+<h2>More on the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement<a class="headerlink" href="#more-on-the-if-statement" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nested-if-statements">
+<h3>Nested <code class="docutils literal notranslate"><span class="pre">if</span></code> statements<a class="headerlink" href="#nested-if-statements" title="Permalink to this headline">¶</a></h3>
+<p>In some cases you may want one decision to depend on the result of an earlier decision. For example, you might only have to choose which shop to visit if you decide that you are going to do your shopping, or what to have for dinner after you have made a decision that you are hungry enough for dinner.</p>
+<div><img height="520" src="_images/blockdiag-c1985fd8934749d57b8b498c51db0fc8c4256b75.png" width="448" /></div><p>In Python this is equivalent to putting an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement within the body of either the <code class="docutils literal notranslate"><span class="pre">if</span></code> or the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause of another <code class="docutils literal notranslate"><span class="pre">if</span></code> statement.  The following code fragment calculates the cost of sending a small parcel. The post office charges R5 for the first 300g, and R2 for every 100g thereafter (rounded up), up to a maximum weight of 1000g:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">weight</span> <span class="o">&lt;=</span> <span class="mi">1000</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">weight</span> <span class="o">&lt;=</span> <span class="mi">300</span><span class="p">:</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">round</span><span class="p">((</span><span class="n">weight</span> <span class="o">-</span> <span class="mi">300</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Your parcel will cost R</span><span class="si">%d</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">cost</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum weight for small parcel exceeded.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Use large parcel service instead.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the bodies of the outer <code class="docutils literal notranslate"><span class="pre">if</span></code> and <code class="docutils literal notranslate"><span class="pre">else</span></code> clauses are indented, and the bodies of the inner <code class="docutils literal notranslate"><span class="pre">if</span></code> and <code class="docutils literal notranslate"><span class="pre">else</span></code> clauses are indented one more time.  It is important to keep track of indentation, so that each statement is in the correct block.  It doesn’t matter that there’s an empty line between the last line of the inner <code class="docutils literal notranslate"><span class="pre">if</span></code> statement and the following print statement – they are still both part of the same block (the outer <code class="docutils literal notranslate"><span class="pre">if</span></code> body) because they are indented by the same amount.  We can use empty lines (sparingly) to make our code more readable.</p>
+</div>
+<div class="section" id="the-elif-clause-and-if-ladders">
+<h3>The <code class="docutils literal notranslate"><span class="pre">elif</span></code> clause and <code class="docutils literal notranslate"><span class="pre">if</span></code> ladders<a class="headerlink" href="#the-elif-clause-and-if-ladders" title="Permalink to this headline">¶</a></h3>
+<p>The addition of the else keyword allows us to specify actions for the case in which the condition is false. However, there may be cases in which we would like to handle more than two alternatives. For example, here is a flowchart of a program which works out which grade should be assigned to a particular mark in a test:</p>
+<div><img height="520" src="_images/blockdiag-d99e8578dc3659173f04e37b60606bf9d327d76d.png" width="448" /></div><p>We should be able to write a code fragment for this program using nested if statements. It might look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">80</span><span class="p">:</span>
+    <span class="n">grade</span> <span class="o">=</span> <span class="n">A</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">65</span><span class="p">:</span>
+        <span class="n">grade</span> <span class="o">=</span> <span class="n">B</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="n">grade</span> <span class="o">=</span> <span class="n">C</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">grade</span> <span class="o">=</span> <span class="n">D</span>
+</pre></div>
+</div>
+<p>This code is a bit difficult to read.  Every time we add a nested <code class="docutils literal notranslate"><span class="pre">if</span></code>, we have to increase the indentation, so all of our alternatives are indented differently.  We can write this code more cleanly using <code class="docutils literal notranslate"><span class="pre">elif</span></code> clauses:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">80</span><span class="p">:</span>
+    <span class="n">grade</span> <span class="o">=</span> <span class="n">A</span>
+<span class="k">elif</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">65</span><span class="p">:</span>
+    <span class="n">grade</span> <span class="o">=</span> <span class="n">B</span>
+<span class="k">elif</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">:</span>
+    <span class="n">grade</span> <span class="o">=</span> <span class="n">C</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">grade</span> <span class="o">=</span> <span class="n">D</span>
+</pre></div>
+</div>
+<p>Now all the alternatives are clauses of one <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, and are indented to the same level.  This is called an <em>if ladder</em>.  Here is a flowchart which more accurately represents this code:</p>
+<div><img height="440" src="_images/blockdiag-f94a5069b454f904ca7ac96a6df4fa59d28b2a99.png" width="448" /></div><p>The default (catch-all) condition is the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause at the end of the statement. If none of the conditions specified earlier is matched, the actions in the <code class="docutils literal notranslate"><span class="pre">else</span></code> body will be executed. It is a good idea to include a final <code class="docutils literal notranslate"><span class="pre">else</span></code> clause in each ladder to make sure that we are covering all cases, especially if there’s a possibility that the options will change in the future.  Consider the following code fragment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">course_code</span> <span class="o">==</span> <span class="s2">&quot;CSC&quot;</span><span class="p">:</span>
+    <span class="n">department_name</span> <span class="o">=</span> <span class="s2">&quot;Computer Science&quot;</span>
+<span class="k">elif</span> <span class="n">course_code</span> <span class="o">==</span> <span class="s2">&quot;MAM&quot;</span><span class="p">:</span>
+    <span class="n">department_name</span> <span class="o">=</span> <span class="s2">&quot;Mathematics and Applied Mathematics&quot;</span>
+<span class="k">elif</span> <span class="n">course_code</span> <span class="o">==</span> <span class="s2">&quot;STA&quot;</span><span class="p">:</span>
+    <span class="n">department_name</span> <span class="o">=</span> <span class="s2">&quot;Statistical Sciences&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">department_name</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown course code: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">course_code</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">department_name</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Department: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">department_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What if we unexpectedly encounter an informatics course, which has a course code of <code class="docutils literal notranslate"><span class="pre">&quot;INF&quot;</span></code>?  The catch-all <code class="docutils literal notranslate"><span class="pre">else</span></code> clause will be executed, and we will immediately see a printed message that this course code is unsupported.  If the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause were omitted, we might not have noticed that anything was wrong until we tried to use <code class="docutils literal notranslate"><span class="pre">department_name</span></code> and discovered that it had never been assigned a value.  Including the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause helps us to pick up potential errors caused by missing options early.</p>
+</div>
+</div>
+<div class="section" id="boolean-values-operators-and-expressions">
+<h2>Boolean values, operators and expressions<a class="headerlink" href="#boolean-values-operators-and-expressions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-bool-type">
+<h3>The <code class="docutils literal notranslate"><span class="pre">bool</span></code> type<a class="headerlink" href="#the-bool-type" title="Permalink to this headline">¶</a></h3>
+<p>In Python there is a value type for variables which can either be true or false: the boolean type, <code class="docutils literal notranslate"><span class="pre">bool</span></code>.  The true value is <code class="docutils literal notranslate"><span class="pre">True</span></code> and the false value is <code class="docutils literal notranslate"><span class="pre">False</span></code>.  Python will implicitly convert any other value type to a boolean if we use it like a boolean, for example as a condition in an <code class="docutils literal notranslate"><span class="pre">if</span></code> statement.   We will almost never have to cast values to <code class="docutils literal notranslate"><span class="pre">bool</span></code> explicitly.  We also don’t have to use the <code class="docutils literal notranslate"><span class="pre">==</span></code> operator explicitly to check if a variable’s value evaluates to <code class="docutils literal notranslate"><span class="pre">True</span></code> – we can use the variable name by itself as a condition:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Jane&quot;</span>
+
+<span class="c1"># This is shorthand for checking if name evaluates to True:</span>
+<span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="c1"># It means the same thing as this:</span>
+<span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="c1"># This won&#39;t give us the answer we expect:</span>
+<span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Why won’t the last <code class="docutils literal notranslate"><span class="pre">if</span></code> statement do what we expect?  If we cast the string <code class="docutils literal notranslate"><span class="pre">&quot;Jane&quot;</span></code> to a boolean, it will be equal to <code class="docutils literal notranslate"><span class="pre">True</span></code>, but it isn’t equal to <code class="docutils literal notranslate"><span class="pre">True</span></code> while it’s still a string – so the condition in the last <code class="docutils literal notranslate"><span class="pre">if</span></code> statement will evaluate to <code class="docutils literal notranslate"><span class="pre">False</span></code>.  This is why we should always use the shorthand syntax, as shown in the first statement – Python will then do the implicit cast for us.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For historical reasons, the numbers <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">0.0</span></code> are actually equal to <code class="docutils literal notranslate"><span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">1.0</span></code> are equal to <code class="docutils literal notranslate"><span class="pre">True</span></code>.  They are not, however, identical objects – you can test this by comparing them with the <code class="docutils literal notranslate"><span class="pre">is</span></code> operator.</p>
+</div>
+<p>At the end of the previous chapter, we discussed how Python converts values to booleans implicitly.  Remember that all non-zero numbers and all non-empty strings are <code class="docutils literal notranslate"><span class="pre">True</span></code> and zero and the empty string (<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>) are <code class="docutils literal notranslate"><span class="pre">False</span></code>.  Other built-in data types that can be considered to be “empty” or “not empty” follow the same pattern.</p>
+</div>
+<div class="section" id="boolean-operations">
+<h3>Boolean operations<a class="headerlink" href="#boolean-operations" title="Permalink to this headline">¶</a></h3>
+<p>Decisions are often based on more than one factor. For example, you might decide to buy a shirt only if you like it AND it costs less than R100. Or you might decide to go out to eat tonight if you don’t have anything in the fridge OR you don’t feel like cooking. You can also alter conditions by negating them – for example you might only want to go to the concert tomorrow if it is NOT raining.  Conditions which consist of simpler conditions joined together with AND, OR and NOT are referred to as <em>compound conditions</em>. These operators are known as <em>boolean operators</em>.</p>
+</div>
+<div class="section" id="the-and-operator">
+<h3>The <code class="docutils literal notranslate"><span class="pre">and</span></code> operator<a class="headerlink" href="#the-and-operator" title="Permalink to this headline">¶</a></h3>
+<p>The AND operator in Python is <code class="docutils literal notranslate"><span class="pre">and</span></code>. A compound expression made up of two subexpressions and the <code class="docutils literal notranslate"><span class="pre">and</span></code> operator is only true when <em>both</em> subexpressions are true:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">50</span> <span class="ow">and</span> <span class="n">mark</span> <span class="o">&lt;</span> <span class="mi">65</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Grade B&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The compound condition is only true if the given mark is less than 50 <em>and</em> it is less than 65. The <code class="docutils literal notranslate"><span class="pre">and</span></code> operator works in the same way as its English counterpart. We can define the <code class="docutils literal notranslate"><span class="pre">and</span></code> operator formally with a truth table such as the one below.    The table shows the truth value of <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">and</span> <span class="pre">b</span></code> for every possible combination of subexpressions <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code>.  For example, if <code class="docutils literal notranslate"><span class="pre">a</span></code> is true and <code class="docutils literal notranslate"><span class="pre">b</span></code> is true, then <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">and</span> <span class="pre">b</span></code> is true.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="31%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><code class="docutils literal notranslate"><span class="pre">a</span></code></th>
+<th class="head"><code class="docutils literal notranslate"><span class="pre">b</span></code></th>
+<th class="head"><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">and</span> <span class="pre">b</span></code></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">and</span></code> is a binary operator so it must be given two operands.  Each subexpression must be a valid complete expression:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is correct:</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># This will give us a syntax error:</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="o">&lt;</span> <span class="mi">300</span><span class="p">):</span> <span class="c1"># &lt; 300 is not a valid expression!</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>We can join three or more subexpressions with <code class="docutils literal notranslate"><span class="pre">and</span></code> – they will be evaluated from left to right:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">condition_1</span> <span class="ow">and</span> <span class="n">condition_2</span> <span class="ow">and</span> <span class="n">condition_3</span> <span class="ow">and</span> <span class="n">condition_4</span>
+<span class="c1"># is the same as</span>
+<span class="p">((</span><span class="n">condition_1</span> <span class="ow">and</span> <span class="n">condition_2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">condition_3</span><span class="p">)</span> <span class="ow">and</span> <span class="n">condition_4</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">for the special case of testing whether a number falls within a certain range, we don’t have to use the <code class="docutils literal notranslate"><span class="pre">and</span></code> operator at all.  Instead of writing <code class="docutils literal notranslate"><span class="pre">mark</span> <span class="pre">&gt;=</span> <span class="pre">50</span> <span class="pre">and</span> <span class="pre">mark</span> <span class="pre">&lt;</span> <span class="pre">65</span></code> we can simply write <code class="docutils literal notranslate"><span class="pre">50</span> <span class="pre">&lt;=</span> <span class="pre">mark</span> <span class="pre">&lt;</span> <span class="pre">65</span></code>.  This doesn’t work in many other languages, but it’s a useful feature of Python.</p>
+</div>
+</div>
+<div class="section" id="short-circuit-evaluation">
+<h3>Short-circuit evaluation<a class="headerlink" href="#short-circuit-evaluation" title="Permalink to this headline">¶</a></h3>
+<p>Note that if <code class="docutils literal notranslate"><span class="pre">a</span></code> is false, the expression <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">and</span> <span class="pre">b</span></code> is false whether <code class="docutils literal notranslate"><span class="pre">b</span></code> is true or not.  The interpreter can take advantage of this to be more efficient: if it evaluates the first subexpression in an AND expression to be false, it does not bother to evaluate the second subexpression.  We call <code class="docutils literal notranslate"><span class="pre">and</span></code> a <em>shortcut operator</em> or <em>short-circuit</em> operator because of this behaviour.</p>
+<p>This behaviour doesn’t just make the interpreter slightly faster – we can also use it to our advantage when writing programs.  Consider this example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="mi">1</span><span class="o">/</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x is </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What if x is zero?  If the interpreter were to evaluate both of the subexpressions, we would get a divide by zero error.  But because <code class="docutils literal notranslate"><span class="pre">and</span></code> is a short-circuit operator, the second subexpression will only be evaluated if the first subexpression is true.  If x is zero, it will evaluate to false, and the second subexpression will not be evaluated at all.</p>
+<p>We could also have used nested <code class="docutils literal notranslate"><span class="pre">if</span></code> statements, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="mi">1</span><span class="o">/</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x is </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">and</span></code> instead is more compact and readable – especially if we have more than two conditions to check.  These two snippets do the same thing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">z</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">y</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">z</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This often comes in useful if we want to access an object’s attribute or an element from a list or a dictionary, and we first want to check if it exists:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">my_person</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">myperson</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;That&#39;s a long name, </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">myperson</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">mylist</span><span class="p">)</span> <span class="ow">and</span> <span class="n">mylist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I found a 3!&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">mydict</span> <span class="ow">and</span> <span class="n">mydict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I found a 3!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-or-operator">
+<h3>The <code class="docutils literal notranslate"><span class="pre">or</span></code> operator<a class="headerlink" href="#the-or-operator" title="Permalink to this headline">¶</a></h3>
+<p>The OR operator in Python is <code class="docutils literal notranslate"><span class="pre">or</span></code>.  A compound expression made up of two subexpressions and the <code class="docutils literal notranslate"><span class="pre">or</span></code> operator is true when <em>at least one</em> of the subexpressions is true.  This means that it is only false in the case where both subexpressions are false, and is true for all other cases. This can be seen in the truth table below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="32%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><code class="docutils literal notranslate"><span class="pre">a</span></code></th>
+<th class="head"><code class="docutils literal notranslate"><span class="pre">b</span></code></th>
+<th class="head"><code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">or</span> <span class="pre">b</span></code></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>The following code fragment will print out a message if the given age is less than 0 <em>or</em> if it is more than 120:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">120</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid age: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">age</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The interpreter also performs a short-circuit evaluation for <code class="docutils literal notranslate"><span class="pre">or</span></code> expressions.  If it evaluates the first subexpression to be true, it will not bother to evaluate the second, because this is sufficient to determine that the whole expression is true.</p>
+<p>The || operator is also binary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is correct:</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">300</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># This will give us a syntax error:</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">or</span> <span class="o">&gt;</span> <span class="mi">300</span><span class="p">:</span> <span class="c1"># &gt; 300 is not a valid expression!</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># This may not do what we expect:</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x is 2 or 3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The last example won’t give us an error, because <code class="docutils literal notranslate"><span class="pre">3</span></code> is a valid subexpression – and since it is a non-zero number it evaluates to <code class="docutils literal notranslate"><span class="pre">True</span></code>.  So the last <code class="docutils literal notranslate"><span class="pre">if</span></code> body will always execute, regardless of the value of <code class="docutils literal notranslate"><span class="pre">x</span></code>!</p>
+</div>
+<div class="section" id="the-not-operator">
+<h3>The <code class="docutils literal notranslate"><span class="pre">not</span></code> operator<a class="headerlink" href="#the-not-operator" title="Permalink to this headline">¶</a></h3>
+<p>The NOT operator, <code class="docutils literal notranslate"><span class="pre">not</span></code> in Python, is a unary operator: it only requires one operand. It is used to reverse an expression, as shown in the following truth table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><code class="docutils literal notranslate"><span class="pre">a</span></code></th>
+<th class="head"><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">a</span></code></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">False</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">not</span></code> operator can be used to write a less confusing expression. For example, consider the following example in which we want to check whether a string <em>doesn’t</em> start with “A”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">):</span>
+    <span class="k">pass</span> <span class="c1"># a statement body can&#39;t be empty -- this is an instruction which does nothing.</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; doesn&#39;t start with A!&quot;</span> <span class="o">%</span> <span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># That&#39;s a little clumsy -- let&#39;s use &quot;not&quot; instead!</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; doesn&#39;t start with A!&quot;</span> <span class="o">%</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here are a few other examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Do something if a flag is False:</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">my_flag</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+
+<span class="c1"># This...</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># ... is equivalent to this:</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="precedence-rules-for-boolean-expressions">
+<h3>Precedence rules for boolean expressions<a class="headerlink" href="#precedence-rules-for-boolean-expressions" title="Permalink to this headline">¶</a></h3>
+<p>Here is a table indicating the relative level of precedence for all the operators we have seen so far, including the arithmetic, relational and boolean operators.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operators</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">()</span></code> (highest)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">**</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">*,</span> <span class="pre">/,</span> <span class="pre">%</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">+,</span> <span class="pre">-</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&lt;,</span> <span class="pre">&lt;=,</span> <span class="pre">&gt;,</span> <span class="pre">&gt;=</span> <span class="pre">==,</span> <span class="pre">!=</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">is,</span> <span class="pre">is</span> <span class="pre">not</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">not</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">and</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">or</span></code> (lowest)</td>
+</tr>
+</tbody>
+</table>
+<p>It is always a good idea to use brackets to clarify what we mean, even though we can rely on the order of precedence above.  Brackets can make complex expressions in our code easier to read and understand, and reduce the opportunity for errors.</p>
+</div>
+<div class="section" id="demorgan-s-law-for-manipulating-boolean-expressions">
+<h3>DeMorgan’s law for manipulating boolean expressions<a class="headerlink" href="#demorgan-s-law-for-manipulating-boolean-expressions" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">not</span></code> operator can make expressions more difficult to understand, especially if it is used multiple times.  Try only to use the <code class="docutils literal notranslate"><span class="pre">not</span></code> operator where it makes sense to have it.  Most people find it easier to read positive statements than negative ones.  Sometimes we can use the opposite relational operator to avoid using the <code class="docutils literal notranslate"><span class="pre">not</span></code> operator, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">mark</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You passed&quot;</span><span class="p">)</span>
+
+<span class="c1"># is the same as</span>
+
+<span class="k">if</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You passed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This table shows each relational operator and its opposite:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operator</th>
+<th class="head">Opposite</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">==</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">!=</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&gt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;=</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&lt;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&gt;=</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>There are other ways to rewrite boolean expressions.  The 19th-century logician DeMorgan proved two properties of negation that we can use.</p>
+<p>Consider this example in English: <em>it is not both cool and rainy today.</em> Does this sentence mean the same thing as <em>it is not cool and not rainy today?</em>  No, the first sentence says that both conditions are not true, but either one of them could be true.  The correct equivalent sentence is <em>it is not cool or not rainy today.</em></p>
+<p>We have just used DeMorgan’s law to distribute NOT over the first sentence.  Formally, DeMorgan’s laws state:</p>
+<ol class="arabic simple">
+<li>NOT (a AND b) = (NOT a) OR (NOT b)</li>
+<li>NOT (a OR b) = (NOT a) AND (NOT b)</li>
+</ol>
+<p>We can use these laws to distribute the <code class="docutils literal notranslate"><span class="pre">not</span></code> operator over boolean expressions in Python.  For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">age</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">age</span> <span class="o">&lt;=</span> <span class="mi">120</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid age&quot;</span><span class="p">)</span>
+
+<span class="c1"># can be rewritten as</span>
+
+<span class="k">if</span> <span class="n">age</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">120</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid age&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Instead of negating each operator, we used its opposite, eliminating <code class="docutils literal notranslate"><span class="pre">not</span></code> altogether.</p>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">For what values of <code class="docutils literal notranslate"><span class="pre">input</span></code> will this program print <code class="docutils literal notranslate"><span class="pre">&quot;True&quot;</span></code>?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="nb">input</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">For what values of <code class="docutils literal notranslate"><span class="pre">absentee_rate</span></code> and <code class="docutils literal notranslate"><span class="pre">overall_mark</span></code> will this program print <code class="docutils literal notranslate"><span class="pre">&quot;You</span> <span class="pre">have</span> <span class="pre">passed</span> <span class="pre">the</span> <span class="pre">course.&quot;</span></code>?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">absentee_rate</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="ow">and</span> <span class="n">overall_mark</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You have passed the course.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">For what values of <code class="docutils literal notranslate"><span class="pre">x</span></code> will this program print <code class="docutils literal notranslate"><span class="pre">&quot;True&quot;</span></code>?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Eliminate <code class="docutils literal notranslate"><span class="pre">not</span></code> from each of these boolean expressions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ow">not</span> <span class="n">total</span> <span class="o">&lt;=</span> <span class="mi">2</span>
+<span class="ow">not</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">40</span>
+<span class="ow">not</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mf">20.0</span> <span class="ow">and</span> <span class="n">total</span> <span class="o">!=</span> <span class="mf">100.0</span><span class="p">)</span>
+<span class="ow">not</span> <span class="p">(</span><span class="n">angle</span> <span class="o">&gt;</span> <span class="mi">180</span> <span class="ow">and</span> <span class="n">width</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+<span class="ow">not</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">5</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">value</span> <span class="o">!=</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">or</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">)</span>
+<span class="ow">not</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="the-none-value">
+<h2>The None value<a class="headerlink" href="#the-none-value" title="Permalink to this headline">¶</a></h2>
+<p>We often initialise a number to zero or a string to an empty string before we give it a more meaningful value.  Zero and various “empty” values evaluate to <code class="docutils literal notranslate"><span class="pre">False</span></code> in boolean expressions, so we can check whether a variable has a meaningful value like this:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if (my_variable):</dt>
+<dd>print(my_variable)</dd>
+</dl>
+</div></blockquote>
+<p>Sometimes, however, a zero or an empty string <em>is</em> a meaningful value.  How can we indicate that a variable isn’t set to anything if we <em>can’t</em> use zero or an empty string?  We can set it to <code class="docutils literal notranslate"><span class="pre">None</span></code> instead.</p>
+<p>In Python, <code class="docutils literal notranslate"><span class="pre">None</span></code> is a special value which means “nothing”.  Its type is called <code class="docutils literal notranslate"><span class="pre">NoneType</span></code>, and only one <code class="docutils literal notranslate"><span class="pre">None</span></code> value exists at a time – all the <code class="docutils literal notranslate"><span class="pre">None</span></code> values we use are actually the same object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="kc">None</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="c1"># True</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">None</span></code> evaluates to <code class="docutils literal notranslate"><span class="pre">False</span></code> in boolean expressions.  If we don’t care whether our variable is <code class="docutils literal notranslate"><span class="pre">None</span></code> or some other value which is also false, we can just check its value like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">my_string</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;My string is &#39;</span><span class="si">%s</span><span class="s2">&#39;.&quot;</span> <span class="o">%</span> <span class="n">my_string</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If, however, we want to distinguish between the case when our variable is <code class="docutils literal notranslate"><span class="pre">None</span></code> and when it is empty (or zero, or some other false value) we need to be more specific:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">my_number</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">my_number</span><span class="p">)</span> <span class="c1"># could still be zero</span>
+
+<span class="k">if</span> <span class="n">my_string</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I haven&#39;t got a string at all!&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="ow">not</span> <span class="n">my_string</span><span class="p">:</span> <span class="c1"># another false value, i.e. an empty string</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;My string is empty!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;My string is &#39;</span><span class="si">%s</span><span class="s2">&#39;.&quot;</span> <span class="o">%</span> <span class="n">my_string</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="switch-statements-and-dictionary-based-dispatch">
+<h3>Switch statements and dictionary-based dispatch<a class="headerlink" href="#switch-statements-and-dictionary-based-dispatch" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">if</span></code> ladders can get unwieldy if they become very long.  Many languages have a control statement called a switch, which tests the value of a single variable and makes a decision on the basis of that value. It is similar to an <code class="docutils literal notranslate"><span class="pre">if</span></code> ladder, but can be a little more readable, and is often optimised to be faster.</p>
+<p>Python does not have a switch statement, but we can achieve something similar by using a dictionary. This example will be clearer when we have read more about dictionaries, but all we need to know for now is that a dictionary is a store of key and value pairs – we retrieve a value by its key, the way we would retrieve a list element by its index.  Here is how we can rewrite the course code example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEPARTMENT_NAMES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;CSC&quot;</span><span class="p">:</span> <span class="s2">&quot;Computer Science&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MAM&quot;</span><span class="p">:</span> <span class="s2">&quot;Mathematics and Applied Mathematics&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;STA&quot;</span><span class="p">:</span> <span class="s2">&quot;Statistical Sciences&quot;</span><span class="p">,</span> <span class="c1"># Trailing commas like this are allowed in Python!</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="n">course_code</span> <span class="ow">in</span> <span class="n">DEPARTMENT_NAMES</span><span class="p">:</span> <span class="c1"># this tests whether the variable is one of the dictionary&#39;s keys</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Department: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">DEPARTMENT_NAMES</span><span class="p">[</span><span class="n">course_code</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown course code: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">course_code</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We are not limited to storing simple values like strings in the dictionary.  In Python, functions can be stored in variables just like any other object, so we can even use this dispatch method to execute completely different statements in response to different values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; reversed is &#39;</span><span class="si">%s</span><span class="s2">&#39;.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="k">def</span> <span class="nf">capitalise</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; capitalised is &#39;</span><span class="si">%s</span><span class="s2">&#39;.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()))</span>
+
+<span class="n">ACTIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="n">reverse</span><span class="p">,</span> <span class="c1"># use the function name without brackets to refer to the function without calling it</span>
+    <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="n">capitalise</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">my_function</span> <span class="o">=</span> <span class="n">ACTIONS</span><span class="p">[</span><span class="n">my_action</span><span class="p">]</span> <span class="c1"># now we retrieve the function</span>
+<span class="n">my_function</span><span class="p">(</span><span class="n">my_string</span><span class="p">)</span> <span class="c1"># and now we call it</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-conditional-operator">
+<h3>The conditional operator<a class="headerlink" href="#the-conditional-operator" title="Permalink to this headline">¶</a></h3>
+<p>Python has another way to write a selection in a program – the conditional operator. It can be used within an expression (i.e. it can be evaluated) – in contrast to <code class="docutils literal notranslate"><span class="pre">if</span></code> and <code class="docutils literal notranslate"><span class="pre">if</span></code>-<code class="docutils literal notranslate"><span class="pre">else</span></code>, which are just statements and not expressions.  It is often called the <em>ternary</em> operator because it has <em>three</em> operands (binary operators have two, and unary operators have one). The syntax is as follows:</p>
+<p><em>true expression</em> <code class="docutils literal notranslate"><span class="pre">if</span></code> <em>condition</em> <code class="docutils literal notranslate"><span class="pre">else</span></code> <em>false expression</em></p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;Pass&quot;</span> <span class="k">if</span> <span class="p">(</span><span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;Fail&quot;</span>
+</pre></div>
+</div>
+<p>This means that if <code class="docutils literal notranslate"><span class="pre">score</span></code> is at least 50, <code class="docutils literal notranslate"><span class="pre">result</span></code> is assigned <code class="docutils literal notranslate"><span class="pre">&quot;Pass&quot;</span></code>, otherwise it is assigned <code class="docutils literal notranslate"><span class="pre">&quot;Fail&quot;</span></code>. This is equivalent to the following <code class="docutils literal notranslate"><span class="pre">if</span></code> statement:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if (score &gt;= 50):</dt>
+<dd>result = “Pass”</dd>
+<dt>else:</dt>
+<dd>result = “Fail”</dd>
+</dl>
+</div></blockquote>
+<p>The ternary operator can make simple <code class="docutils literal notranslate"><span class="pre">if</span></code> statements shorter and more legible, but some people may find this code harder to understand. There is no functional or efficiency difference between a normal <code class="docutils literal notranslate"><span class="pre">if</span></code>-<code class="docutils literal notranslate"><span class="pre">else</span></code> and the ternary operator.  You should use the operator sparingly.</p>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Rewrite the following fragment as an if-ladder (using <code class="docutils literal notranslate"><span class="pre">elif</span></code> statements):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Below freezing&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Very cold&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">Chilly</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warm&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hot&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too hot&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Write a Python program to assign grades to students at the end of the year. The program must do the following:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Ask for a student number.</p>
+</li>
+<li><p class="first">Ask for the student’s tutorial mark.</p>
+</li>
+<li><p class="first">Ask for the student’s test mark.</p>
+</li>
+<li><p class="first">Calculate whether the student’s average so far is high enough for the student to be permitted to write the examination. If the average (mean) of the tutorial and test marks is lower than 40%, the student should automatically get an F grade, and the program should print the grade and exit without performing the following steps.</p>
+</li>
+<li><p class="first">Ask for the student’s examination mark.</p>
+</li>
+<li><p class="first">Calculate the student’s final mark. The tutorial and test marks should count for 25% of the final mark each, and the final examination should count for the remaining 50%.</p>
+</li>
+<li><p class="first">Calculate and print the student’s grade, according to the following table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="65%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Weighted final score</th>
+<th class="head">Final grade</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>80 &lt;= mark &lt;= 100</td>
+<td>A</td>
+</tr>
+<tr class="row-odd"><td>70 &lt;= mark &lt; 80</td>
+<td>B</td>
+</tr>
+<tr class="row-even"><td>60 &lt;= mark &lt; 70</td>
+<td>C</td>
+</tr>
+<tr class="row-odd"><td>50 &lt;= mark &lt; 60</td>
+<td>D</td>
+</tr>
+<tr class="row-even"><td>mark &lt; 50</td>
+<td>E</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><ol class="first arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">4)</span></code> – valid</li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x</span> <span class="pre">==</span> <span class="pre">2</span></code> – valid (brackets are not compulsory)</li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(y</span> <span class="pre">=&lt;</span> <span class="pre">4)</span></code> – invalid (<code class="docutils literal notranslate"><span class="pre">=&lt;</span></code> is not a valid operator; it should be <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(y</span> <span class="pre">=</span> <span class="pre">5)</span></code> – invalid (<code class="docutils literal notranslate"><span class="pre">=</span></code> is the assignment operator, not a comparison operator)</li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(3</span> <span class="pre">&lt;=</span> <span class="pre">a)</span></code> – valid</li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">1)</span></code> – valid (<code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">1</span></code> evaluates to zero, which is false)</li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">((1</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">&lt;=</span> <span class="pre">0)</span></code> – valid</li>
+<li><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(name</span> <span class="pre">==</span> <span class="pre">&quot;James&quot;)</span></code> – valid</li>
+</ol>
+</li>
+<li><dl class="first docutils">
+<dt>The program will print out:</dt>
+<dd><div class="first last line-block">
+<div class="line">is greater</div>
+<div class="line">than 3.</div>
+</div>
+</dd>
+</dl>
+<p>This happens because the last two print statements are not indented – they are outside the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement, which means that they will always be executed.</p>
+</li>
+<li><ol class="first arabic">
+<li><p class="first">We don’t have to compare variables to boolean values and compare them to <code class="docutils literal notranslate"><span class="pre">True</span></code> explicitly.  This will be done implicitly if we just evaluate the variable in the condition of the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">a</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a is true&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">We set <code class="docutils literal notranslate"><span class="pre">a</span></code> to the same value whether we execute the <code class="docutils literal notranslate"><span class="pre">if</span></code> block or the <code class="docutils literal notranslate"><span class="pre">else</span></code> block, so we can move this line outside the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement and only write it once.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+    <span class="n">b</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">b</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">The program will print <code class="docutils literal notranslate"><span class="pre">&quot;True&quot;</span></code> if <code class="docutils literal notranslate"><span class="pre">input</span></code> is less than or equal to 5.</p>
+</li>
+<li><p class="first">The program will print <code class="docutils literal notranslate"><span class="pre">&quot;You</span> <span class="pre">have</span> <span class="pre">passed</span> <span class="pre">the</span> <span class="pre">course.&quot;</span></code> if <code class="docutils literal notranslate"><span class="pre">absentee_rate</span></code> is less than or equal to <code class="docutils literal notranslate"><span class="pre">5</span></code> and <code class="docutils literal notranslate"><span class="pre">overall_mark</span></code> is greater than or equal to <code class="docutils literal notranslate"><span class="pre">50</span></code>.</p>
+</li>
+<li><p class="first">The program will print <code class="docutils literal notranslate"><span class="pre">&quot;True&quot;</span></code> for any value of <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+</li>
+<li><div class="first highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">2</span>
+<span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">40</span>
+<span class="n">value</span> <span class="o">&lt;=</span> <span class="mf">20.0</span> <span class="ow">or</span> <span class="n">total</span> <span class="o">==</span> <span class="mf">100.0</span>
+<span class="n">angle</span> <span class="o">&lt;=</span> <span class="mi">180</span> <span class="ow">or</span> <span class="n">width</span> <span class="o">!=</span> <span class="mi">5</span>
+<span class="p">(</span><span class="n">count</span> <span class="o">!=</span> <span class="mi">5</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">!=</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">50</span>
+<span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">200</span> <span class="ow">and</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><div class="first highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Below freezing&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Very cold&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Chilly</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warm&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hot&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too hot&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">student_number</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter a student number: &quot;</span><span class="p">)</span>
+<span class="n">tutorial_mark</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the student&#39;s tutorial mark: &quot;</span><span class="p">))</span>
+<span class="n">test_mark</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the student&#39;s test mark: &quot;</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">tutorial_mark</span> <span class="o">+</span> <span class="n">test_mark</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">:</span>
+    <span class="n">grade</span> <span class="o">=</span> <span class="s2">&quot;F&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">exam_mark</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the student&#39;s final examination mark: &quot;</span><span class="p">))</span>
+    <span class="n">mark</span> <span class="o">=</span> <span class="p">(</span><span class="n">tutorial_mark</span> <span class="o">+</span> <span class="n">test_mark</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">exam_mark</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span>
+
+    <span class="k">if</span> <span class="mi">80</span> <span class="o">&lt;=</span> <span class="n">mark</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">grade</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span>
+    <span class="k">elif</span> <span class="mi">70</span> <span class="o">&lt;=</span> <span class="n">mark</span> <span class="o">&lt;</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="n">grade</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span>
+    <span class="k">elif</span> <span class="mi">60</span> <span class="o">&lt;=</span> <span class="n">mark</span> <span class="o">&lt;</span> <span class="mi">70</span><span class="p">:</span>
+        <span class="n">grade</span> <span class="o">=</span> <span class="s2">&quot;C&quot;</span>
+    <span class="k">elif</span> <span class="mi">50</span> <span class="o">&lt;=</span> <span class="n">mark</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+        <span class="n">grade</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">grade</span> <span class="o">=</span> <span class="s2">&quot;E&quot;</span>
+
+<span class="nb">print</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&#39;s grade is </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">student_number</span><span class="p">,</span> <span class="n">grade</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Selection control statements</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#selection-if-statement">Selection: <code class="docutils literal notranslate"><span class="pre">if</span></code> statement</a><ul>
+<li><a class="reference internal" href="#relational-operators">Relational operators</a></li>
+<li><a class="reference internal" href="#value-vs-identity">Value vs identity</a></li>
+<li><a class="reference internal" href="#using-indentation">Using indentation</a></li>
+<li><a class="reference internal" href="#the-else-clause">The <code class="docutils literal notranslate"><span class="pre">else</span></code> clause</a></li>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#more-on-the-if-statement">More on the <code class="docutils literal notranslate"><span class="pre">if</span></code> statement</a><ul>
+<li><a class="reference internal" href="#nested-if-statements">Nested <code class="docutils literal notranslate"><span class="pre">if</span></code> statements</a></li>
+<li><a class="reference internal" href="#the-elif-clause-and-if-ladders">The <code class="docutils literal notranslate"><span class="pre">elif</span></code> clause and <code class="docutils literal notranslate"><span class="pre">if</span></code> ladders</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#boolean-values-operators-and-expressions">Boolean values, operators and expressions</a><ul>
+<li><a class="reference internal" href="#the-bool-type">The <code class="docutils literal notranslate"><span class="pre">bool</span></code> type</a></li>
+<li><a class="reference internal" href="#boolean-operations">Boolean operations</a></li>
+<li><a class="reference internal" href="#the-and-operator">The <code class="docutils literal notranslate"><span class="pre">and</span></code> operator</a></li>
+<li><a class="reference internal" href="#short-circuit-evaluation">Short-circuit evaluation</a></li>
+<li><a class="reference internal" href="#the-or-operator">The <code class="docutils literal notranslate"><span class="pre">or</span></code> operator</a></li>
+<li><a class="reference internal" href="#the-not-operator">The <code class="docutils literal notranslate"><span class="pre">not</span></code> operator</a></li>
+<li><a class="reference internal" href="#precedence-rules-for-boolean-expressions">Precedence rules for boolean expressions</a></li>
+<li><a class="reference internal" href="#demorgan-s-law-for-manipulating-boolean-expressions">DeMorgan’s law for manipulating boolean expressions</a></li>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-none-value">The None value</a><ul>
+<li><a class="reference internal" href="#switch-statements-and-dictionary-based-dispatch">Switch statements and dictionary-based dispatch</a></li>
+<li><a class="reference internal" href="#the-conditional-operator">The conditional operator</a></li>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Variables_and_Scope.html"
+                        title="previous chapter">Variables and scope</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Collections.html"
+                        title="next chapter">Collections</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Selection_Control_Statements.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Collections.html" title="Collections"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Variables_and_Scope.html" title="Variables and scope"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

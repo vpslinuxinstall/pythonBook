@@ -1,0 +1,942 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Functions &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Classes" href="Classes.html" />
+    <link rel="prev" title="Errors and exceptions" href="Errors_and_Exceptions.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Classes.html" title="Classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Errors_and_Exceptions.html" title="Errors and exceptions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="functions">
+<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>A function is a sequence of statements which performs some kind of task.  We use functions to eliminate code duplication – instead of  writing all the statements at every place in our code where we want to perform the same task, we define them in one place and refer to them by the function name.  If we want to change how that task is performed, we will now mostly only need to change code in one place.</p>
+<p>Here is a definition of a simple function which takes no parameters and doesn’t return any values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_a_message</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We use the <code class="docutils literal notranslate"><span class="pre">def</span></code> statement to indicate the start of a function definition. The next part of the definition is the function name, in this case <code class="docutils literal notranslate"><span class="pre">print_a_message</span></code>, followed by round brackets (the definitions of any parameters that the function takes will go in between them) and a colon.  Thereafter, everything that is indented by one level is the body of the function.</p>
+<p>Functions <em>do things</em>, so you should always choose a function name which explains as simply as accurately as possible <em>what the function does</em>.  This will usually be a verb or some phrase containing a verb.  If you change a function so much that the name no longer accurately reflects what it does, you should consider updating the name – although this may sometimes be inconvenient.</p>
+<p>This particular function always does exactly the same thing: it prints the message <code class="docutils literal notranslate"><span class="pre">&quot;Hello,</span> <span class="pre">world!&quot;</span></code>.</p>
+<p>Defining a function does not make it run – when the flow of control reaches the function definition and executes it, Python just learns about the function and what it will do when we run it.  To run a function, we have to <em>call</em> it.  To call the function we use its name followed by round brackets (with any parameters that the function takes in between them):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">print_a_message</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Of course we have already used many of Python’s built-in functions, such as <code class="docutils literal notranslate"><span class="pre">print</span></code> and <code class="docutils literal notranslate"><span class="pre">len</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Many objects in Python are <em>callable</em>, which means that you can call them like functions – a callable object has a special method defined which is executed when the object is called.  For example, types such as <code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code> can be used as functions, to create new objects of that type (sometimes by converting an existing object):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">)</span>
+
+<span class="n">people</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span> <span class="c1"># make a new (empty) list</span>
+<span class="n">people</span> <span class="o">=</span> <span class="nb">list</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="c1"># convert a tuple to a new list</span>
+</pre></div>
+</div>
+<p>In general, classes (of which types are a subset) are callable – when we call a class we call its <em>constructor</em> method, which is used to create a new object of that class.  We will learn more about classes in the next chapter, but you may recall that we already called some classes to make new objects when we raised exceptions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;There&#39;s something wrong with your number!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Because functions are objects in Python, we can treat them just like any other object – we can assign a function as the value of a variable. To refer to a function without calling it, we just use the function name without round brackets:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_function</span> <span class="o">=</span> <span class="n">print_a_message</span>
+
+<span class="c1"># later we can call the function using the variable name</span>
+<span class="n">my_function</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Because defining a function does not cause it to execute, we can use an identifier inside a function even if it hasn’t been defined yet – as long as it becomes defined by the time we run the function.  For example, if we define several functions which all call each other, the order in which we define them doesn’t matter as long as they are all defined before we start using them:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="n">my_other_function</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">my_other_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+
+<span class="c1"># this is fine, because my_other_function is now defined</span>
+<span class="n">my_function</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If we were to move that function call up, we would get an error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="n">my_other_function</span><span class="p">()</span>
+
+<span class="c1"># this is not fine, because my_other_function is not defined yet!</span>
+<span class="n">my_function</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">my_other_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Because of this, it’s a good idea to put all function definitions near the top of your program, so that they are executed before any of your other statements.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a function called <code class="docutils literal notranslate"><span class="pre">func_a</span></code>, which prints a message.</li>
+<li>Call the function.</li>
+<li>Assign the function object as a value to the variable <code class="docutils literal notranslate"><span class="pre">b</span></code>, without calling the function.</li>
+<li>Now call the function using the variable <code class="docutils literal notranslate"><span class="pre">b</span></code>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="input-parameters">
+<h2>Input parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline">¶</a></h2>
+<p>It is very seldom the case that the task that we want to perform with a function is always exactly the same.  There are usually minor differences to what we need to do under different circumstances.  We don’t want to write a slightly different function for each of these slightly different cases – that would defeat the object of the exercise!  Instead, we want to pass information into the function and use it inside the function to tailor the function’s behaviour to our exact needs.  We express this information as a series of <em>input parameters</em>.</p>
+<p>For example, we can make the function we defined above more useful if we make the message customisable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_a_message</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>More usefully, we can pass in two numbers and add them together:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are parameters.  When we call this function, we have to pass two paramenters in, or we will get an error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">print_sum</span><span class="p">()</span> <span class="c1"># this won&#39;t work</span>
+
+<span class="n">print_sum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># this is correct</span>
+</pre></div>
+</div>
+<p>In the example above, we are passing <code class="docutils literal notranslate"><span class="pre">2</span></code> and <code class="docutils literal notranslate"><span class="pre">3</span></code> as parameters to the function when we call it.  That means that when the function is executed, the variable <code class="docutils literal notranslate"><span class="pre">a</span></code> will be given the value <code class="docutils literal notranslate"><span class="pre">2</span></code> and the variable <code class="docutils literal notranslate"><span class="pre">b</span></code> will be given the value <code class="docutils literal notranslate"><span class="pre">3</span></code>.  You will then be able to refer to these values using the variable names <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> inside the function.</p>
+<p>In languages which are statically typed, we have to declare the types of parameters when we define the function, and we can only use variables of those types when we call the function.  If we want to perform a similar task with variables of different types, we must define a separate function which accepts those types.</p>
+<p>In Python, parameters have no declared types.  We can pass any kind of variable to the <code class="docutils literal notranslate"><span class="pre">print_message</span></code> function above, not just a string.  We can use the <code class="docutils literal notranslate"><span class="pre">print_sum</span></code> function to add any two things which can be added: two integers, two floats, an integer and a float, or even two strings.  We can also pass in an integer and a string, but although these are permitted as parameters, they cannot be added together, so we will get an error when we actually try to add them inside the function.</p>
+<p>The advantage of this is that we don’t have to write a lot of different <code class="docutils literal notranslate"><span class="pre">print_sum</span></code> functions, one for each different pair of types, when they would all be identical otherwise.  The disadvantage is that since Python doesn’t check parameter types against the function definition when a function is called, we may not immediately notice if the wrong type of parameter is passed in – if, for example, another person interacting with code that we have written uses parameter types that we did not anticipate, or if we accidentally get the parameters out of order.</p>
+<p>This is why it is important for us to test our code thoroughly – something we will look at in a later chapter. If we intend to write code which is robust, especially if it is also going to be used by other people, it is also often a good idea to check function parameters early in the function and give the user feedback (by raising exceptions) if the are incorrect.</p>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a function called <code class="docutils literal notranslate"><span class="pre">hypotenuse</span></code>, which takes two numbers as parameters and prints the square root of the sum of their squares.</li>
+<li>Call this function with two floats.</li>
+<li>Call this function with two integers.</li>
+<li>Call this function with one integer and one float.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="return-values">
+<h2>Return values<a class="headerlink" href="#return-values" title="Permalink to this headline">¶</a></h2>
+<p>The function examples we have seen above don’t return any values – they just result in a message being printed.  We often want to use a function to calculate some kind of value and then <em>return</em> it to us, so that we can store it in a variable and use it later.  Output which is returned from a function is called a <em>return value</em>.  We can rewrite the <code class="docutils literal notranslate"><span class="pre">print_sum</span></code> function to return the result of its addition instead of printing it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>We use the <code class="docutils literal notranslate"><span class="pre">return</span></code> keyword to define a return value.  To access this value when we call the function, we have to <em>assign</em> the result of the function to a variable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here the return value of the function will be assigned to <code class="docutils literal notranslate"><span class="pre">c</span></code> when the function is executed.</p>
+<p>A function can only have a single return value, but that value can be a list or tuple, so in practice you can return as many different values from a function as you like.  It usually only makes sense to return multiple values if they are tied to each other in some way.  If you place several values after the <code class="docutils literal notranslate"><span class="pre">return</span></code> statement, separated by commas, they will automatically be converted to a tuple.  Conversely, you can assign a tuple to multiple variables separated by commas at the same time, so you can <em>unpack</em> a tuple returned by a function into multiple variables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">):</span>
+    <span class="n">quotient</span> <span class="o">=</span> <span class="n">dividend</span> <span class="o">//</span> <span class="n">divisor</span>
+    <span class="n">remainder</span> <span class="o">=</span> <span class="n">dividend</span> <span class="o">%</span> <span class="n">divisor</span>
+    <span class="k">return</span> <span class="n">quotient</span><span class="p">,</span> <span class="n">remainder</span>
+
+<span class="c1"># you can do this</span>
+<span class="n">q</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">divide</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># but you can also do this</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">divide</span><span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">q1</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">q2</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># by the way, you can also do this</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1"># or this</span>
+<span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>What happens if you try to assign one of our first examples, which don’t have a return value, to a variable?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mystery_output</span> <span class="o">=</span> <span class="n">print_message</span><span class="p">(</span><span class="s2">&quot;Boo!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mystery_output</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All functions do actually return <em>something</em>, even if we don’t define a return value – the default return value is <code class="docutils literal notranslate"><span class="pre">None</span></code>, which is what our mystery output is set to.</p>
+<p>When a <code class="docutils literal notranslate"><span class="pre">return</span></code> statement is reached, the flow of control immediately exits the function – any further statements in the function body will be skipped.  We can sometimes use this to our advantage to reduce the number of conditional statements we need to use inside a function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">divisor</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span> <span class="c1"># instead of dividing by zero</span>
+
+    <span class="n">quotient</span> <span class="o">=</span> <span class="n">dividend</span> <span class="o">//</span> <span class="n">divisor</span>
+    <span class="n">remainder</span> <span class="o">=</span> <span class="n">dividend</span> <span class="o">%</span> <span class="n">divisor</span>
+    <span class="k">return</span> <span class="n">quotient</span><span class="p">,</span> <span class="n">remainder</span>
+</pre></div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">if</span></code> clause is executed, the first <code class="docutils literal notranslate"><span class="pre">return</span></code> will cause the function to exit – so whatever comes after the <code class="docutils literal notranslate"><span class="pre">if</span></code> clause doesn’t need to be inside an <code class="docutils literal notranslate"><span class="pre">else</span></code>.  The remaining statements can simply be in the main body of the function, since they can only be reached if the <code class="docutils literal notranslate"><span class="pre">if</span></code> clause is not executed.</p>
+<p>This technique can be useful whenever we want to check parameters at the beginning of a function – it means that we don’t have to indent the main part of the function inside an <code class="docutils literal notranslate"><span class="pre">else</span></code> block.  Sometimes it’s more appropriate to raise an exception instead of returning a value like <code class="docutils literal notranslate"><span class="pre">None</span></code> if there is something wrong with one of the parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">divisor</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The divisor cannot be zero!&quot;</span><span class="p">)</span>
+
+    <span class="n">quotient</span> <span class="o">=</span> <span class="n">dividend</span> <span class="o">//</span> <span class="n">divisor</span>
+    <span class="n">remainder</span> <span class="o">=</span> <span class="n">dividend</span> <span class="o">%</span> <span class="n">divisor</span>
+    <span class="k">return</span> <span class="n">quotient</span><span class="p">,</span> <span class="n">remainder</span>
+</pre></div>
+</div>
+<p>Having multiple exit points scattered throughout your function can make your code difficult to read – most people expect a single <code class="docutils literal notranslate"><span class="pre">return</span></code> right at the end of a function.  You should use this technique sparingly.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">in some other languages, only functions that return a value are called functions (because of their similarity to mathematical functions).  Functions which have no return value are known as <em>procedures</em> instead.</p>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Rewrite the <code class="docutils literal notranslate"><span class="pre">hypotenuse</span></code> function from exercise 2 so that it returns a value instead of printing it.  Add exception handling so that the function returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if it is called with parameters of the wrong type.</li>
+<li>Call the function with two numbers, and print the result.</li>
+<li>Call the function with two strings, and print the result.</li>
+<li>Call the function with a number and a string, and print the result.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="the-stack">
+<h2>The stack<a class="headerlink" href="#the-stack" title="Permalink to this headline">¶</a></h2>
+<p>Python stores information about functions which have been called in a <em>call stack</em>.  Whenever a function is called, a new <em>stack frame</em> is added to the stack – all of the function’s parameters are added to it, and as the body of the function is executed, local variables will be created there.  When the function finishes executing, its stack frame is discarded, and the flow of control returns to wherever you were before you called the function, at the previous level of the stack.</p>
+<p>If you recall the section about variable scope from the beginning of the course, this explains a little more about the way that variable names are resolved.  When you use an identifier, Python will first look for it on the current level of the stack, and if it doesn’t find it it will check the previous level, and so on – until either the variable is found or it isn’t found anywhere and you get an error.  This is why a local variable will always take precedence over a global variable with the same name.</p>
+<p>Python also searches the stack whenever it handles an exception: first it checks if the exception can be handled in the current function, and if it cannot, it terminates the function and tries the next one down – until either the exception is handled on some level or the program itself has to terminate.  The traceback you see when an exception is printed shows the path that Python took through the stack.</p>
+<div class="section" id="recursion">
+<h3>Recursion<a class="headerlink" href="#recursion" title="Permalink to this headline">¶</a></h3>
+<p>We can make a function call itself.  This is known as <em>recursion</em>. A common example is a function which calculates numbers in the Fibonacci sequence: the zeroth number is <code class="docutils literal notranslate"><span class="pre">0</span></code>, the first number is <code class="docutils literal notranslate"><span class="pre">1</span></code>, and each subsequent number is the sum of the previous two numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Whenever we write a recursive function, we need to include some kind of condition which will allow it to <em>stop</em> recursing – an end case in which the function <em>doesn’t</em> call itself.  In this example, that happens at the beginning of the sequence: the first two numbers are <em>not</em> calculated from any previous numbers – they are constants.</p>
+<p>What would happen if we omitted that condition from our function?  When we got to <em>n = 2</em>, we would keep calling the function, trying to calculate <code class="docutils literal notranslate"><span class="pre">fibonacci(0)</span></code>, <code class="docutils literal notranslate"><span class="pre">fibonacci(-1)</span></code>, and so on.  In theory, the function would end up recursing forever and never terminate, but in practice the program will crash with a <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> and a message that we have exceeded the maximum recursion depth.  This is because Python’s stack has a finite size – if we keep placing instances of the function on the stack we will eventually fill it up and cause a <em>stack overflow</em>.  Python protects itself from stack overflows by setting a limit on the number of times that a function is allowed to recurse.</p>
+<p>Writing fail-safe recursive functions is difficult.  What if we called the function above with a parameter of <code class="docutils literal notranslate"><span class="pre">-1</span></code>?  We haven’t included any error checking which guards against this, so we would skip over the end cases and try to calculate <code class="docutils literal notranslate"><span class="pre">fibonacci(-2)</span></code>, <code class="docutils literal notranslate"><span class="pre">fibonacci(-3)</span></code>, and keep going.</p>
+<p>Any recursive function can be re-written in an <em>iterative</em> way which avoids recursion.  For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">current</span><span class="p">,</span> <span class="nb">next</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">current</span><span class="p">,</span> <span class="nb">next</span> <span class="o">=</span> <span class="nb">next</span><span class="p">,</span> <span class="n">current</span> <span class="o">+</span> <span class="nb">next</span>
+
+    <span class="k">return</span> <span class="n">current</span>
+</pre></div>
+</div>
+<p>This function uses <em>iteration</em> to count up to the desired value of <em>n</em>, updating variables to keep track of the calculation.  All the iteration happens within a single instance of the function.  Note that we assign new values to both variables at the same time, so that we can use both old values to calculate both new values on the right-hand side.</p>
+</div>
+<div class="section" id="exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a recursive function which calculates the factorial of a given number.  Use exception handling to raise an appropriate exception if the input parameter is not a positive integer, but allow the user to enter floats as long as they are whole numbers.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="default-parameters">
+<h2>Default parameters<a class="headerlink" href="#default-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The combination of the function name and the number of parameters that it takes is called the <em>function signature</em>.  In statically typed languages, there can be multiple functions with the same name in the same scope as long as they have different numbers or types of parameters (in these languages, parameter types and return types are also part of the signature).</p>
+<p>In Python, there can only be one function with a particular name defined in the scope – if you define another function with the same name, you will overwrite the first function.  You must call this function with the correct number of parameters, otherwise you will get an error.</p>
+<p>Sometimes there is a good reason to want to have two versions of the same function with different sets of parameters.  You can achieve something similar to this by making some parameters <em>optional</em>.  To make a parameter optional, we need to supply a default value for it.  Optional parameters must come after all the required parameters in the function definition:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_greeting</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">formal</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">formal</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Hello, </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">surname</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="s2">&quot;Hello, </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">name</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>When we call the function, we can leave the optional parameter out – if we do, the default value will be used.  If we include the parameter, our value will override the default value.</p>
+<p>We can define multiple optional parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_greeting</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">formal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">formal</span><span class="p">:</span>
+        <span class="n">fullname</span> <span class="o">=</span>  <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">surname</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fullname</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">if</span> <span class="n">time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">greeting</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">greeting</span> <span class="o">=</span> <span class="s2">&quot;Good </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">time</span>
+
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">greeting</span><span class="p">,</span> <span class="n">fullname</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;evening&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>What if we want to pass in the <em>second</em> optional parameter, but not the <em>first</em>?  So far we have been passing <em>positional</em> parameters to all these functions – a tuple of values which are matched up with parameters in the function signature based on their <em>positions</em>.  We can also, however, pass these values in as <em>keyword</em> parameters – we can explicitly specify the parameter names along with the values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="n">surname</span><span class="o">=</span><span class="s2">&quot;Smith&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="n">surname</span><span class="o">=</span><span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="n">formal</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s2">&quot;evening&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>We can mix positional and keyword parameters, but the keyword parameters must come <em>after</em> any positional parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is OK</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="n">surname</span><span class="o">=</span><span class="s2">&quot;Smith&quot;</span><span class="p">))</span>
+<span class="c1"># this will give you an error</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>We can specify keyword parameters in any order – they don’t have to match the order in the function definition:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="n">surname</span><span class="o">=</span><span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Mr&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Now we can easily pass in the second optional parameter and not the first:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="s2">&quot;Mr&quot;</span><span class="p">,</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s2">&quot;evening&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="section" id="mutable-types-and-default-parameters">
+<h3>Mutable types and default parameters<a class="headerlink" href="#mutable-types-and-default-parameters" title="Permalink to this headline">¶</a></h3>
+<p>We should be careful when using mutable types as default parameter values in function definitions if we intend to modify them in-place:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_pet_to_list</span><span class="p">(</span><span class="n">pet</span><span class="p">,</span> <span class="n">pets</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="n">pets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pet</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pets</span>
+
+<span class="n">list_with_cat</span> <span class="o">=</span> <span class="n">add_pet_to_list</span><span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">)</span>
+<span class="n">list_with_dog</span> <span class="o">=</span> <span class="n">add_pet_to_list</span><span class="p">(</span><span class="s2">&quot;dog&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">list_with_cat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">list_with_dog</span><span class="p">)</span> <span class="c1"># oops</span>
+</pre></div>
+</div>
+<p>Remember that although we can execute a function <em>body</em> many times, a function <em>definition</em> is executed only once – that means that the empty list which is created in this function definition will be the same list for all instances of the function.  What we really want to do in this case is to create an empty list inside the function body:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_pet_to_list</span><span class="p">(</span><span class="n">pet</span><span class="p">,</span> <span class="n">pets</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">pets</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">pets</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pet</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pets</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>Exercise 4<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Write a function called <code class="docutils literal notranslate"><span class="pre">calculator</span></code>.  It should take the following parameters: two numbers, an arithmetic operation (which can be addition, subtraction, multiplication or division and is addition by default), and an output format (which can be integer or floating point, and is floating point by default).  Division should be floating-point division.</p>
+<p>The function should perform the requested operation on the two input numbers, and return a result in the requested format (if the format is integer, the result should be rounded and not just truncated).  Raise exceptions as appropriate if any of the parameters passed to the function are invalid.</p>
+</li>
+<li><p class="first">Call the function with the following sets of parameters, and check that the answer is what you expect:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3.0</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3.0</span></code>, output format is integer</li>
+<li><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3.0</span></code>, operation is division</li>
+<li><code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3.0</span></code>, operation is division, output format is integer</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="args-and-kwargs">
+<h2><code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code><a class="headerlink" href="#args-and-kwargs" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes we may want to pass a variable-length list of positional or keyword parameters into a function.  We can put <code class="docutils literal notranslate"><span class="pre">*</span></code> before a parameter name to indicate that it is a variable-length tuple of positional parameters, and we can use <code class="docutils literal notranslate"><span class="pre">**</span></code> to indicate that a parameter is a variable-length dictionary of keyword parameters.  By convention, the parameter name we use for the tuple is <code class="docutils literal notranslate"><span class="pre">args</span></code> and the name we use for the dictionary is <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_args</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">print_kwargs</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Inside the function, we can access <code class="docutils literal notranslate"><span class="pre">args</span></code> as a normal tuple, but the <code class="docutils literal notranslate"><span class="pre">*</span></code> means that <code class="docutils literal notranslate"><span class="pre">args</span></code> isn’t passed into the function as a single parameter which is a tuple: instead, it is passed in as a series of individual parameters.  Similarly, <code class="docutils literal notranslate"><span class="pre">**</span></code> means that <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> is passed in as a series of individual keyword parameters, rather than a single parameter which is a dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">print_args</span><span class="p">(</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;three&quot;</span><span class="p">)</span>
+<span class="n">print_args</span><span class="p">(</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;three&quot;</span><span class="p">,</span> <span class="s2">&quot;four&quot;</span><span class="p">)</span>
+
+<span class="n">print_kwargs</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="n">surname</span><span class="o">=</span><span class="s2">&quot;Doe&quot;</span><span class="p">)</span>
+<span class="n">print_kwargs</span><span class="p">(</span><span class="n">age</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">*</span></code> or <code class="docutils literal notranslate"><span class="pre">**</span></code> when we are <em>calling</em> a function to <em>unpack</em> a sequence or a dictionary into a series of individual parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;three&quot;</span><span class="p">]</span>
+<span class="n">print_args</span><span class="p">(</span><span class="o">*</span><span class="n">my_list</span><span class="p">)</span>
+
+<span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;surname&quot;</span><span class="p">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">}</span>
+<span class="n">print_kwargs</span><span class="p">(</span><span class="o">**</span><span class="n">my_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This makes it easier to build lists of parameters programmatically.  Note that we can use this for <em>any</em> function, not just one which uses <code class="docutils literal notranslate"><span class="pre">*args</span></code> or <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Mr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;surname&quot;</span><span class="p">:</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;formal&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="s2">&quot;evening&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">make_greeting</span><span class="p">(</span><span class="o">**</span><span class="n">my_dict</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>We can mix ordinary parameters, <code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> in the same function definition. <code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> must come after all the other parameters, and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> must come after <code class="docutils literal notranslate"><span class="pre">*args</span></code>.  You cannot have more than one variable-length list parameter or more than one variable dict parameter (recall that you can call them whatever you like):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_everything</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s2">&quot;morning&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Good </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>If we use a <code class="docutils literal notranslate"><span class="pre">*</span></code> expression when you call a function, it must come after all the positional parameters, and if we use a <code class="docutils literal notranslate"><span class="pre">**</span></code> expression it must come right at the end:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_everything</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+
+<span class="c1"># we can write all the parameters individually</span>
+<span class="n">print_everything</span><span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="s2">&quot;Tuesday&quot;</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;dog&quot;</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;day&quot;</span><span class="p">:</span> <span class="s2">&quot;Tuesday&quot;</span><span class="p">}</span>
+
+<span class="c1"># we can unpack a tuple and a dictionary</span>
+<span class="n">print_everything</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span>
+<span class="c1"># or just one of them</span>
+<span class="n">print_everything</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="s2">&quot;Tuesday&quot;</span><span class="p">)</span>
+<span class="n">print_everything</span><span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span>
+
+<span class="c1"># we can mix * and ** with explicit parameters</span>
+<span class="n">print_everything</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span>
+<span class="n">print_everything</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s2">&quot;evening&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span>
+<span class="n">print_everything</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="s2">&quot;evening&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span>
+
+<span class="c1"># none of these are allowed:</span>
+<span class="n">print_everything</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">)</span>
+<span class="n">print_everything</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="o">**</span><span class="n">d</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s2">&quot;evening&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If a function takes only <code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> as its parameters, it can be called with <em>any set of parameters</em>.  One or both of <code class="docutils literal notranslate"><span class="pre">args</span></code> and <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> can be empty, so the function will accept any combination of positional and keyword parameters, including no parameters at all.  This can be useful if we are writing a very generic function, like <code class="docutils literal notranslate"><span class="pre">print_everything</span></code> in the example above.</p>
+<div class="section" id="exercise-5">
+<h3>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Rewrite the calculator function from exercise 4 so that it takes any number of number parameters as well as the same optional keyword parameters.  The function should apply the operation to the first two numbers, and then apply it again to the result and the next number, and so on. For example, if the numbers are <code class="docutils literal notranslate"><span class="pre">6</span></code>, <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">9</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code> and the operation is subtraction the function should return <code class="docutils literal notranslate"><span class="pre">6</span> <span class="pre">-</span> <span class="pre">4</span> <span class="pre">-</span> <span class="pre">9</span> <span class="pre">-</span> <span class="pre">1</span></code>.  If only one number is entered, it should be returned unmodified.  If no numbers are entered, raise an exception.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="decorators">
+<h2>Decorators<a class="headerlink" href="#decorators" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes we may need to modify several functions in the same way – for example, we may want to perform a particular action before and after executing each of the functions, or pass in an extra parameter, or convert the output to another format.</p>
+<p>We may also have good reasons not to write the modification into all the functions – maybe it would make the function definitions very verbose and unwieldy, and maybe we would like the option to apply the modification quickly and easily to any function (and remove it just as easily).</p>
+<p>To solve this problem, we can write a function which modifies functions.  We call a function like this a <em>decorator</em>.  Our function will take a function object as a parameter, and will return a new function object – we can then assign the new function value to the old function’s name to replace the old function with the new function.  For example, here is a decorator which logs the function name and its arguments to a log file whenever the function is used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># we define a decorator</span>
+<span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">original_function</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">new_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;log.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">logfile</span><span class="p">:</span>
+            <span class="n">logfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Function &#39;</span><span class="si">%s</span><span class="s2">&#39; called with positional arguments </span><span class="si">%s</span><span class="s2"> and keyword arguments </span><span class="si">%s</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">original_function</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">original_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_function</span>
+
+<span class="c1"># here is a function to decorate</span>
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="c1"># and here is how we decorate it</span>
+<span class="n">my_function</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">my_function</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Inside our decorator (the outer function) we define a replacement function and return it.  The replacement function (the inner function) writes a log message and then simply calls the original function and returns its value.</p>
+<p>Note that the decorator function is only called once, when we replace the original function with the decorated function, but that the inner function will be called every time we use <code class="docutils literal notranslate"><span class="pre">my_function</span></code>.  The inner function can access both variables in its own scope (like <code class="docutils literal notranslate"><span class="pre">args</span></code> and <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>) and variables in the decorator’s scope (like <code class="docutils literal notranslate"><span class="pre">original_function</span></code>).</p>
+<p>Because the inner function takes <code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> as its parameters, we can use this decorator to decorate any function, no matter what its parameter list is.  The inner function accepts any parameters, and simply passes them to the original function.  We will still get an error inside the original function if we pass in the wrong parameters.</p>
+<p>There is a shorthand syntax for applying decorators to functions: we can use the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> symbol together with the decorator name before the definition of each function that we want to decorate:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@log</span>
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;log</span></code> before the function definition means exactly the same thing as <code class="docutils literal notranslate"><span class="pre">my_function</span> <span class="pre">=</span> <span class="pre">log(my_function)</span></code> after the function definition.</p>
+<p>We can pass additional parameters to our decorator.  For example, we may want to specify a custom log file to use in our logging decorator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">original_function</span><span class="p">,</span> <span class="n">logfilename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">new_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">logfilename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">logfile</span><span class="p">:</span>
+            <span class="n">logfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Function &#39;</span><span class="si">%s</span><span class="s2">&#39; called with positional arguments </span><span class="si">%s</span><span class="s2"> and keyword arguments </span><span class="si">%s</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">original_function</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">original_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_function</span>
+
+<span class="nd">@log</span><span class="p">(</span><span class="s2">&quot;someotherfilename.txt&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Python has several built-in decorators which are commonly used to decorate class methods.  We will learn about them in the next chapter.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A decorator doesn’t have to be a function – it can be any callable object.  Some people prefer to write decorators as classes.</p>
+</div>
+<div class="section" id="exercise-6">
+<h3>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Rewrite the <code class="docutils literal notranslate"><span class="pre">log</span></code> decorator example so that the decorator logs both the function name and parameters and the returned result.</li>
+<li>Test the decorator by applying it to a function which takes two arguments and returns their sum.  Print the result of the function, and what was logged to the file.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="lambdas">
+<h2>Lambdas<a class="headerlink" href="#lambdas" title="Permalink to this headline">¶</a></h2>
+<p>We have already seen that when we want to use a number or a string in our program we can either write it as a <em>literal</em> in the place where we want to use it or use a <em>variable</em> that we have already defined in our code.  For example, <code class="docutils literal notranslate"><span class="pre">print(&quot;Hello!&quot;)</span></code> prints the literal string <code class="docutils literal notranslate"><span class="pre">&quot;Hello!&quot;</span></code>, which we haven’t stored in a variable anywhere, but <code class="docutils literal notranslate"><span class="pre">print(message)</span></code> prints whatever string is stored in the variable <code class="docutils literal notranslate"><span class="pre">message</span></code>.</p>
+<p>We have also seen that we can store a function in a variable, just like any other object, by referring to it by its name (but not calling it).  Is there such a thing as a function literal?  Can we define a function on the fly when we want to pass it as a parameter or assign it to a variable, just like we did with the string <code class="docutils literal notranslate"><span class="pre">&quot;Hello!&quot;</span></code>?</p>
+<p>The answer is <em>yes</em>, but only for very simple functions.  We can use the <code class="docutils literal notranslate"><span class="pre">lambda</span></code> keyword to define anonymous, one-line functions <em>inline</em> in our code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">3</span>
+
+<span class="c1"># is the same as</span>
+
+<span class="k">def</span> <span class="nf">a</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>Lambdas can take parameters – they are written between the <code class="docutils literal notranslate"><span class="pre">lambda</span></code> keyword and the colon, without brackets.  A lambda function may only contain a single expression, and the result of evaluating this expression is implicitly returned from the function (we don’t use the <code class="docutils literal notranslate"><span class="pre">return</span></code> keyword):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="c1"># is the same as</span>
+
+<span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>Lambdas should only be used for very simple functions. If your lambda starts looking too complicated to be readable, you should rather write it out in full as a normal, named function.</p>
+<div class="section" id="exercise-7">
+<h3>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Define the following functions as lambdas, and assign them to variables:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Take one parameter; return its square</li>
+<li>Take two parameters; return the square root of the sums of their squares</li>
+<li>Take any number of parameters; return their average</li>
+<li>Take a string parameter; return a string which contains the unique letters in the input string (in any order)</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Rewrite all these functions as named functions.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="generator-functions-and-yield">
+<h2>Generator functions and <code class="docutils literal notranslate"><span class="pre">yield</span></code><a class="headerlink" href="#generator-functions-and-yield" title="Permalink to this headline">¶</a></h2>
+<p>We have already encountered generators – sequences in which new elements are generated as they are needed, instead of all being generated up-front.  We can create our own generators by writing functions which make use of the <code class="docutils literal notranslate"><span class="pre">yield</span></code> statement.</p>
+<p>Consider this simple function which returns a range of numbers as a list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_list</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">l</span>
+</pre></div>
+</div>
+<p>This function builds the full list of numbers and returns it.  We can change this function into a generator function while preserving a very similar syntax, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_gen</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The first important thing to know about the <code class="docutils literal notranslate"><span class="pre">yield</span></code> statement is that if we use it in a function, that function will return a generator.  We can test this by using the <code class="docutils literal notranslate"><span class="pre">type</span></code> function on the return value of <code class="docutils literal notranslate"><span class="pre">my_gen</span></code>. We can also try using it in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, like we would use any other generator, to see what sequence the generator represents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">my_gen</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What does the <code class="docutils literal notranslate"><span class="pre">yield</span></code> statement do?  Whenever a new value is requested from the generator, for example by our <code class="docutils literal notranslate"><span class="pre">for</span></code> loop in the example above, the generator begins to execute the function until it reaches the <code class="docutils literal notranslate"><span class="pre">yield</span></code> statement. The <code class="docutils literal notranslate"><span class="pre">yield</span></code> statement causes the generator to return a single value.</p>
+<p>After the <code class="docutils literal notranslate"><span class="pre">yield</span></code> statement is executed, execution of the function does not end – when the <em>next</em> value is requested from the generator, it will go back to the beginning of the function and execute it <em>again</em>.</p>
+<p>If the generator executes the entire function without encountering a <code class="docutils literal notranslate"><span class="pre">yield</span></code> statement, it will raise a <code class="docutils literal notranslate"><span class="pre">StopIteration</span></code> exception to indicate that there are no more values.  A <code class="docutils literal notranslate"><span class="pre">for</span></code> loop automatically handles this exception for us.  In our <code class="docutils literal notranslate"><span class="pre">my_gen</span></code> function this will happen when <code class="docutils literal notranslate"><span class="pre">i</span></code> becomes equal to <code class="docutils literal notranslate"><span class="pre">n</span></code> – when this happens, the <code class="docutils literal notranslate"><span class="pre">yield</span></code> statement inside the <code class="docutils literal notranslate"><span class="pre">while</span></code> loop will no longer be executed.</p>
+<div class="section" id="exercise-8">
+<h3>Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a generator function which takes an integer <code class="docutils literal notranslate"><span class="pre">n</span></code> as a parameter.  The function should return a generator which counts <em>down</em> from <code class="docutils literal notranslate"><span class="pre">n</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code>.  Test your function using a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_a</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is my awesome function.&quot;</span><span class="p">)</span>
+
+<span class="n">func_a</span><span class="p">()</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">func_a</span>
+
+<span class="n">b</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<p>Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">hypotenuse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">hypotenuse</span><span class="p">(</span><span class="mf">12.3</span><span class="p">,</span> <span class="mf">45.6</span><span class="p">)</span>
+<span class="n">hypotenuse</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">34</span><span class="p">)</span>
+<span class="n">hypotenuse</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">34.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<p>Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">hypotenuse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">hypotenuse</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">34</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hypotenuse</span><span class="p">(</span><span class="s2">&quot;12&quot;</span><span class="p">,</span> <span class="s2">&quot;34&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hypotenuse</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;34&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Answer to exercise 3<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">ni</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ni</span> <span class="o">!=</span> <span class="n">n</span> <span class="ow">or</span> <span class="n">ni</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not a positive integer.&quot;</span> <span class="o">%</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ni</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">ni</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">ni</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-4">
+<h3>Answer to exercise 4<a class="headerlink" href="#answer-to-exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">ADD</span><span class="p">,</span> <span class="n">SUB</span><span class="p">,</span> <span class="n">MUL</span><span class="p">,</span> <span class="n">DIV</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">calculator</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="n">ADD</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="nb">float</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">operation</span> <span class="o">==</span> <span class="n">ADD</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">operation</span> <span class="o">==</span> <span class="n">SUB</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">operation</span> <span class="o">==</span> <span class="n">MUL</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">operation</span> <span class="o">==</span> <span class="n">DIV</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Operation must be ADD, SUB, MUL or DIV.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">output_format</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Format must be float or int.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">You should get the following results:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">5.0</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">5</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">0.6666666666666666</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">1</span></code></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-5">
+<h3>Answer to exercise 5<a class="headerlink" href="#answer-to-exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">ADD</span><span class="p">,</span> <span class="n">SUB</span><span class="p">,</span> <span class="n">MUL</span><span class="p">,</span> <span class="n">DIV</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">calculator</span><span class="p">(</span><span class="n">operation</span><span class="o">=</span><span class="n">ADD</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At least one number must be entered.&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">if</span> <span class="n">operation</span> <span class="o">==</span> <span class="n">ADD</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">n</span>
+        <span class="k">elif</span> <span class="n">operation</span> <span class="o">==</span> <span class="n">SUB</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">-=</span> <span class="n">n</span>
+        <span class="k">elif</span> <span class="n">operation</span> <span class="o">==</span> <span class="n">MUL</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">*=</span> <span class="n">n</span>
+        <span class="k">elif</span> <span class="n">operation</span> <span class="o">==</span> <span class="n">DIV</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">/=</span> <span class="n">n</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Operation must be ADD, SUB, MUL or DIV.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">output_format</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Format must be float or int.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-6">
+<h3>Answer to exercise 6<a class="headerlink" href="#answer-to-exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">original_function</span><span class="p">,</span> <span class="n">logfilename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">new_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">original_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">logfilename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">logfile</span><span class="p">:</span>
+            <span class="n">logfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Function &#39;</span><span class="si">%s</span><span class="s2">&#39; called with positional arguments </span><span class="si">%s</span><span class="s2"> and keyword arguments </span><span class="si">%s</span><span class="s2">. The result was </span><span class="si">%s</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">original_function</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">result</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">return</span> <span class="n">new_function</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@log</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;log.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">logfile</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">logfile</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-7">
+<h3>Answer to exercise 7<a class="headerlink" href="#answer-to-exercise-7" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">b</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">a</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">b</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">c</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">d</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-8">
+<h3>Answer to exercise 8<a class="headerlink" href="#answer-to-exercise-8" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_gen</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">my_gen</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Functions</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#input-parameters">Input parameters</a><ul>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-values">Return values</a><ul>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-stack">The stack</a><ul>
+<li><a class="reference internal" href="#recursion">Recursion</a></li>
+<li><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#default-parameters">Default parameters</a><ul>
+<li><a class="reference internal" href="#mutable-types-and-default-parameters">Mutable types and default parameters</a></li>
+<li><a class="reference internal" href="#id1">Exercise 4</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#args-and-kwargs"><code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code></a><ul>
+<li><a class="reference internal" href="#exercise-5">Exercise 5</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decorators">Decorators</a><ul>
+<li><a class="reference internal" href="#exercise-6">Exercise 6</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lambdas">Lambdas</a><ul>
+<li><a class="reference internal" href="#exercise-7">Exercise 7</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#generator-functions-and-yield">Generator functions and <code class="docutils literal notranslate"><span class="pre">yield</span></code></a><ul>
+<li><a class="reference internal" href="#exercise-8">Exercise 8</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+<li><a class="reference internal" href="#id2">Answer to exercise 3</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-4">Answer to exercise 4</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-5">Answer to exercise 5</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-6">Answer to exercise 6</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-7">Answer to exercise 7</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-8">Answer to exercise 8</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Errors_and_Exceptions.html"
+                        title="previous chapter">Errors and exceptions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Classes.html"
+                        title="next chapter">Classes</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Functions.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Classes.html" title="Classes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Errors_and_Exceptions.html" title="Errors and exceptions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

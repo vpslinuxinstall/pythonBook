@@ -1,0 +1,857 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Sorting, searching and algorithm analysis &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Introduction to GUI programming with tkinter" href="Introduction_to_GUI_Programming.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Introduction_to_GUI_Programming.html" title="Introduction to GUI programming with tkinter"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sorting-searching-and-algorithm-analysis">
+<h1>Sorting, searching and algorithm analysis<a class="headerlink" href="#sorting-searching-and-algorithm-analysis" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>We have learned that in order to write a computer program which
+performs some task we must construct a suitable algorithm. However,
+whatever algorithm we construct is unlikely to be unique – there are
+likely to be many possible algorithms which can perform the same task.
+Are some of these algorithms in some sense better than others?
+Algorithm analysis is the study of this question.</p>
+<p>In this chapter we will analyse four algorithms; two for each of the
+following common tasks:</p>
+<ul class="simple">
+<li><em>sorting</em>: ordering a list of values</li>
+<li><em>searching</em>: finding the position of a value within a list</li>
+</ul>
+<p>Algorithm analysis should begin with a clear statement of the task to
+be performed. This allows us both to check that the algorithm is
+correct and to ensure that the algorithms we are comparing perform the
+same task.</p>
+<p>Although there are many ways that algorithms can be compared, we will
+focus on two that are of primary importance to many data processing
+algorithms:</p>
+<ul class="simple">
+<li><em>time complexity</em>: how the number of steps required depends on the
+size of the input</li>
+<li><em>space complexity</em>: how the amount of extra memory or storage
+required depends on the size of the input</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Common sorting and searching algorithms are widely implemented
+and already available for most programming languages. You will
+seldom have to implement them yourself outside of the exercises in
+these notes. It is nevertheless important for you to understand
+these basic algorithms, because you are likely to use them within
+your own programs – their space and time complexity will thus
+affect that of your own algorithms. Should you need to select a
+specific sorting or searching algorithm to fit a particular task,
+you will require a good understanding of the available options.</p>
+</div>
+</div>
+<div class="section" id="sorting-algorithms">
+<h2>Sorting algorithms<a class="headerlink" href="#sorting-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>The sorting of a list of values is a common computational task which has
+been studied extensively. The classic description of the task is as
+follows:</p>
+<blockquote>
+<div>Given a <em>list of values</em> and a function that <em>compares two
+values</em>, order the values in the list from smallest to largest.</div></blockquote>
+<p>The values might be integers, or strings or even other kinds of
+objects. We will examine two algorithms:</p>
+<ul class="simple">
+<li><em>Selection sort</em>, which relies on repeated <em>selection</em> of the next
+smallest item</li>
+<li><em>Merge sort</em>, which relies on repeated <em>merging</em> of sections of the
+list that are already sorted</li>
+</ul>
+<p>Other well-known algorithms for sorting lists are <em>insertion sort</em>,
+<em>bubble sort</em>, <em>heap sort</em>, <em>quicksort</em> and <em>shell sort</em>.</p>
+<p>There are also various algorithms which perform the sorting task
+for restricted kinds of values, for example:</p>
+<ul class="simple">
+<li><em>Counting sort</em>, which relies on the values belonging to a small set
+of items</li>
+<li><em>Bucket sort</em>, which relies on the ability to map each value to one of
+a small set of items</li>
+<li><em>Radix sort</em>, which relies on the values being sequences of digits</li>
+</ul>
+<p>If we restrict the task, we can enlarge the set of algorithms that can
+perform it. Among these new algorithms may be ones that have desirable
+properties. For example, <em>Radix sort</em> uses fewer steps than any generic
+sorting algorithm.</p>
+<div class="section" id="selection-sort">
+<h3>Selection sort<a class="headerlink" href="#selection-sort" title="Permalink to this headline">¶</a></h3>
+<p>To order a given list using selection sort, we repeatedly select the
+smallest remaining element and move it to the end of a growing sorted
+list.</p>
+<p>To illustrate selection sort, let us examine how it operates on a
+small list of four elements:</p>
+<div><img height="120" src="_images/blockdiag-5ebe7908b4ceea4e802e27997756f3bb3bef591b.png" width="576" /></div><p>Initially the entire list is unsorted. We will use the front of the
+list to hold the sorted items – to avoid using extra storage
+space – but at the start this sorted list is empty.</p>
+<p>First we must find the smallest element in the unsorted portion of the
+list. We take the first element of the unsorted list as a candidate
+and compare it to each of the following elements in turn, replacing
+our candidate with any element found to be smaller. This requires 3
+comparisons and we find that element 1.5 at position 2 is smallest.</p>
+<p>Now we will swap the first element of our unordered list with the
+smallest element. This becomes the start of our ordered list:</p>
+<div><img height="120" src="_images/blockdiag-daf855c6a328f8bab36ab776bd3c00c4308282e9.png" width="576" /></div><p>We now repeat our previous steps, determining that 2.7 is the smallest
+remaining element and swapping it with 3.8 – the first element of the
+current unordered section – to get:</p>
+<div><img height="120" src="_images/blockdiag-9eb1506161057d245f20bb64ff29fd1520bb35c7.png" width="576" /></div><p>Finally, we determine that 3.8 is the smallest of the remaining
+unordered elements and swap it with 7.2:</p>
+<div><img height="120" src="_images/blockdiag-20e5aabeec32c40014e5428540092c1820974d18.png" width="576" /></div><p>The table below shows the number of operations of each type used in
+sorting our example list:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="17%" />
+<col width="8%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Sorted List Length</th>
+<th class="head">Comparisons</th>
+<th class="head">Swaps</th>
+<th class="head">Assign smallest candidate</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0 -&gt; 1</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr class="row-odd"><td>1 -&gt; 2</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td>2 -&gt; 3</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td><strong>Total</strong></td>
+<td><strong>6</strong></td>
+<td><strong>3</strong></td>
+<td><strong>7</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Note that the number of <em>comparisons</em> and the number of <em>swaps</em> are
+independent of the contents of the list (this is true for selection
+sort but not necessarily for other sorting algorithms) while the
+number of times we have to assign a new value to the smallest
+candidate depends on the contents of the list.</p>
+<p>More generally, the algorithm for selection sort is as follows:</p>
+<ol class="arabic simple">
+<li>Divide the list to be sorted into a sorted portion at the front
+(initially empty) and an unsorted portion at the end (initially the
+whole list).</li>
+<li>Find the smallest element in the unsorted list:</li>
+</ol>
+<blockquote>
+<div><ol class="lowerroman simple">
+<li>Select the first element of the unsorted list as the initial
+candidate.</li>
+<li>Compare the candidate to each element of the unsorted list in
+turn, replacing the candidate with the current element if the
+current element is smaller.</li>
+<li>Once the end of the unsorted list is reached, the candidate is the
+smallest element.</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>Swap the smallest element found in the previous step with the first
+element in the unsorted list, thus extending the sorted list by one
+element.</li>
+<li>Repeat the steps 2 and 3 above until only one element remains in the
+unsorted list.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The <em>Selection sort</em> algorithm as described here has two properties
+which are often desirable in sorting algorithms.</p>
+<p>The first is that the algorithm is <em>in-place</em>. This means that it
+uses essentially no extra storage beyond that required for the
+input (the unsorted list in this case). A little extra storage may
+be used (for example, a temporary variable to hold the candidate
+for the smallest element). The important property is that the extra
+storage required should not increase as the size of the input
+increases.</p>
+<p class="last">The second is that the sorting algorithm is <em>stable</em>. This means
+that two elements which are equal retain their initial relative
+ordering. This becomes important if there is additional information
+attached to the values being sorted (for example, if we are sorting
+a list of people using a comparison function that compares their
+dates of birth). Stable sorting algorithms ensure that sorting an
+already sorted list leaves the order of the list unchanged, even in
+the presence of elements that are treated as equal by the comparison.</p>
+</div>
+</div>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Complete the following code which will perform a selection sort in
+Python. “…” denotes missing code that should be filled in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">selection_sort</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sorts a list of items into ascending order using the</span>
+<span class="sd">       selection sort algoright.</span>
+<span class="sd">       &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)):</span>
+        <span class="c1"># Find the location of the smallest element in</span>
+        <span class="c1"># items[step:].</span>
+        <span class="n">location_of_smallest</span> <span class="o">=</span> <span class="n">step</span>
+        <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)):</span>
+            <span class="c1"># TODO: determine location of smallest</span>
+            <span class="o">...</span>
+        <span class="c1"># TODO: Exchange items[step] with items[location_of_smallest]</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<p>Earlier in this section we counted the number of <em>comparisons</em>,
+<em>swaps</em> and <em>assignments</em> used in our example.</p>
+<ol class="arabic simple">
+<li>How many swaps are performed when we apply selection sort to a list
+of N items?</li>
+<li>How many comparisons are performed when we apply selection sort to
+a list of N items?<ol class="lowerroman">
+<li>How many comparisons are performed to find the smallest
+element when the unsorted portion of the list has M items?</li>
+<li>Sum over all the values of M encountered when sorting the list
+of length N to find the total number of comparisons.</li>
+</ol>
+</li>
+<li>The number of assignments (to the candidate smallest number)
+performed during the search for a smallest element is at most one
+more than the number of comparisons. Use this to find an upper
+limit on the total number of assignments performed while sorting a
+list of length N.</li>
+<li>Use the results of the previous question to find an upper bound on
+the total number of operations (swaps, comparisons and assignments)
+performed. Which term in the number of operations will dominate for
+large lists?</li>
+</ol>
+</div>
+<div class="section" id="merge-sort">
+<h3>Merge sort<a class="headerlink" href="#merge-sort" title="Permalink to this headline">¶</a></h3>
+<p>When we use merge sort to order a list, we repeatedly merge sorted
+sub-sections of the list – starting from sub-sections consisting of a
+single item each.</p>
+<p>We will see shortly that merge sort requires significantly fewer
+operations than selection sort.</p>
+<p>Let us start once more with our small list of four elements:</p>
+<div><img height="200" src="_images/blockdiag-b0c34c1ba291352697141e84451eddf21d73de92.png" width="576" /></div><p>First we will merge the two sections on the left into the temporary
+storage. Imagine the two sections as two sorted piles of cards – we
+will merge the two piles by repeatedly taking the smaller of the top two
+cards and placing it at the end of the merged list in the temporary
+storage. Once one of the two piles is empty, the remaining items in
+the other pile can just be placed on the end of the merged list:</p>
+<div><img height="200" src="_images/blockdiag-e1223883ad9618cd1af46ce7b2c1ca4d4c9faefc.png" width="576" /></div><p>Next we copy the merged list from the temporary storage back into the
+portion of the list originally occupied by the merged subsections:</p>
+<div><img height="200" src="_images/blockdiag-dc27664cabe47cb94c55634d3a7d0626036be8a2.png" width="576" /></div><p>We repeat the procedure to merge the second pair of sorted sub-sections:</p>
+<div><img height="200" src="_images/blockdiag-18bdd7a309560010c6611906355a29d373b18dd1.png" width="576" /></div><p>Having reached the end of the original list, we now return to the start
+of the list and begin to merge sorted sub-sections again. We repeat
+this until the entire list is a single sorted sub-section. In our
+example, this requires just one more merge:</p>
+<div><img height="200" src="_images/blockdiag-49408da6bb3fcb4e9f169a82f9b67dc397347951.png" width="576" /></div><p>Notice how the size of the sorted sections of the list doubles after
+every iteration of merges. After M steps the size of the sorted
+sections is 2<sup>M</sup>. Once 2<sup>M</sup> is greater than N, the
+entire list is sorted. Thus, for a list of size N, we need M equals
+log<sub>2</sub>N interations to sort the list.</p>
+<p>Each iteration of merges requires a complete pass through the list and
+each element is copied twice – once into the temporary storage and
+once back into the original list. As long as there are items left in
+both sub-sections in each pair, each copy into the temporary list also
+requires a comparison to pick which item to copy. Once one of the
+lists runs out, no comparisons are needed. Thus each pass requires 2N
+copies and roughly N comparisons (and certainly no more than N).</p>
+<p>The total number of operations required for our merge sort algorithm
+is the product of the number of operations in each pass and the number
+of passes – i.e. 2Nlog<sub>2</sub>N copies and roughly Nlog<sub>2</sub>N comparisons.</p>
+<p>The algorithm for merge sort may be written as this list of steps:</p>
+<ol class="arabic simple">
+<li>Create a temporary storage list which is the same size as the list to
+be sorted.</li>
+<li>Start by treating each element of the list as a sorted one-element
+sub-section of the original list.</li>
+<li>Move through all the sorted sub-sections, merging adjacent pairs as
+follows:<ol class="lowerroman">
+<li>Use two variables to point to the indices of the smallest uncopied
+items in the two sorted sub-sections, and a third variable to
+point to the index of the start of the temporary storage.</li>
+<li>Copy the smaller of the two indexed items into the indicated
+position in the temporary storage. Increment the index of the
+sub-section from which the item was copied, and the index into
+temporary storage.</li>
+<li>If all the items in one sub-section have been copied, copy the
+items remaining in the other sub-section to the back of the list
+in temporary storage. Otherwise return to step 3 ii.</li>
+<li>Copy the sorted list in temporary storage back over the section
+of the original list which was occupied by the two sub-sections
+that have just been merged.</li>
+</ol>
+</li>
+<li>If only a single sorted sub-section remains, the entire list is
+sorted and we are done. Otherwise return to the start of step 3.</li>
+</ol>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<p>Write a Python function that implements merge sort. It may help to
+write a separate function which performs merges and call it from within
+your merge sort implementation.</p>
+</div>
+<div class="section" id="python-s-sorting-algorithm">
+<h3>Python’s sorting algorithm<a class="headerlink" href="#python-s-sorting-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>Python’s default sorting algorithm, which is used by the built-in
+<code class="docutils literal notranslate"><span class="pre">sorted</span></code> function as well as the <code class="docutils literal notranslate"><span class="pre">sort</span></code> method of list objects, is
+called <em>Timsort</em>.  It’s an algorithm developed by Tim Peters in 2002 for
+use in Python. Timsort is a modified version of merge sort which uses
+insertion sort to arrange the list of items into conveniently mergeable
+sections.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Tim Peters is also credited as the author of <em>The Zen of Python</em> –
+an attempt to summarise the early Python community’s ethos in a
+short series of koans. You can read it by typing <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">this</span></code>
+into the Python console.</p>
+</div>
+</div>
+</div>
+<div class="section" id="searching-algorithms">
+<h2>Searching algorithms<a class="headerlink" href="#searching-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>Searching is also a common and well-studied task. This task can be
+described formally as follows:</p>
+<blockquote>
+<div>Given a <em>list of values</em>, a function that <em>compares two values</em>
+and a <em>desired value</em>, find the position of the desired value in
+the list.</div></blockquote>
+<p>We will look at two algorithms that perform this task:</p>
+<ul class="simple">
+<li><em>linear search</em>, which simply checks the values in sequence until the
+desired value is found</li>
+<li><em>binary search</em>, which requires a sorted input list, and checks for
+the value in the middle of the list, repeatedly discarding the half of
+the list which contains values which are definitely either all larger
+or all smaller than the desired value</li>
+</ul>
+<p>There are numerous other searching techniques. Often they rely on the
+construction of more complex data structures to facilitate repeated
+searching. Examples of such structures are <em>hash tables</em> (such as
+Python’s dictionaries) and <em>prefix trees</em>. Inexact searches that find
+elements similar to the one being searched for are also an important
+topic.</p>
+<div class="section" id="linear-search">
+<h3>Linear search<a class="headerlink" href="#linear-search" title="Permalink to this headline">¶</a></h3>
+<p>Linear search is the most basic kind of search method. It involves
+checking each element of the list in turn, until the desired element
+is found.</p>
+<p>For example, suppose that we want to find the number 3.8 in the
+following list:</p>
+<div><img height="120" src="_images/blockdiag-4a7f1627bb8e28b887846e51ece30914ce1e00c5.png" width="576" /></div><p>We start with the first element, and perform a comparison to see if
+its value is the value that we want. In this case, 1.5 is not equal to
+3.8, so we move onto the next element:</p>
+<div><img height="120" src="_images/blockdiag-b358d35417f9e284c840bf092fadcafe9b38807d.png" width="576" /></div><p>We perform another comparison, and see that 2.7 is also not equal to
+3.8, so we move onto the next element:</p>
+<div><img height="120" src="_images/blockdiag-dead80e07f7fc948ecffe57b299e7574bf03a0d7.png" width="576" /></div><p>We perform another comparison and determine that we have found the
+correct element. Now we can end the search and return the position of
+the element (index 2).</p>
+<p>We had to use a total of 3 comparisons when searching through this
+list of 4 elements. How many comparisons we need to perform depends on
+the total length of the list, but also whether the element we are
+looking for is near the beginning or near the end of the list. In the
+worst-case scenario, if our element is the last element of the list,
+we will have to search through the entire list to find it.</p>
+<p>If we search the same list many times, assuming that all elements are
+equally likely to be searched for, we will on average have to search
+through half of the list each time.  The cost (in comparisons) of
+performing linear search thus scales linearly with the length of the
+list.</p>
+</div>
+<div class="section" id="exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a function which implements linear search. It should take a
+list and an element as a parameter, and return the position of the
+element in the list. If the element is not in the list, the function
+should raise an exception. If the element is in the list multiple
+times, the function should return the first position.</li>
+</ol>
+</div>
+<div class="section" id="binary-search">
+<h3>Binary search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h3>
+<p>Binary search is a more efficient search algorithm which relies on the
+elements in the list being sorted.  We apply the same search process
+to progressively smaller sub-lists of the original list, starting with
+the whole list and approximately halving the search area every time.</p>
+<p>We first check the <em>middle</em> element in the list.</p>
+<ul class="simple">
+<li>If it is the value we want, we can stop.</li>
+<li>If it is <em>higher</em> than the value we want, we repeat the search
+process with the portion of the list <em>before</em> the middle element.</li>
+<li>If it is <em>lower</em> than the value we want, we repeat the search
+process with the portion of the list <em>after</em> the middle element.</li>
+</ul>
+<p>For example, suppose that we want to find the value 3.8 in the
+following list of 7 elements:</p>
+<div><img height="120" src="_images/blockdiag-3ff593d88116cb8048123cf0ed5b6f8ea2feb136.png" width="960" /></div><p>First we compare the element in the middle of the list to our
+value. 7.2 is <em>bigger</em> than 3.8, so we need to check the first half of
+the list next.</p>
+<div><img height="120" src="_images/blockdiag-1c5d3da98c8e692ebf9727dd055dc6a9c853bf8e.png" width="960" /></div><p>Now the first half of the list is our new list to search.  We compare
+the element in the middle of this list to our value.  2.7 is <em>smaller</em>
+than 3.8, so we need to search the <em>second half</em> of this sublist next.</p>
+<div><img height="120" src="_images/blockdiag-bbcf4ce42d362b93415ff8defb42240ecd14b614.png" width="960" /></div><p>The second half of the last sub-list is just a single element, which
+is also the middle element.  We compare this element to our value, and
+it is the element that we want.</p>
+<p>We have performed 3 comparisons in total when searching this list of 7
+items.  The number of comparisons we need to perform scales with the
+size of the list, but much more slowly than for linear search – if we
+are searching a list of length N, the maximum number of comparisons
+that we will have to perform is log<sub>2</sub>N.</p>
+</div>
+<div class="section" id="exercise-5">
+<h3>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a function which implements binary search. You may assume that
+the input list will be sorted. Hint: this function is often written
+recursively.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="algorithm-complexity-and-big-o-notation">
+<h2>Algorithm complexity and Big O notation<a class="headerlink" href="#algorithm-complexity-and-big-o-notation" title="Permalink to this headline">¶</a></h2>
+<p>We commonly express the cost of an algorithm as a function of the
+number N of elements that the algorithm acts on.  The function gives
+us an estimate of the number of operations we have to perform in order
+to use the algorithm on N elements – it thus allows us to predict how
+the number of required operations will increase as N increases. We use
+a function which is an <em>approximation</em> of the exact function – we
+simplify it as much as possible, so that only the most important
+information is preserved.</p>
+<p>For example, we know that when we use linear search on a list of N
+elements, on average we will have to search through half of the list
+before we find our item – so the number of operations we will have to
+perform is N/2.  However, the most important thing is that the
+algorithm scales <em>linearly</em> – as N increases, the cost of the
+algorithm increases in proportion to N, not N<sup>2</sup> or N<sup>3</sup>.  The constant factor of 1/2 is insignificant compared to
+the very large differences in cost between – for example – N and N<sup>2</sup>, so we leave it out when we describe the cost of the
+algorithm.</p>
+<p>We thus write the cost of the linear search algorithm as O(N) – we
+say that the cost is <em>on the order of N</em>, or just <em>order N</em>.  We call
+this notation <em>big O notation</em>, because it uses the capital O symbol
+(for <em>order</em>).</p>
+<p>We have dropped the constant factor 1/2. We would also drop any
+lower-order terms from an expression with multiple terms – for
+example, O(N<sup>3</sup> + N<sup>2</sup>) would be simplified to O(N<sup>3</sup>).</p>
+<p>In the example above we calculated the <em>average</em> cost of the
+algorithm, which is also known as the <em>expected</em> cost, but it can also
+be useful to calculate the <em>best case</em> and <em>worst case</em> costs.  Here
+are the best case, expected and worst case costs for the sorting and
+searching algorithms we have discussed so far:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Algorithm</th>
+<th class="head">Best case</th>
+<th class="head">Expected</th>
+<th class="head">Worst case</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Selection sort</td>
+<td>O(N<sup>2</sup>)</td>
+<td>O(N<sup>2</sup>)</td>
+<td>O(N<sup>2</sup>)</td>
+</tr>
+<tr class="row-odd"><td>Merge sort</td>
+<td>O(N log N)</td>
+<td>O(N log N)</td>
+<td>O(N log N)</td>
+</tr>
+<tr class="row-even"><td>Linear search</td>
+<td>O(1)</td>
+<td>O(N)</td>
+<td>O(N)</td>
+</tr>
+<tr class="row-odd"><td>Binary search</td>
+<td>O(1)</td>
+<td>O(log N)</td>
+<td>O(log N)</td>
+</tr>
+</tbody>
+</table>
+<p>What does O(1) mean? It means that the cost of an algorithm is
+<em>constant</em>, no matter what the value of N is. For both these search
+algorithms, the best case scenario happens when the first element to
+be tested is the correct element – then we only have to perform a
+single operation to find it.</p>
+<p>In the previous table, big O notation has been used to describe the
+<em>time complexity</em> of algorithms.  It can also be used to describe
+their <em>space complexity</em> – in which case the cost function represents
+the number of units of space required for storage rather than the
+required number of operations.  Here are the space complexities of the
+algorithms above (for the worst case, and excluding the space required
+to store the input):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="48%" />
+<col width="52%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Algorithm</th>
+<th class="head">Space complexity</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Selection sort</td>
+<td>O(1)</td>
+</tr>
+<tr class="row-odd"><td>Merge sort</td>
+<td>O(N)</td>
+</tr>
+<tr class="row-even"><td>Linear search</td>
+<td>O(1)</td>
+</tr>
+<tr class="row-odd"><td>Binary search</td>
+<td>O(1)</td>
+</tr>
+</tbody>
+</table>
+<p>None of these algorithms require a significant amount of storage space
+in addition to that used by the input list, except for the merge sort
+– which, as we saw in a previous section, requires temporary storage
+which is the same size as the input (and thus scales linearly with the
+input size).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Python wiki has a <a class="reference external" href="http://wiki.python.org/moin/TimeComplexity">summary</a> of the time
+complexities of common operations on collections.  You may also
+wish to investigate the <code class="docutils literal notranslate"><span class="pre">collections</span></code> module, which provides
+additional collection classes which are optimised for particular
+tasks.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><em>Computational complexity theory</em> studies the inherent complexity
+of <em>tasks</em> themselves. Sometimes it is possible to prove that
+<em>any</em> algorithm that can perform a given task will require some
+minimum number of steps or amount of extra storage.  For example,
+it can be shown that, given a list of arbitrary objects and only a
+comparison function with which to compare them, no sorting
+algorithm can use fewer than O(N log N) comparisons.</p>
+</div>
+<div class="section" id="exercise-6">
+<h3>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>We can see from the comparison tables above that binary search is
+more efficient than linear search.  Why would we ever use linear
+search?  Hint: what property must a list have for us to be able to
+use a binary search on it?</li>
+<li>Suppose that each of the following functions shows the average number
+of operations required to perform some algorithm on a list of length
+N. Give the big O notation for the time complexity of each algorithm:<ol class="arabic">
+<li>4N<sup>2</sup> + 2N + 2</li>
+<li>N + log N</li>
+<li>N log N</li>
+<li>3</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<p>Completed selection sort implementation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">selection_sort</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sorts a list of items into ascending order using the</span>
+<span class="sd">       selection sort algoright.</span>
+<span class="sd">       &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)):</span>
+        <span class="c1"># Find the location of the smallest element in</span>
+        <span class="c1"># items[step:].</span>
+        <span class="n">location_of_smallest</span> <span class="o">=</span> <span class="n">step</span>
+        <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)):</span>
+            <span class="c1"># determine location of smallest</span>
+            <span class="k">if</span> <span class="n">items</span><span class="p">[</span><span class="n">location</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">items</span><span class="p">[</span><span class="n">location_of_smallest</span><span class="p">]:</span>
+                <span class="n">location_of_smallest</span> <span class="o">=</span> <span class="n">location</span>
+        <span class="c1"># Exchange items[step] with items[location_of_smallest]</span>
+        <span class="n">temporary_item</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="n">step</span><span class="p">]</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">step</span><span class="p">]</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="n">location_of_smallest</span><span class="p">]</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">location_of_smallest</span><span class="p">]</span> <span class="o">=</span> <span class="n">temporary_item</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">-</span> <span class="pre">1</span></code> swaps are performed.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">(N</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">*</span> <span class="pre">N</span> <span class="pre">/</span> <span class="pre">2</span></code> comparisons are performed.</p>
+<ol class="lowerroman">
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">-</span> <span class="pre">1</span></code> comparisons are performed finding the smallest element.</p>
+</li>
+<li><p class="first">Summing <code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">-</span> <span class="pre">1</span></code> from <code class="docutils literal notranslate"><span class="pre">2</span></code> to <code class="docutils literal notranslate"><span class="pre">N</span></code> gives:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">+</span> <span class="o">...</span> <span class="o">+</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="o">=</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span> <span class="o">/</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p class="first">At most <code class="docutils literal notranslate"><span class="pre">(N</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">*</span> <span class="pre">N</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">+</span> <span class="pre">(N</span> <span class="pre">-</span> <span class="pre">1)</span></code> assignements are performed.</p>
+</li>
+<li><p class="first">At most <code class="docutils literal notranslate"><span class="pre">N**2</span> <span class="pre">+</span> <span class="pre">N</span> <span class="pre">-</span> <span class="pre">2</span></code> operations are performed. For long lists
+the number of operations grows as <code class="docutils literal notranslate"><span class="pre">N**2</span></code>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">sections</span><span class="p">,</span> <span class="n">temporary_storage</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">start_1</span><span class="p">,</span> <span class="n">end_1</span><span class="p">),</span> <span class="p">(</span><span class="n">start_2</span><span class="p">,</span> <span class="n">end_2</span><span class="p">)</span> <span class="o">=</span> <span class="n">sections</span>
+    <span class="n">i_1</span> <span class="o">=</span> <span class="n">start_1</span>
+    <span class="n">i_2</span> <span class="o">=</span> <span class="n">start_2</span>
+    <span class="n">i_t</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="n">i_1</span> <span class="o">&lt;</span> <span class="n">end_1</span> <span class="ow">or</span> <span class="n">i_2</span> <span class="o">&lt;</span> <span class="n">end_2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i_1</span> <span class="o">&lt;</span> <span class="n">end_1</span> <span class="ow">and</span> <span class="n">i_2</span> <span class="o">&lt;</span> <span class="n">end_2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">items</span><span class="p">[</span><span class="n">i_1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">items</span><span class="p">[</span><span class="n">i_2</span><span class="p">]:</span>
+                <span class="n">temporary_storage</span><span class="p">[</span><span class="n">i_t</span><span class="p">]</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="n">i_1</span><span class="p">]</span>
+                <span class="n">i_1</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># the_list[i_2] &gt;= items[i_1]</span>
+                <span class="n">temporary_storage</span><span class="p">[</span><span class="n">i_t</span><span class="p">]</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="n">i_2</span><span class="p">]</span>
+                <span class="n">i_2</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">i_t</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">elif</span> <span class="n">i_1</span> <span class="o">&lt;</span> <span class="n">end_1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i_1</span><span class="p">,</span> <span class="n">end_1</span><span class="p">):</span>
+                <span class="n">temporary_storage</span><span class="p">[</span><span class="n">i_t</span><span class="p">]</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="n">i_1</span><span class="p">]</span>
+                <span class="n">i_1</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">i_t</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># i_2 &lt; end_2</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i_2</span><span class="p">,</span> <span class="n">end_2</span><span class="p">):</span>
+                <span class="n">temporary_storage</span><span class="p">[</span><span class="n">i_t</span><span class="p">]</span> <span class="o">=</span> <span class="n">items</span><span class="p">[</span><span class="n">i_2</span><span class="p">]</span>
+                <span class="n">i_2</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">i_t</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i_t</span><span class="p">):</span>
+        <span class="n">items</span><span class="p">[</span><span class="n">start_1</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temporary_storage</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">merge_sort</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+    <span class="n">temporary_storage</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">size_of_subsections</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">while</span> <span class="n">size_of_subsections</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">size_of_subsections</span> <span class="o">*</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">i1_start</span><span class="p">,</span> <span class="n">i1_end</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">size_of_subsections</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">i2_start</span><span class="p">,</span> <span class="n">i2_end</span> <span class="o">=</span> <span class="n">i1_end</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">i1_end</span> <span class="o">+</span> <span class="n">size_of_subsections</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">sections</span> <span class="o">=</span> <span class="p">(</span><span class="n">i1_start</span><span class="p">,</span> <span class="n">i1_end</span><span class="p">),</span> <span class="p">(</span><span class="n">i2_start</span><span class="p">,</span> <span class="n">i2_end</span><span class="p">)</span>
+            <span class="n">merge</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">sections</span><span class="p">,</span> <span class="n">temporary_storage</span><span class="p">)</span>
+        <span class="n">size_of_subsections</span> <span class="o">*=</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">items</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-4">
+<h3>Answer to exercise 4<a class="headerlink" href="#answer-to-exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">linear_search</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">desired_item</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="n">desired_item</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">position</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> was not found in the list.&quot;</span> <span class="o">%</span> <span class="n">desired_item</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-5">
+<h3>Answer to exercise 5<a class="headerlink" href="#answer-to-exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">binary_search</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">desired_item</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">end</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="n">end</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> was not found in the list.&quot;</span> <span class="o">%</span> <span class="n">desired_item</span><span class="p">)</span>
+
+    <span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">start</span>
+
+    <span class="k">if</span> <span class="n">desired_item</span> <span class="o">==</span> <span class="n">items</span><span class="p">[</span><span class="n">pos</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">pos</span>
+    <span class="k">elif</span> <span class="n">desired_item</span> <span class="o">&gt;</span> <span class="n">items</span><span class="p">[</span><span class="n">pos</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">binary_search</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">desired_item</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># desired_item &lt; items[pos]:</span>
+        <span class="k">return</span> <span class="n">binary_search</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">desired_item</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">pos</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-6">
+<h3>Answer to exercise 6<a class="headerlink" href="#answer-to-exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>The advantage of linear search is that it can be performed on an
+<em>unsorted</em> list – if we are going to examine all the values in
+turn, their order doesn’t matter. It can be more efficient to
+perform a linear search than a binary search if we need to find a
+value <em>once</em> in a large unsorted list, because just sorting the
+list in preparation for performing a binary search could be more
+expensive. If, however, we need to find values in the same large
+list multiple times, sorting the list and using binary search
+becomes more worthwhile.</li>
+<li>We drop all constant factors and less significant terms:<ol class="arabic">
+<li>O(N<sup>2</sup>)</li>
+<li>O(N)</li>
+<li>O(N log N)</li>
+<li>O(1)</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sorting, searching and algorithm analysis</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#sorting-algorithms">Sorting algorithms</a><ul>
+<li><a class="reference internal" href="#selection-sort">Selection sort</a></li>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+<li><a class="reference internal" href="#merge-sort">Merge sort</a></li>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+<li><a class="reference internal" href="#python-s-sorting-algorithm">Python’s sorting algorithm</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#searching-algorithms">Searching algorithms</a><ul>
+<li><a class="reference internal" href="#linear-search">Linear search</a></li>
+<li><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+<li><a class="reference internal" href="#binary-search">Binary search</a></li>
+<li><a class="reference internal" href="#exercise-5">Exercise 5</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#algorithm-complexity-and-big-o-notation">Algorithm complexity and Big O notation</a><ul>
+<li><a class="reference internal" href="#exercise-6">Exercise 6</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-4">Answer to exercise 4</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-5">Answer to exercise 5</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-6">Answer to exercise 6</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Introduction_to_GUI_Programming.html"
+                        title="previous chapter">Introduction to GUI programming with <code class="docutils literal notranslate"><span class="pre">tkinter</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Sorting_and_Searching_Algorithms.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Introduction_to_GUI_Programming.html" title="Introduction to GUI programming with tkinter"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

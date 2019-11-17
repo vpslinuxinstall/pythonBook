@@ -1,0 +1,753 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Errors and exceptions &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Functions" href="Functions.html" />
+    <link rel="prev" title="Loop control statements" href="Loop_Control_Statements.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Functions.html" title="Functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Loop_Control_Statements.html" title="Loop control statements"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="errors-and-exceptions">
+<h1>Errors and exceptions<a class="headerlink" href="#errors-and-exceptions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="errors">
+<h2>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h2>
+<p>Errors or mistakes in a program are often referred to as bugs. They are almost always the fault of the programmer. The process of finding and eliminating errors is called debugging. Errors can be classified into three major groups:</p>
+<ul class="simple">
+<li>Syntax errors</li>
+<li>Runtime errors</li>
+<li>Logical errors</li>
+</ul>
+<div class="section" id="syntax-errors">
+<h3>Syntax errors<a class="headerlink" href="#syntax-errors" title="Permalink to this headline">¶</a></h3>
+<p>Python will find these kinds of errors when it tries to parse your program, and exit with an error message without running anything.  Syntax errors are mistakes in the use of the Python language, and are analogous to spelling or grammar mistakes in a language like English: for example, the sentence <em>Would you some tea?</em> does not make sense – it is missing a verb.</p>
+<p>Common Python syntax errors include:</p>
+<ul class="simple">
+<li>leaving out a keyword</li>
+<li>putting a keyword in the wrong place</li>
+<li>leaving out a symbol, such as a colon, comma or brackets</li>
+<li>misspelling a keyword</li>
+<li>incorrect indentation</li>
+<li>empty block</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">it is illegal for any block (like an <code class="docutils literal notranslate"><span class="pre">if</span></code> body, or the body of a function) to be left completely empty.  If you want a block to do nothing, you can use the <code class="docutils literal notranslate"><span class="pre">pass</span></code> statement inside the block.</p>
+</div>
+<p>Python will do its best to tell you where the error is located, but sometimes its messages can be misleading: for example, if you forget to escape a quotation mark inside a string you may get a syntax error referring to a place later in your code, even though that is not the real source of the problem.  If you can’t see anything wrong on the line specified in the error message, try backtracking through the previous few lines.  As you program more, you will get better at identifying and fixing errors.</p>
+<p>Here are some examples of syntax errors in Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">myfunction</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">mark</span> <span class="o">&gt;=</span> <span class="mi">50</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You passed!&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">arriving</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hi!&quot;</span><span class="p">)</span>
+<span class="n">esle</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bye!&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Flag is set!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="runtime-errors">
+<h3>Runtime errors<a class="headerlink" href="#runtime-errors" title="Permalink to this headline">¶</a></h3>
+<p>If a program is syntactically correct – that is, free of syntax errors – it will be run by the Python interpreter.  However, the program may exit unexpectedly during execution if it encounters a <em>runtime error</em> – a problem which was not detected when the program was parsed, but is only revealed when a particular line is executed.  When a program comes to a halt because of a runtime error, we say that it has crashed.</p>
+<p>Consider the English instruction <em>flap your arms and fly to Australia.</em>  While the instruction is structurally correct and you can understand its meaning perfectly, it is impossible for you to follow it.</p>
+<p>Some examples of Python runtime errors:</p>
+<ul class="simple">
+<li>division by zero</li>
+<li>performing an operation on incompatible types</li>
+<li>using an identifier which has not been defined</li>
+<li>accessing a list element, dictionary value or object attribute which doesn’t exist</li>
+<li>trying to access a file which doesn’t exist</li>
+</ul>
+<p>Runtime errors often creep in if you don’t consider all possible values that a variable could contain, especially when you are processing user input.  You should always try to add checks to your code to make sure that it can deal with bad input and edge cases gracefully.  We will look at this in more detail in the chapter about exception handling.</p>
+</div>
+<div class="section" id="logical-errors">
+<h3>Logical errors<a class="headerlink" href="#logical-errors" title="Permalink to this headline">¶</a></h3>
+<p>Logical errors are the most difficult to fix. They occur when the program runs without crashing, but produces an incorrect result.  The error is caused by a mistake in the program’s logic.  You won’t get an error message, because no syntax or runtime error has occurred.  You will have to find the problem on your own by reviewing all the relevant parts of your code – although some tools can flag suspicious code which looks like it could cause unexpected behaviour.</p>
+<p>Sometimes there can be absolutely nothing wrong with your Python implementation of an algorithm – the algorithm itself can be incorrect.  However, more frequently these kinds of errors are caused by programmer carelessness.  Here are some examples of mistakes which lead to logical errors:</p>
+<ul class="simple">
+<li>using the wrong variable name</li>
+<li>indenting a block to the wrong level</li>
+<li>using integer division instead of floating-point division</li>
+<li>getting operator precedence wrong</li>
+<li>making a mistake in a boolean expression</li>
+<li>off-by-one, and other numerical errors</li>
+</ul>
+<p>If you misspell an identifier name, you may get a runtime error or a logical error, depending on whether the misspelled name is defined.</p>
+<p>A common source of variable name mix-ups and incorrect indentation is frequent copying and pasting of large blocks of code.  If you have many duplicate lines with minor differences, it’s very easy to miss a necessary change when you are editing your pasted lines.  You should always try to factor out excessive duplication using functions and loops – we will look at this in more detail later.</p>
+</div>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Find all the syntax errors in the code snippet above, and explain why they are errors.</p>
+</li>
+<li><p class="first">Find potential sources of runtime errors in this code snippet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dividend</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the dividend: &quot;</span><span class="p">))</span>
+<span class="n">divisor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the divisor: &quot;</span><span class="p">))</span>
+<span class="n">quotient</span> <span class="o">=</span> <span class="n">dividend</span> <span class="o">/</span> <span class="n">divisor</span>
+<span class="n">quotient_rounded</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">quotient</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Find potential sources of runtime errors in this code snippet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(</span><span class="si">%f</span><span class="s2">, </span><span class="si">%f</span><span class="s2">, </span><span class="si">%f</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">my_list</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Find potential sources of logic errors in this code snippet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">product</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">product</span> <span class="o">*=</span> <span class="n">i</span>
+
+<span class="n">sum_squares</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">i_sq</span> <span class="o">=</span> <span class="n">i</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">sum_squares</span> <span class="o">+=</span> <span class="n">i_sq</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">num</span> <span class="o">+=</span> <span class="n">num</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="handling-exceptions">
+<h2>Handling exceptions<a class="headerlink" href="#handling-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>Until now, the programs that we have written have generally ignored the fact that things can go wrong.  We have have tried to prevent runtime errors by checking data which may be incorrect before we used it, but we haven’t yet seen how we can handle errors when they do occur – our programs so far have just crashed suddenly whenever they have encountered one.</p>
+<p>There are some situations in which runtime errors are likely to occur.  Whenever we try to read a file or get input from a user, there is a chance that something unexpected will happen – the file may have been moved or deleted, and the user may enter data which is not in the right format.  Good programmers should add safeguards to their programs so that common situations like this can be handled gracefully – a program which crashes whenever it encounters an easily foreseeable problem is not very pleasant to use.  Most users expect programs to be robust enough to recover from these kinds of setbacks.</p>
+<p>If we know that a particular section of our program is likely to cause an error, we can tell Python what to do if it does happen.  Instead of letting the error crash our program we can intercept it, do something about it, and allow the program to continue.</p>
+<p>All the runtime (and syntax) errors that we have encountered are called <em>exceptions</em> in Python – Python uses them to indicate that something <em>exceptional</em> has occurred, and that your program cannot continue unless it is <em>handled</em>.  All exceptions are subclasses of the <code class="docutils literal notranslate"><span class="pre">Exception</span></code> class – we will learn more about classes, and how to write your own exception types, in later chapters.</p>
+<div class="section" id="the-try-and-except-statements">
+<h3>The <code class="docutils literal notranslate"><span class="pre">try</span></code> and <code class="docutils literal notranslate"><span class="pre">except</span></code> statements<a class="headerlink" href="#the-try-and-except-statements" title="Permalink to this headline">¶</a></h3>
+<p>To handle possible exceptions, we use a <em>try-except</em> block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I see that you are </span><span class="si">%d</span><span class="s2"> years old.&quot;</span> <span class="o">%</span> <span class="n">age</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hey, that wasn&#39;t a number!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Python will <em>try</em> to process all the statements inside the <em>try</em> block.  If a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> occurs at any point as it is executing them, the flow of control will immediately pass to the <em>except</em> block, and any remaining statements in the <em>try</em> block will be skipped.</p>
+<p>In this example, we know that the error is likely to occur when we try to convert the user’s input to an integer.  If the input string is not a number, this line will trigger a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> – that is why we specified it as the type of error that we are going to handle.</p>
+<p>We could have specified a more general type of error – or even left the type out entirely, which would have caused the <code class="docutils literal notranslate"><span class="pre">except</span></code> clause to match <em>any</em> kind of exception – but that would have been a bad idea.  What if we got a completely different error that we hadn’t predicted?  It would be handled as well, and we wouldn’t even notice that anything unusual was going wrong.  We may also want to react in different ways to different kinds of errors.  We should always try pick specific rather than general error types for our <code class="docutils literal notranslate"><span class="pre">except</span></code> clauses.</p>
+<p>It is possible for one <code class="docutils literal notranslate"><span class="pre">except</span></code> clause to handle more than one kind of error: we can provide a tuple of exception types instead of a single type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">dividend</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the dividend: &quot;</span><span class="p">))</span>
+    <span class="n">divisor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the divisor: &quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="n">dividend</span><span class="o">/</span><span class="n">divisor</span><span class="p">))</span>
+<span class="k">except</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">ZeroDivisionError</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Oops, something went wrong!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A <em>try-except</em> block can also have multiple <code class="docutils literal notranslate"><span class="pre">except</span></code> clauses.  If an exception occurs, Python will check each <code class="docutils literal notranslate"><span class="pre">except</span></code> clause from the top down to see if the exception type matches.  If none of the <code class="docutils literal notranslate"><span class="pre">except</span></code> clauses match, the exception will be considered <em>unhandled</em>, and your program will crash:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">dividend</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the dividend: &quot;</span><span class="p">))</span>
+    <span class="n">divisor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the divisor: &quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="n">dividend</span><span class="o">/</span><span class="n">divisor</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The divisor and dividend have to be numbers!&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dividend may not be zero!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that in the example above if a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> occurs we won’t know whether it was caused by the dividend or the divisor not being an integer – either one of the input lines could cause that error.  If we want to give the user more specific feedback about which input was wrong, we will have to wrap each input line in a separate <em>try-except</em> block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">dividend</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the dividend: &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dividend has to be a number!&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">divisor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the divisor: &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The divisor has to be a number!&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2"> = </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="n">dividend</span><span class="o">/</span><span class="n">divisor</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dividend may not be zero!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In general, it is a better idea to use exception handlers to protect small blocks of code against specific errors than to wrap large blocks of code and write vague, generic error recovery code.  It may sometimes seem inefficient and verbose to write many small <em>try-except</em> statements instead of a single catch-all statement, but we can mitigate this to some extent by making effective use of loops and functions to reduce the amount of code duplication.</p>
+</div>
+<div class="section" id="how-an-exception-is-handled">
+<h3>How an exception is handled<a class="headerlink" href="#how-an-exception-is-handled" title="Permalink to this headline">¶</a></h3>
+<p>When an exception occurs, the normal flow of execution is interrupted. Python checks to see if the line of code which caused the exception is inside a <em>try</em> block.  If it is, it checks to see if any of the <em>except</em> blocks associated with the <em>try</em> block can handle that type of exception.  If an appropriate handler is found, the exception is handled, and the program continues from the next statement after the end of that <em>try-except</em>.</p>
+<p>If there is no such handler, or if the line of code was <em>not</em> in a <em>try</em> block, Python will go up one level of scope: if the line of code which caused the exception was inside a <em>function</em>, that function will exit immediately, and the line which <em>called</em> the function will be treated as if <em>it</em> had thrown the exception.  Python will check if <em>that</em> line is inside a <em>try</em> block, and so on.  When a function is called, it is placed on Python’s <em>stack</em>, which we will discuss in the chapter about functions. Python traverses this stack when it tries to handle an exception.</p>
+<p>If an exception is thrown by a line which is in the main body of your program, not inside a function, the program will terminate.  When the exception message is printed, you should also see a <em>traceback</em> – a list which shows the path the exception has taken, all the way back to the original line which caused the error.</p>
+</div>
+<div class="section" id="error-checks-vs-exception-handling">
+<h3>Error checks vs exception handling<a class="headerlink" href="#error-checks-vs-exception-handling" title="Permalink to this headline">¶</a></h3>
+<p>Exception handling gives us an alternative way to deal with error-prone situations in our code.  Instead of performing more checks before we do something to make sure that an error will not occur, we just try to do it – and if an error does occur we handle it.  This can allow us to write simpler and more readable code.  Let’s look at a more complicated input example – one in which we want to keep asking the user for input until the input is correct.  We will try to write this example using the two different approaches:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># with checks</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">while</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter an integer: &quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not an integer.&quot;</span> <span class="o">%</span> <span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># with exception handling</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">while</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter an integer: &quot;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not an integer.&quot;</span> <span class="o">%</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the first code snippet, we have to write quite a convoluted check to test whether the user’s input is an integer – first we strip off a minus sign if it exists, and then we check if the rest of the string consists only of digits.  But there’s a very simple criterion which is also what we really want to know: will this string cause a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if we try to convert it to an integer?  In the second snippet we can in effect check for exactly the right condition instead of trying to replicate it ourselves – something which isn’t always easy to do.  For example, we could easily have forgotten that integers can be negative, and written the check in the first snippet incorrectly.</p>
+<p>Here are a few other advantages of exception handling:</p>
+<ul class="simple">
+<li>It separates normal code from code that handles errors.</li>
+<li>Exceptions can easily be passed along functions in the stack until they reach a function which knows how to handle them. The intermediate functions don’t need to have any error-handling code.</li>
+<li>Exceptions come with lots of useful error information built in – for example, they can print a traceback which helps us to see exactly where the error occurred.</li>
+</ul>
+</div>
+<div class="section" id="the-else-and-finally-statements">
+<h3>The <code class="docutils literal notranslate"><span class="pre">else</span></code> and <code class="docutils literal notranslate"><span class="pre">finally</span></code> statements<a class="headerlink" href="#the-else-and-finally-statements" title="Permalink to this headline">¶</a></h3>
+<p>There are two other clauses that we can add to a <em>try-except</em> block: <code class="docutils literal notranslate"><span class="pre">else</span></code> and <code class="docutils literal notranslate"><span class="pre">finally</span></code>.  <code class="docutils literal notranslate"><span class="pre">else</span></code> will be executed only if the <code class="docutils literal notranslate"><span class="pre">try</span></code> clause doesn’t raise an exception:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hey, that wasn&#39;t a number!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I see that you are </span><span class="si">%d</span><span class="s2"> years old.&quot;</span> <span class="o">%</span> <span class="n">age</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We want to print a message about the user’s age only if the integer conversion succeeds.  In the first exception handler example, we put this print statement directly after the conversion inside the <code class="docutils literal notranslate"><span class="pre">try</span></code> block.  In both cases, the statement will only be executed if the conversion statement doesn’t raise an exception, but putting it in the <code class="docutils literal notranslate"><span class="pre">else</span></code> block is better practice – it means that the only code inside the <code class="docutils literal notranslate"><span class="pre">try</span></code> block is the single line that is the potential source of the error that we want to handle.</p>
+<p>When we edit this program in the future, we may introduce additional statements that should also be executed if the age input is successfully converted.  Some of these statements may also potentially raise a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.  If we don’t notice this, and put them inside the <code class="docutils literal notranslate"><span class="pre">try</span></code> clause, the <code class="docutils literal notranslate"><span class="pre">except</span></code> clause will also handle these errors if they occur.  This is likely to cause some odd and unexpected behaviour.  By putting all this extra code in the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause instead, we avoid taking this risk.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">finally</span></code> clause will be executed at the end of the <em>try-except</em> block no matter what – if there is no exception, if an exception is raised and handled, if an exception is raised and not handled, and even if we exit the block using <code class="docutils literal notranslate"><span class="pre">break</span></code>, <code class="docutils literal notranslate"><span class="pre">continue</span></code> or <code class="docutils literal notranslate"><span class="pre">return</span></code>.  We can use the <code class="docutils literal notranslate"><span class="pre">finally</span></code> clause for cleanup code that we always want to be executed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hey, that wasn&#39;t a number!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I see that you are </span><span class="si">%d</span><span class="s2"> years old.&quot;</span> <span class="o">%</span> <span class="n">age</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;It was really nice talking to you.  Goodbye!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Extend the program in exercise 7 of the loop control statements chapter to include exception handling.  Whenever the user enters input of the incorrect type, keep prompting the user for the same value until it is entered correctly.  Give the user sensible feedback.</p>
+</li>
+<li><p class="first">Add a <em>try-except</em> statement to the body of this function which handles a possible <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>, which could occur if the index provided exceeds the length of the list.  Print an error message if this happens:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_list_element</span><span class="p">(</span><span class="n">thelist</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">thelist</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">This function adds an element to a list inside a dict of lists.  Rewrite it to use a <em>try-except</em> statement which handles a possible <code class="docutils literal notranslate"><span class="pre">KeyError</span></code> if the list with the name provided doesn’t exist in the dictionary yet, instead of checking beforehand whether it does.  Include <code class="docutils literal notranslate"><span class="pre">else</span></code> and <code class="docutils literal notranslate"><span class="pre">finally</span></code> clauses in your <em>try-except</em> block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_to_list_in_dict</span><span class="p">(</span><span class="n">thedict</span><span class="p">,</span> <span class="n">listname</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">listname</span> <span class="ow">in</span> <span class="n">thedict</span><span class="p">:</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">thedict</span><span class="p">[</span><span class="n">listname</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> already has </span><span class="si">%d</span><span class="s2"> elements.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">listname</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">thedict</span><span class="p">[</span><span class="n">listname</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">listname</span><span class="p">)</span>
+
+    <span class="n">thedict</span><span class="p">[</span><span class="n">listname</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Added </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">listname</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="the-with-statement">
+<h3>The <code class="docutils literal notranslate"><span class="pre">with</span></code> statement<a class="headerlink" href="#the-with-statement" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="using-the-exception-object">
+<h3>Using the exception object<a class="headerlink" href="#using-the-exception-object" title="Permalink to this headline">¶</a></h3>
+<p>Python’s exception objects contain more information than just the error type.  They also come with some kind of message – we have already seen some of these messages displayed when our programs have crashed.  Often these messages aren’t very user-friendly – if we want to report an error to the user we usually need to write a more descriptive message which explains how the error is related to what the user did.  For example, if the error was caused by incorrect input, it is helpful to tell the user which of the input values was incorrect.</p>
+<p>Sometimes the exception message contains useful information which we want to display to the user.  In order to access the message, we need to be able to access the exception object.  We can assign the object to a variable that we can use inside the <code class="docutils literal notranslate"><span class="pre">except</span></code> clause like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">err</span></code> is not a string, but Python knows how to convert it into one – the string representation of an exception is the message, which is exactly what we want.  We can also combine the exception message with our own message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You entered incorrect age input: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that inserting a variable into a formatted string using <code class="docutils literal notranslate"><span class="pre">%s</span></code> also converts the variable to a string.</p>
+</div>
+<div class="section" id="raising-exceptions">
+<h3>Raising exceptions<a class="headerlink" href="#raising-exceptions" title="Permalink to this headline">¶</a></h3>
+<p>We can raise exceptions ourselves using the <code class="docutils literal notranslate"><span class="pre">raise</span></code> statement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> is not a valid age. Age must be positive or zero.&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You entered incorrect age input: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">err</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I see that you are </span><span class="si">%d</span><span class="s2"> years old.&quot;</span> <span class="o">%</span> <span class="n">age</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can raise our own <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if the age input is a valid integer, but it’s negative.  When we do this, it has exactly the same effect as any other exception – the flow of control will immediately exit the <code class="docutils literal notranslate"><span class="pre">try</span></code> clause at this point and pass to the <code class="docutils literal notranslate"><span class="pre">except</span></code> clause.  This <code class="docutils literal notranslate"><span class="pre">except</span></code> clause can match our exception as well, since it is also a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p>
+<p>We picked <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> as our exception type because it’s the most appropriate for this kind of error.  There’s nothing stopping us from using a completely inappropriate exception class here, but we should try to be consistent. Here are a few common exception types which we are likely to raise in our own code:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">TypeError</span></code>: this is an error which indicates that a variable has the wrong <em>type</em> for some operation.  We might raise it in a function if a parameter is not of a type that we know how to handle.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ValueError</span></code>: this error is used to indicate that a variable has the right <em>type</em> but the wrong <em>value</em>.  For example, we used it when <code class="docutils literal notranslate"><span class="pre">age</span></code> was an integer, but the wrong <em>kind</em> of integer.</li>
+<li><code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code>: we will see in the next chapter how we use this exception to indicate that a class’s method has to be implemented in a child class.</li>
+</ul>
+<p>We can also write our own custom exception classes which are based on existing exception classes – we will see some examples of this in a later chapter.</p>
+<p>Something we may want to do is raise an exception that we have just intercepted – perhaps because we want to handle it partially in the current function, but also want to respond to it in the code which called the function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You entered incorrect age input: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">err</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">err</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Rewrite the program from the first question of exercise 2 so that it prints the text of Python’s original exception inside the <code class="docutils literal notranslate"><span class="pre">except</span></code> clause instead of a custom message.</li>
+<li>Rewrite the program from the second question of exercise 2 so that the exception which is caught in the <code class="docutils literal notranslate"><span class="pre">except</span></code> clause is re-raised after the error message is printed.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="debugging-programs">
+<h2>Debugging programs<a class="headerlink" href="#debugging-programs" title="Permalink to this headline">¶</a></h2>
+<p>Syntax errors are usually quite straightforward to debug: the error message shows us the line in the file where the error is, and it should be easy to find it and fix it.</p>
+<p>Runtime errors can be a little more difficult to debug: the error message and the traceback can tell us exactly where the error occurred, but that doesn’t necessarily tell us what the problem is.  Sometimes they are caused by something obvious, like an incorrect identifier name, but sometimes they are triggered by a particular state of the program – it’s not always clear which of many variables has an unexpected value.</p>
+<p>Logical errors are the most difficult to fix because they don’t cause any errors that can be traced to a particular line in the code.  All that we know is that the code is not behaving as it should be – sometimes tracking down the area of the code which is causing the incorrect behaviour can take a long time.</p>
+<p>It is important to test your code to make sure that it behaves the way that you expect.  A quick and simple way of testing that a function is doing the right thing, for example, is to insert a print statement after every line which outputs the intermediate results which were calculated on that line.  Most programmers intuitively do this as they are writing a function, or perhaps if they need to figure out why it isn’t doing the right thing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hypotenuse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x is </span><span class="si">%f</span><span class="s2"> and y is </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="n">x_2</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x_2</span><span class="p">)</span>
+    <span class="n">y_2</span> <span class="o">=</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">y_2</span><span class="p">)</span>
+    <span class="n">z_2</span> <span class="o">=</span> <span class="n">x_2</span> <span class="o">+</span> <span class="n">y_2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">z_2</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">z_2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">z</span>
+</pre></div>
+</div>
+<p>This is a quick and easy thing to do, and even experienced programmers are guilty of doing it every now and then, but this approach has several disadvantages:</p>
+<ul>
+<li><p class="first">As soon as the function is working, we are likely to delete all the print statements, because we don’t want our program to print all this debugging information all the time.  The problem is that code often changes – the next time we want to test this function we will have to add the print statements all over again.</p>
+</li>
+<li><p class="first">To avoid rewriting the print statements if we happen to need them again, we may be tempted to comment them out instead of deleting them – leaving them to clutter up our code, and possibly become so out of sync that they end up being completely useless anyway.</p>
+</li>
+<li><p class="first">To print out all these intermediate values, we had to spread out the formula inside the function over many lines. Sometimes it is useful to break up a calculation into several steps, if it is very long and putting it all on one line makes it hard to read, but sometimes it just makes our code unnecessarily verbose.  Here is what the function above would normally look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hypotenuse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>How can we do this better?  If we want to <em>inspect</em> the values of variables at various steps of a program’s execution, we can use a tool like <code class="docutils literal notranslate"><span class="pre">pdb</span></code>.  If we want our program to print out informative messages, possibly to a file, and we want to be able to control the level of detail at runtime without having to change anything in the code, we can use <em>logging</em>.</p>
+<p>Most importantly, to check that our code is working correctly now and will <em>keep</em> working correctly, we should write a permanent suite of tests which we can run on our code regularly.  We will discuss testing in more detail in a later chapter.</p>
+<div class="section" id="debugging-tools">
+<h3>Debugging tools<a class="headerlink" href="#debugging-tools" title="Permalink to this headline">¶</a></h3>
+<p>There are some automated tools which can help us to debug errors, and also to keep our code as correct as possible to minimise the chances of new errors creeping in.  Some of these tools analyse our program’s syntax, reporting errors and bad programming style, while others let us analyse the program as it is running.</p>
+<div class="section" id="pyflakes-pylint-pychecker-and-pep8">
+<h4>Pyflakes, pylint, PyChecker and pep8<a class="headerlink" href="#pyflakes-pylint-pychecker-and-pep8" title="Permalink to this headline">¶</a></h4>
+<p>These four utilities analyse code for syntax errors as well as some kinds of runtime errors.  They also print warnings about bad coding style, and about inefficient and potentially incorrect code – for example, variables and imported modules which are never used.</p>
+<p><a class="reference external" href="http://pypi.python.org/pypi/pyflakes">Pyflakes</a> parses code instead of importing it, which means that it can’t detect as many errors as other tools – but it is also safer to use, since there is no risk that it will execute broken code which does permanent damage to our system.  This is mostly relevant when we use it as part of an automated system.  It also means that Pyflakes is faster than other checkers.</p>
+<p><a class="reference external" href="http://pypi.python.org/pypi/pylint">Pylint</a> and <a class="reference external" href="http://pypi.python.org/pypi/PyChecker">PyChecker</a> do import the code that they check, and they produce more extensive lists of errors and warnings. They are used by programmers who find the functionality of pyflakes to be too basic.</p>
+<p><a class="reference external" href="http://pypi.python.org/pypi/pep8">Pep8</a> specifically targets bad coding style – it checks whether our code conforms to <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">Pep 8</a>, a specification document for good coding style.</p>
+<p>Here is how we use these programs on the commandline:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyflakes</span> <span class="n">myprogram</span><span class="o">.</span><span class="n">py</span>
+<span class="n">pylint</span> <span class="n">myprogram</span><span class="o">.</span><span class="n">py</span>
+<span class="n">pychecker</span> <span class="n">myprogram</span><span class="o">.</span><span class="n">py</span>
+<span class="n">pep8</span> <span class="n">myprogram</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pdb">
+<h4>pdb<a class="headerlink" href="#pdb" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="http://docs.python.org/3.3/library/pdb.html">pdb</a> is a built-in Python module which we can use to debug a program while it’s running.  We can either import the module and use its functions from inside our code, or invoke it as a script when running our code file.  We can use pdb to step through our program, either line by line or in larger increments, inspect the state at each step, and perform a “post-mortem” of the program if it crashes.</p>
+<p>Here is how we would use pdb in our code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pdb</span>
+
+<span class="k">def</span> <span class="nf">our_function</span><span class="p">():</span>
+    <span class="n">bad_idea</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="s2">&quot;4&quot;</span>
+
+<span class="n">pdb</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;our_function()&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here is how we would run it as a script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pdb</span> <span class="n">ourprogram</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>More extensive documentation, including the full list of commands which can be used inside the debugger, can be found at the link above.</p>
+</div>
+</div>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes it is valuable for a program to output messages to a console or a file as it runs. These messages can be used as a record of the program’s execution, and help us to find errors.  Sometimes a bug occurs intermittently, and we don’t know what triggers it – if we only add debugging output to our program when we want to begin an active search for the bug, we may be unable to reproduce it.  If our program logs messages to a file all the time, however, we may find that some helpful information has been recorded when we check the log after the bug has occurred.</p>
+<p>Some kinds of messages are more important than others – errors are noteworthy events which should almost always be logged.  Messages which record that an operation has been completed successfully may sometimes be useful, but are not as important as errors.  Detailed messages which debug every step of a calculation can be interesting if we are trying to debug the calculation, but if they were printed all the time they would fill the console with noise (or make our log file really, really big).</p>
+<p>We can use Python’s <code class="docutils literal notranslate"><span class="pre">logging</span></code> module to add logging to our program in an easy and consistent way.  Logging statements are almost like print statements, but whenever we log a message we specify a <em>level</em> for the message.  When we run our program, we set a desired log level for the program.  Only messages which have a level <em>greater than or equal to</em> the level which we have set will appear in the log.  This means that we can temporarily switch on detailed logging and switch it off again just by changing the log level in one place.</p>
+<p>There is a consistent set of logging level names which most languages use.  In order, from the highest value (most severe) to the lowest value (least severe), they are:</p>
+<ul class="simple">
+<li>CRITICAL – for very serious errors</li>
+<li>ERROR – for less serious errors</li>
+<li>WARNING – for warnings</li>
+<li>INFO – for important informative messages</li>
+<li>DEBUG – for detailed debugging messages</li>
+</ul>
+<p>These names are used for integer constants defined in the <code class="docutils literal notranslate"><span class="pre">logging</span></code> module.  The module also provides methods which we can use to log messages.  By default these messages are printed to the console, and the default log level is <code class="docutils literal notranslate"><span class="pre">WARNING</span></code>.  We can configure the module to customise its behaviour – for example, we can write the messages to a file instead, raise or lower the log level and change the message format.  Here is a simple logging example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c1"># log messages to a file, ignoring anything less severe than ERROR</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;myprogram.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+
+<span class="c1"># these messages should appear in our file</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The washing machine is leaking!&quot;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;The house is on fire!&quot;</span><span class="p">)</span>
+
+<span class="c1"># but these ones won&#39;t</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;We&#39;re almost out of milk.&quot;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;It&#39;s sunny today.&quot;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;I had eggs for breakfast.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There’s also a special <code class="docutils literal notranslate"><span class="pre">exception</span></code> method which is used for logging exceptions.  The level used for these messages is <code class="docutils literal notranslate"><span class="pre">ERROR</span></code>, but additional information about the exception is added to them.  This method is intended to be used inside exception handlers instead of <code class="docutils literal notranslate"><span class="pre">error</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;How old are you? &quot;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If we have a large project, we may want to set up a more complicated system for logging – perhaps we want to format certain messages differently, log different messages to different files, or log to multiple locations at the same time.  The logging module also provides us with <em>logger</em> and <em>handler</em> objects for this purpose.  We can use multiple loggers to create our messages, customising each one independently.  Different handlers are associated with different logging locations.  We can connect up our loggers and handlers in any way we like – one logger can use many handlers, and multiple loggers can use the same handler.</p>
+<div class="section" id="exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write logging configuration for a program which logs to a file called <code class="docutils literal notranslate"><span class="pre">log.txt</span></code> and discards all logs less important than <code class="docutils literal notranslate"><span class="pre">INFO</span></code>.</li>
+<li>Rewrite the second program from exercise 2 so that it uses this logging configuration instead of printing messages to the console (except for the first print statement, which is the purpose of the function).</li>
+<li>Do the same with the third program from exercise 2.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">There are five syntax errors:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Missing <code class="docutils literal notranslate"><span class="pre">def</span></code> keyword in function definition</li>
+<li><code class="docutils literal notranslate"><span class="pre">else</span></code> clause without an <code class="docutils literal notranslate"><span class="pre">if</span></code></li>
+<li>Missing colon after <code class="docutils literal notranslate"><span class="pre">if</span></code> condition</li>
+<li>Spelling mistake (“esle”)</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">if</span></code> block is empty because the <code class="docutils literal notranslate"><span class="pre">print</span></code> statement is not indented correctly</li>
+</ol>
+</div></blockquote>
+</li>
+<li><ol class="first arabic simple">
+<li>The values entered by the user may not be valid integers or floating-point numbers.</li>
+<li>The user may enter zero for the divisor.</li>
+<li>If the <code class="docutils literal notranslate"><span class="pre">math</span></code> library hasn’t been imported, <code class="docutils literal notranslate"><span class="pre">math.round</span></code> is undefined.</li>
+</ol>
+</li>
+<li><ol class="first arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">my_list</span></code> need to be defined before this snippet.</li>
+<li>The attempt to access the list element with index <code class="docutils literal notranslate"><span class="pre">x</span></code> may fail during one of the loop iterations if the range from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">b</span></code> exceeds the size of <code class="docutils literal notranslate"><span class="pre">my_list</span></code>.</li>
+<li>The string formatting operation inside the <code class="docutils literal notranslate"><span class="pre">print</span></code> statement expects <code class="docutils literal notranslate"><span class="pre">my_list[x]</span></code> to be a tuple with three numbers. If it has too many or too few elements, or isn’t a tuple at all, the attempt to format the string will fail.</li>
+</ol>
+</li>
+<li><ol class="first arabic simple">
+<li>If you are accumulating a number total by multiplication, not addition, you need to initialise the total to <code class="docutils literal notranslate"><span class="pre">1</span></code>, not <code class="docutils literal notranslate"><span class="pre">0</span></code>, otherwise the product will always be zero!</li>
+<li>The line which adds <code class="docutils literal notranslate"><span class="pre">i_sq</span></code> to <code class="docutils literal notranslate"><span class="pre">sum_squares</span></code> is not aligned correctly, and will only add the last value of <code class="docutils literal notranslate"><span class="pre">i_sq</span></code> after the loop has concluded.</li>
+<li>The wrong variable is used: at each loop iteration the current number in the range is added to itself and <code class="docutils literal notranslate"><span class="pre">nums</span></code> remains unchanged.</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">person</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">properties</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;surname&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="nb">property</span><span class="p">,</span> <span class="n">p_type</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+    <span class="n">valid_value</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">while</span> <span class="n">valid_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your </span><span class="si">%s</span><span class="s2">: &quot;</span> <span class="o">%</span> <span class="nb">property</span><span class="p">)</span>
+            <span class="n">valid_value</span> <span class="o">=</span> <span class="n">p_type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not convert </span><span class="si">%s</span><span class="s2"> &#39;</span><span class="si">%s</span><span class="s2">&#39; to type </span><span class="si">%s</span><span class="s2">. Please try again.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">property</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">p_type</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="n">person</span><span class="p">[</span><span class="nb">property</span><span class="p">]</span> <span class="o">=</span> <span class="n">valid_value</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_list_element</span><span class="p">(</span><span class="n">thelist</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">thelist</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The list has no element at index </span><span class="si">%d</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_to_list_in_dict</span><span class="p">(</span><span class="n">thedict</span><span class="p">,</span> <span class="n">listname</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">thedict</span><span class="p">[</span><span class="n">listname</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">thedict</span><span class="p">[</span><span class="n">listname</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">listname</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> already has </span><span class="si">%d</span><span class="s2"> elements.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">listname</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)))</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">thedict</span><span class="p">[</span><span class="n">listname</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Added </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">listname</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">person</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">properties</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;surname&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="nb">property</span><span class="p">,</span> <span class="n">p_type</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+    <span class="n">valid_value</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">while</span> <span class="n">valid_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your </span><span class="si">%s</span><span class="s2">: &quot;</span> <span class="o">%</span> <span class="nb">property</span><span class="p">)</span>
+            <span class="n">valid_value</span> <span class="o">=</span> <span class="n">p_type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ve</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ve</span><span class="p">)</span>
+
+    <span class="n">person</span><span class="p">[</span><span class="nb">property</span><span class="p">]</span> <span class="o">=</span> <span class="n">valid_value</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_list_element</span><span class="p">(</span><span class="n">thelist</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">thelist</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+    <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">ie</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The list has no element at index </span><span class="si">%d</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ie</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-4">
+<h3>Answer to exercise 4<a class="headerlink" href="#answer-to-exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example of the logging configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;log.txt&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_list_element</span><span class="p">(</span><span class="n">thelist</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">thelist</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The list has no element at index </span><span class="si">%d</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_to_list_in_dict</span><span class="p">(</span><span class="n">thedict</span><span class="p">,</span> <span class="n">listname</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">thedict</span><span class="p">[</span><span class="n">listname</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">thedict</span><span class="p">[</span><span class="n">listname</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Created </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">listname</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> already has </span><span class="si">%d</span><span class="s2"> elements.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">listname</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)))</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">thedict</span><span class="p">[</span><span class="n">listname</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Added </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">listname</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Errors and exceptions</a><ul>
+<li><a class="reference internal" href="#errors">Errors</a><ul>
+<li><a class="reference internal" href="#syntax-errors">Syntax errors</a></li>
+<li><a class="reference internal" href="#runtime-errors">Runtime errors</a></li>
+<li><a class="reference internal" href="#logical-errors">Logical errors</a></li>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-exceptions">Handling exceptions</a><ul>
+<li><a class="reference internal" href="#the-try-and-except-statements">The <code class="docutils literal notranslate"><span class="pre">try</span></code> and <code class="docutils literal notranslate"><span class="pre">except</span></code> statements</a></li>
+<li><a class="reference internal" href="#how-an-exception-is-handled">How an exception is handled</a></li>
+<li><a class="reference internal" href="#error-checks-vs-exception-handling">Error checks vs exception handling</a></li>
+<li><a class="reference internal" href="#the-else-and-finally-statements">The <code class="docutils literal notranslate"><span class="pre">else</span></code> and <code class="docutils literal notranslate"><span class="pre">finally</span></code> statements</a></li>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+<li><a class="reference internal" href="#the-with-statement">The <code class="docutils literal notranslate"><span class="pre">with</span></code> statement</a></li>
+<li><a class="reference internal" href="#using-the-exception-object">Using the exception object</a></li>
+<li><a class="reference internal" href="#raising-exceptions">Raising exceptions</a></li>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debugging-programs">Debugging programs</a><ul>
+<li><a class="reference internal" href="#debugging-tools">Debugging tools</a><ul>
+<li><a class="reference internal" href="#pyflakes-pylint-pychecker-and-pep8">Pyflakes, pylint, PyChecker and pep8</a></li>
+<li><a class="reference internal" href="#pdb">pdb</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logging">Logging</a><ul>
+<li><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-4">Answer to exercise 4</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Loop_Control_Statements.html"
+                        title="previous chapter">Loop control statements</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Functions.html"
+                        title="next chapter">Functions</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Errors_and_Exceptions.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Functions.html" title="Functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Loop_Control_Statements.html" title="Loop control statements"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

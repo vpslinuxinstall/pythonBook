@@ -1,0 +1,866 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Loop control statements &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Errors and exceptions" href="Errors_and_Exceptions.html" />
+    <link rel="prev" title="Collections" href="Collections.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Errors_and_Exceptions.html" title="Errors and exceptions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Collections.html" title="Collections"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="loop-control-statements">
+<h1>Loop control statements<a class="headerlink" href="#loop-control-statements" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In this chapter, you will learn how to make the computer execute a group of statements over and over as long as certain criterion holds. The group of statements being executed repeatedly is called a loop. There are two loop statements in Python: <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code>.  We will discuss the difference between these statements later in the chapter, but first let us look at an example of a loop in the real world.</p>
+<p>A petrol attendant performs the following actions when serving a customer:</p>
+<ol class="arabic simple">
+<li>greet customer</li>
+<li>ask for required type of petrol and amount</li>
+<li>ask whether customer needs other services</li>
+<li>ask for required amount of money</li>
+<li>give money to cashier</li>
+<li>wait for change and receipt</li>
+<li>give change and receipt to customer</li>
+<li>say thank you and goodbye</li>
+</ol>
+<p>A petrol attendant performs these steps for each customer, but he does not follow them when there is no customer to serve. He also only performs them when it is his shift. If we were to write a computer program to simulate this behaviour, it would not be enough just to provide the steps and ask the computer to repeat them over and over. We would also need to tell it when to stop executing them.</p>
+<p>There are two major kinds of programming loops: counting loops and event-controlled loops.</p>
+<p>In a counting loop, the computer knows at the beginning of the loop execution how many times it needs to execute the loop. In Python, this kind of loop is defined with the <code class="docutils literal notranslate"><span class="pre">for</span></code> statement, which executes the loop body <em>for</em> every item in some list.</p>
+<p>In an event-controlled loop, the computer stops the loop execution when a condition is no longer true. In Python, you can use the <code class="docutils literal notranslate"><span class="pre">while</span></code> statement for this – it executes the loop body <em>while</em> the condition is true.  The <code class="docutils literal notranslate"><span class="pre">while</span></code> statement checks the condition <em>before</em> performing each iteration of the loop.  Some languages also have a loop statement which performs the check <em>after</em> each iteration, so that the loop is always executed at least once.  Python has no such construct, but we will see later how you can simulate one.</p>
+<p>Counting loops are actually subset of event-control loop - the loop is repeated until the required number of iterations is reached.</p>
+<p>If you wanted to get from Cape Town to Camps Bay, what loop algorithm would you use?  If you started by putting your car on the road to Camps Bay, you could:</p>
+<ul class="simple">
+<li>drive for exactly 15 minutes. After 15 minutes, stop the car and get out.</li>
+<li>drive for exactly 8km. After 8km, stop the car and get out.</li>
+<li>drive as long as you are not in Camps Bay. When you arrive, stop the car and get out.</li>
+</ul>
+<p>The first two algorithms are based on counting – the first counts time, and the second counts distance.  Neither of these algorithms guarantees that you will arrive in Camps Bay. In the first case, you might hit heavy traffic or none at all, and either fall short of or overshoot your desired destination. In the second case, you might find a detour and end up nowhere near Camps Bay.</p>
+<p>The third algorithm is event-controlled. You carry on driving as long as you are not at the beach. The condition you keep checking is <em>am I at the beach yet?</em>.</p>
+<p>Many real-life activities are event-controlled. For example, you drink as long as you are thirsty. You read the newspaper as long as you are interested.  Some activities are based on multiple events – for example, a worker works as long as there is work to do and the time is not 5pm.</p>
+</div>
+<div class="section" id="the-while-statement">
+<h2>The <code class="docutils literal notranslate"><span class="pre">while</span></code> statement<a class="headerlink" href="#the-while-statement" title="Permalink to this headline">¶</a></h2>
+<p>Python’s event-controlled loop statement is the <code class="docutils literal notranslate"><span class="pre">while</span></code> statement. You should use it when you don’t know beforehand how many times you will have to execute the body of the loop.  The while-body keeps repeating as long as the condition is true.  Here’s a flow control diagram for the while statement:</p>
+<div><img height="440" src="_images/blockdiag-1dd4d1287c1aaf13fd077ec03a88258d7b47b64e.png" width="448" /></div><p>The loop consists of three important parts: the <em>initialisation</em>, the <em>condition</em>, and the <em>update</em>.  In the initialisation step, you set up the variable which you’re going to use in the condition.  In the condition step, you perform a test on the variable to see whether you should terminate the loop or execute the body another time.  Then, after each successfully completed execution of the loop body, you update your variable.</p>
+<p>Note that the condition is checked before the loop body is executed for the first time – if the condition is false at the start, the loop body will never be executed at all.</p>
+<p>Here is a simple Python example which adds the first ten integers together:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span><span class="mi">10</span><span class="p">:</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The variable used in the loop condition is the number <code class="docutils literal notranslate"><span class="pre">i</span></code>, which you use to count the integers from <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">10</span></code>.  First you <em>initialise</em> this number to <code class="docutils literal notranslate"><span class="pre">1</span></code>.  In the <em>condition</em>, you check whether <code class="docutils literal notranslate"><span class="pre">i</span></code> is less than or equal to <code class="docutils literal notranslate"><span class="pre">10</span></code>, and if this is true you execute the loop body.  Then, at the end of the loop body, you <em>update</em> <code class="docutils literal notranslate"><span class="pre">i</span></code> by incrementing it by <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>It is very important that you increment <code class="docutils literal notranslate"><span class="pre">i</span></code> at the end.  If you did not, <code class="docutils literal notranslate"><span class="pre">i</span></code> would always be equal to <code class="docutils literal notranslate"><span class="pre">1</span></code>, the condition would always be true, and your program would never terminate – we call this an infinite loop.  Whenever you write a <code class="docutils literal notranslate"><span class="pre">while</span></code> loop, make sure that the variable you use in your condition is updated inside the loop body!</p>
+<p>Here are a few common errors which might result in an infinite loop:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># wrong variable updated</span>
+
+<span class="n">product</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">while</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="n">product</span> <span class="o">*=</span> <span class="n">count</span>
+    <span class="c1"># forgot to update count</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># update statement is indented one level too little, so it&#39;s outside the loop body</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">2</span> <span class="c1"># x will never equal 5, because we are counting in even numbers!</span>
+</pre></div>
+</div>
+<p>You might be wondering why the Python interpreter cannot catch infinite loops. This is known as the halting problem. It is impossible for a computer to detect all possible infinite loops in another program. It is up to the programmer to avoid infinite loops.</p>
+<p>In many of the examples above, we are counting to a predetermined number, so it would really be more appropriate for us to use a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop (which will be introduced in the next section) – that is the loop structure which is more commonly used for counting loops.  Here is a more realistic example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># numbers is a list of numbers -- we don&#39;t know what the numbers are!</span>
+
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span> <span class="ow">and</span> <span class="n">total</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">+=</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Here we add up numbers from a list until the total reaches 100.  We don’t know how many times we will have to execute the loop, because we don’t know the values of the numbers.  Note that we might reach the end of the list of numbers before the total reaches 100 – if we try to access an element beyond the end of the list we will get an error, so we should add a check to make sure that this doesn’t happen.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a program which uses a <code class="docutils literal notranslate"><span class="pre">while</span></code> loop to sum the squares of integers (starting from <code class="docutils literal notranslate"><span class="pre">1</span></code>) until the total exceeds 200.  Print the final total and the last number to be squared and added.</li>
+<li>Write a program which keeps prompting the user to guess a word.  The user is allowed up to ten guesses – write your code in such a way that the secret word and the number of allowed guesses are easy to change.  Print messages to give the user feedback.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="the-for-statement">
+<h2>The <code class="docutils literal notranslate"><span class="pre">for</span></code> statement<a class="headerlink" href="#the-for-statement" title="Permalink to this headline">¶</a></h2>
+<p>Python’s other loop statement is the <code class="docutils literal notranslate"><span class="pre">for</span></code> statement.  You should use it when you need to do something for some predefined number of steps.  Before we look at Python’s <code class="docutils literal notranslate"><span class="pre">for</span></code> loop syntax, we will briefly look at the way <em>for</em> loops work in other languages.</p>
+<p>Here is an example of a <em>for</em> loop in Java:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="p">;</span> <span class="n">count</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can see that this kind of <em>for</em> loop has a lot in common with a <em>while</em> loop – in fact, you could say that it’s just a special case of a <em>while</em> loop.  The initialisation step, the condition and the update step are all defined in the section in parentheses on the first line.</p>
+<p><em>for</em> loops are often used to perform an operation on every element of some kind of sequence. If you wanted to iterate over a list using the classic-style <em>for</em> loop, you would have to count from zero to the end of the list, and then access each list element by its index.</p>
+<p>In Python, <code class="docutils literal notranslate"><span class="pre">for</span></code> loops make this use case simple and easy by allowing you to iterate over sequences directly.  Here is an example of a <code class="docutils literal notranslate"><span class="pre">for</span></code> statement which counts from 1 to 8:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As we saw in the previous chapter, <code class="docutils literal notranslate"><span class="pre">range</span></code> is an immutable sequence type used for ranges of integers – in this case, the range is counting from <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">8</span></code>. The <code class="docutils literal notranslate"><span class="pre">for</span></code> loop will step through each of the numbers in turn, performing the print action for each one.  When the end of the range is reached, the <code class="docutils literal notranslate"><span class="pre">for</span></code> loop will exit.</p>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">for</span></code> to iterate over other kinds of sequences too.  You can iterate over a list of strings like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="s2">&quot;budgie&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">pet</span> <span class="ow">in</span> <span class="n">pets</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pet</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At each iteration of the loop, the next element of the list <code class="docutils literal notranslate"><span class="pre">pets</span></code> is assigned to the variable <code class="docutils literal notranslate"><span class="pre">pet</span></code>, which you can then access inside the loop body.  The example above is functionally identical to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pets</span><span class="p">)):</span> <span class="c1"># i will iterate over 0, 1 and 2</span>
+    <span class="n">pet</span> <span class="o">=</span> <span class="n">pets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pet</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That is similar to the way <code class="docutils literal notranslate"><span class="pre">for</span></code> loops are written in, for example, Java.  You should avoid doing this, as it’s more difficult to read, and unnecessarily complex.  If for some reason you need the index inside the loop as well as the list element itself, you can use the <code class="docutils literal notranslate"><span class="pre">enumerate</span></code> function to number the elements:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pet</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pets</span><span class="p">):</span>
+    <span class="n">pets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pet</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="c1"># rewrite the list in all caps</span>
+</pre></div>
+</div>
+<p>Like <code class="docutils literal notranslate"><span class="pre">range</span></code>, <code class="docutils literal notranslate"><span class="pre">enumerate</span></code> also returns an iterator – each item it generates is a tuple in which the first value is the index of the element (starting at zero) and the second is the element itself. In the loop above, at each iteration the value of the index is assigned to the variable <code class="docutils literal notranslate"><span class="pre">i</span></code>, and the element is assigned to the variable <code class="docutils literal notranslate"><span class="pre">pet</span></code>, as before.</p>
+<p>Why couldn’t we just write <code class="docutils literal notranslate"><span class="pre">pet</span> <span class="pre">=</span> <span class="pre">pet.upper()</span></code>?  That would just assign a new value to the variable <code class="docutils literal notranslate"><span class="pre">pet</span></code> inside the loop, without changing the original list.</p>
+<p>This brings us to a common <code class="docutils literal notranslate"><span class="pre">for</span></code> loop pitfall: modifying a list while you’re iterating over it.  The example above only modifies elements in-place, and doesn’t change their order around, but you can cause all kinds of errors and unintended behaviour if you insert or delete list elements in the middle of iteration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span> <span class="c1"># oops -- we missed one, because we shifted the elements around while we were iterating!</span>
+</pre></div>
+</div>
+<p>Sometimes you can avoid this by iterating over a <em>copy</em> of the list instead, but it won’t help you in this case – as you delete elements from the original list, it will shrink, so the indices from the unmodified list copy will soon exceed the length of the modified list and you will get an error.  In general, if you want to select a subset of elements from a list on the basis of some criterion, you should use a <em>list comprehension</em> instead. We will look at them at the end of this chapter.</p>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a program which sums the integers from 1 to 10 using a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop (and prints the total at the end).</li>
+<li>Can you think of a way to do this without using a loop?</li>
+<li>Write a program which finds the factorial of a given number. E.g. 3 factorial, or <strong>3!</strong> is equal to <strong>3 x 2 x 1</strong>; <strong>5!</strong> is equal to <strong>5 x 4 x 3 x 2 x 1</strong>, etc.. Your program should only contain a single loop.</li>
+<li>Write a program which prompts the user for 10 floating-point numbers and calculates their sum, product and average. Your program should only contain a single loop.</li>
+<li>Rewrite the previous program so that it has two loops – one which collects and stores the numbers, and one which processes them.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="nested-loops">
+<h2>Nested loops<a class="headerlink" href="#nested-loops" title="Permalink to this headline">¶</a></h2>
+<p>We saw in the previous chapter that we can create multi-dimensional sequences – sequences in which each element is another sequence.  How do we iterate over all the values of a multi-dimensional sequence?  We need to use loops inside other loops.  When we do this, we say that we are <em>nesting</em> loops.</p>
+<p>Consider the timetable example from the previous chapter – let us say that the timetable contains seven days, and each day contains 24 time slots.  Each time slot is a string, which is empty if there is nothing scheduled for that slot.  How can we iterate over all the time slots and print out all our scheduled events?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># first let&#39;s define weekday names</span>
+<span class="n">WEEKDAYS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Monday&#39;</span><span class="p">,</span> <span class="s1">&#39;Tuesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Wednesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Thursday&#39;</span><span class="p">,</span> <span class="s1">&#39;Friday&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunday&#39;</span><span class="p">)</span>
+
+<span class="c1"># now we iterate over each day in the timetable</span>
+<span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">timetable</span><span class="p">:</span>
+    <span class="c1"># and over each timeslot in each day</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">event</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">day</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event</span><span class="p">:</span> <span class="c1"># if the slot is not an empty string</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> at </span><span class="si">%02d</span><span class="s2">:00 -- </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">WEEKDAYS</span><span class="p">[</span><span class="n">day</span><span class="p">],</span> <span class="n">i</span><span class="p">,</span> <span class="n">event</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Note that we have two <code class="docutils literal notranslate"><span class="pre">for</span></code> loops – the inner loop will be executed once for every step in the outer loop’s iteration.  Also note that we are using the <code class="docutils literal notranslate"><span class="pre">enumerate</span></code> function when iterating over the days – because we need both the index of each time slot (so that we can print the hour) and the contents of that slot.</p>
+<p>You may have noticed that we look up the name of the weekday once for every iteration of the inner loop – but the name only changes once for every iteration of the outer loop.  We can make our loop a little more efficient by moving this lookup out of the inner loop, so that we only perform it seven times and not 168 times!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">timetable</span><span class="p">:</span>
+    <span class="n">day_name</span> <span class="o">=</span> <span class="n">WEEKDAYS</span><span class="p">[</span><span class="n">day</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">event</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">day</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> at </span><span class="si">%02d</span><span class="s2">:00 -- </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">day_name</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">event</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This doesn’t make much difference when you are looking up a value in a short tuple, but it could make a big difference if it were an expensive, time-consuming calculation and you were iterating over hundreds or thousands of values.</p>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a program which uses a nested <code class="docutils literal notranslate"><span class="pre">for</span></code> loop to populate a three-dimensional list representing a calendar: the top-level list should contain a sub-list for each month, and each month should contain four weeks.  Each week should be an empty list.</li>
+<li>Modify your code to make it easier to access a month in the calendar by a human-readable month name, and each week by a name which is numbered starting from 1.  Add an event (in the form of a string description) to the second week in July.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="iterables-iterators-and-generators">
+<h2>Iterables, iterators and generators<a class="headerlink" href="#iterables-iterators-and-generators" title="Permalink to this headline">¶</a></h2>
+<p>In Python, any type which can be iterated over with a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop is an <em>iterable</em>.  Lists, tuples, strings and dicts are all commonly used iterable types.  Iterating over a list or a tuple simply means processing each value in turn.</p>
+<p>Sometimes we use a sequence to store a series of values which don’t follow any particular pattern: each value is unpredictable, and can’t be calculated on the fly.  In cases like this, we have no choice but to store each value in a list or tuple.  If the list is very large, this can use up a lot of memory.</p>
+<p>What if the values in our sequence <em>do</em> follow a pattern, and <em>can</em> be calculated on the fly?  We can save a lot of memory by calculating values only when we need them, instead of calculating them all up-front: instead of storing a big list, we can store only the information we need for the calculation.</p>
+<p>Python has a lot of built-in iterable types that generate values on demand – they are often referred to as <em>generators</em>.  We have already seen some examples, like <code class="docutils literal notranslate"><span class="pre">range</span></code> and <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>.  You can mostly treat a generator just like any other sequence if you only need to access its elements one at a time – for example, if you use it in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># These two loops will do exactly the same thing:</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You may notice a difference if you try to print out the generator’s contents – by default all you will get is Python’s standard string representation of the object, which shows you the object’s type and its unique identifier.  To print out all the values of generator, we need to convert it to a sequence type like a list, which will force all of the values to be generated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this will not be very helpful</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+
+<span class="c1"># this will show you all the generated values</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>You can use all these iterables almost interchangeably because they all use the same interface for iterating over values: every <em>iterable</em> object has a method which can be used to return an <em>iterator</em> over that object.  The iterable and the iterator together form a consistent interface which can be used to loop over a sequence of values – whether those values are all stored in memory or calculated as they are needed:</p>
+<ul>
+<li><p class="first">The <em>iterable</em> has a method for accessing an item by its index.  For example, a list just returns the item which is stored in a particular position.  A range, on the other hand, <em>calculates</em> the integer in the range which corresponds to a particular index.</p>
+</li>
+<li><p class="first">The <em>iterator</em> “keeps your place” in the sequence, and has a method which lets you access the next element.  There can be multiple iterators associated with a single iterable at the same time – each one in a different place in the iteration.  For example, you can iterate over the same list in both levels of a nested loop – each loop uses its own <em>iterator</em>, and they do not interfere with each other:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;fish&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">first_animal</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">second_animal</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Yesterday I bought a </span><span class="si">%s</span><span class="s2">. Today I bought a </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">first_animal</span><span class="p">,</span> <span class="n">second_animal</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>We will look in more detail at how these methods are defined in a later chapter, when we discuss writing custom objects.  For now, here are some more examples of built-in generators defined in Python’s <code class="docutils literal notranslate"><span class="pre">itertools</span></code> module:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># we need to import the module in order to use it</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="c1"># unlike range, count doesn&#39;t have an upper bound, and is not restricted to integers</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="c1"># 1, 2, 3....</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="c1"># 1.0, 1.5, 2.0....</span>
+
+<span class="c1"># cycle repeats the values in another iterable over and over</span>
+<span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">([</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span> <span class="c1"># &#39;cat&#39;, &#39;dog&#39;, &#39;cat&#39;, &#39;dog&#39;...</span>
+
+<span class="c1"># repeat repeats a single item</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span> <span class="c1"># ...forever</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="c1"># 1, 1, 1....</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="c1"># or a set number of times</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="c1"># 1, 1, 1</span>
+
+<span class="c1"># chain combines multiple iterables sequentially</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">animals</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="c1"># print all the numbers and then all the animals</span>
+</pre></div>
+</div>
+<p>Some of these generators can go on for ever, so if you use them in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop you will need some other check to make the loop terminate!</p>
+<p>There is also a built-in function called <code class="docutils literal notranslate"><span class="pre">zip</span></code> which allows us to combine multiple iterables pairwise. It also outputs a generator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The combined iterable will be the same length as the shortest of the component iterables – if any of the component iterables are longer than that, their trailing elements will be discarded.</p>
+<div class="section" id="exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a tuple of month names and a tuple of the number of days in each month (assume that February has 28 days). Using a single <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, construct a dictionary which has the month names as keys and the corresponding day numbers as values.</li>
+<li>Now do the same thing without using a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="comprehensions">
+<h2>Comprehensions<a class="headerlink" href="#comprehensions" title="Permalink to this headline">¶</a></h2>
+<p>Suppose that we have a list of numbers, and we want to build a new list by doubling all the values in the first list.  Or that we want to extract all the even numbers from a list of numbers.  Or that we want to find and capitalise all the animal names in a list of animal names that start with a vowel.  We can do each of these things by iterating over the original list, performing some kind of check on each element in turn, and appending values to a new list as we go:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+
+<span class="n">doubles</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="n">doubles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">number</span><span class="p">)</span>
+
+<span class="n">even_numbers</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">even_numbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+
+<span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;aardvark&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;opossum&#39;</span><span class="p">]</span>
+
+<span class="n">vowel_animals</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">animal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;aeiou&#39;</span><span class="p">:</span>
+        <span class="n">vowel_animals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">animal</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>That’s quite an unwieldy way to do something very simple.  Fortunately, we can rewrite simple loops like this to use a cleaner and more readable syntax by using <em>comprehensions</em>.</p>
+<p>A comprehension is a kind of filter which we can define on an iterable based on some condition.  The result is another iterable.  Here are some examples of list comprehensions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">doubles</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">number</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
+<span class="n">even_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="n">number</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span> <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">vowel_animals</span> <span class="o">=</span> <span class="p">[</span><span class="n">animal</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="n">animals</span> <span class="k">if</span> <span class="n">animal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="s1">&#39;aeiou&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The comprehension is the part written between square brackets on each line.  Each of these comprehensions results in the creation of a new <code class="docutils literal notranslate"><span class="pre">list</span></code> object.</p>
+<p>You can think of the comprehension as a compact form of <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, which has been rearranged slightly.</p>
+<ul class="simple">
+<li>The first part (<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">number</span></code> or <code class="docutils literal notranslate"><span class="pre">number</span></code> or <code class="docutils literal notranslate"><span class="pre">animal.title()</span></code>) defines what is going to be inserted into the new list at each step of the loop.  This is usually some function of each item in the original iterable as it is processed.</li>
+<li>The middle part (<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">number</span> <span class="pre">in</span> <span class="pre">numbers</span></code> or <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">animal</span> <span class="pre">in</span> <span class="pre">animals</span></code>) corresponds to the first line of a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, and defines what iterable is being iterated over and what variable name each item is given inside the loop.</li>
+<li>The last part (nothing or <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">number</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">==</span> <span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">animal[0]</span> <span class="pre">in</span> <span class="pre">'aeiou'</span></code>) is a condition which filters out some of the original items.  Only items for which the condition is true will be processed (as described in the first part) and included in the new list.  You don’t have to include this part – in the first example, we want to double <em>all</em> the numbers in the original list.</li>
+</ul>
+<p>List comprehensions can be used to replace loops that are a lot more complicated than this – even nested loops.  The more complex the loop, the more complicated the corresponding list comprehension is likely to be.  A long and convoluted list comprehension can be very difficult for someone reading your code to understand – sometimes it’s better just to write the loop out in full.</p>
+<p>The final product of a comprehension doesn’t have to be a list.  You can create dictionaries or generators in a very similar way – a generator expression uses round brackets instead of square brackets, a set comprehension uses curly brackets, and a dict comprehension uses curly brackets <em>and</em> separates the key and the value using a colon:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+
+<span class="c1"># a generator comprehension</span>
+<span class="n">doubles_generator</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">number</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">)</span>
+
+<span class="c1"># a set comprehension</span>
+<span class="n">doubles_set</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span> <span class="o">*</span> <span class="n">number</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">}</span>
+
+<span class="c1"># a dict comprehension which uses the number as the key and the doubled number as the value</span>
+<span class="n">doubles_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">number</span><span class="p">:</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">number</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If your generator expression is a parameter being passed to a function, like <code class="docutils literal notranslate"><span class="pre">sum</span></code>, you can leave the round brackets out:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sum_doubles</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">number</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">dict and set comprehensions were introduced in Python 3.  In Python 2 you have to create a list or generator instead and convert it to a set or a dict yourself.</p>
+</div>
+<div class="section" id="exercise-5">
+<h3>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a string which contains the first ten positive integers separated by commas and spaces. Remember that you can’t join numbers – you have to convert them to strings first.  Print the output string.</li>
+<li>Rewrite the calendar program from exercise 3 using nested comprehensions instead of nested loops.  Try to append a string to one of the week lists, to make sure that you haven’t reused the same list instead of creating a separate list for each week.</li>
+<li>Now do something similar to create a calendar which is a list with 52 empty sublists (one for each week in the whole year). Hint: how would you modify the nested <code class="docutils literal notranslate"><span class="pre">for</span></code> loops?</li>
+</ol>
+</div>
+</div>
+<div class="section" id="the-break-and-continue-statements">
+<h2>The <code class="docutils literal notranslate"><span class="pre">break</span></code> and <code class="docutils literal notranslate"><span class="pre">continue</span></code> statements<a class="headerlink" href="#the-break-and-continue-statements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="break">
+<h3><code class="docutils literal notranslate"><span class="pre">break</span></code><a class="headerlink" href="#break" title="Permalink to this headline">¶</a></h3>
+<p>Inside the loop body, you can use the <code class="docutils literal notranslate"><span class="pre">break</span></code> statement to exit the loop immediately. You might want to test for a special case which will result in immediate exit from the loop. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">while</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">break</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The code fragment above will only print out the numbers <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">4</span></code>. In the case where <code class="docutils literal notranslate"><span class="pre">x</span></code> is <code class="docutils literal notranslate"><span class="pre">5</span></code>, the <code class="docutils literal notranslate"><span class="pre">break</span></code> statement will be encountered, and the flow of control will leave the loop immediately.</p>
+</div>
+<div class="section" id="continue">
+<h3><code class="docutils literal notranslate"><span class="pre">continue</span></code><a class="headerlink" href="#continue" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">continue</span></code> statement is similar to the <code class="docutils literal notranslate"><span class="pre">break</span></code> statement, in that it causes the flow of control to exit the current loop body at the point of encounter – but the loop itself is not exited. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> <span class="c1"># this will count from 1 to 10</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This fragment will print all the numbers from <code class="docutils literal notranslate"><span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">10</span></code> <em>except</em> <code class="docutils literal notranslate"><span class="pre">5</span></code>.  In the case where <code class="docutils literal notranslate"><span class="pre">x</span></code> is <code class="docutils literal notranslate"><span class="pre">5</span></code>, the <code class="docutils literal notranslate"><span class="pre">continue</span></code> statement will be encountered, and the flow of control will leave that loop body – but then the loop will <em>continue</em> with the next element in the range.</p>
+<p>Note that if we replaced <code class="docutils literal notranslate"><span class="pre">break</span></code> with <code class="docutils literal notranslate"><span class="pre">continue</span></code> in the first example, we would get an infinite loop – because the <code class="docutils literal notranslate"><span class="pre">continue</span></code> statement would be triggered before <code class="docutils literal notranslate"><span class="pre">x</span></code> could be updated. <code class="docutils literal notranslate"><span class="pre">x</span></code> would stay equal to <code class="docutils literal notranslate"><span class="pre">5</span></code>, and keep triggering the <code class="docutils literal notranslate"><span class="pre">continue</span></code> statement, for ever!</p>
+</div>
+<div class="section" id="using-break-to-simulate-a-do-while-loop">
+<h3>Using <code class="docutils literal notranslate"><span class="pre">break</span></code> to simulate a <em>do-while</em> loop<a class="headerlink" href="#using-break-to-simulate-a-do-while-loop" title="Permalink to this headline">¶</a></h3>
+<p>Recall that a <code class="docutils literal notranslate"><span class="pre">while</span></code> loop checks the condition <em>before</em> executing the loop body for the first time.  Sometimes this is convenient, but sometimes it’s not.  What if you always need to execute the loop body at least once?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">age</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">)</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">valid_number</span><span class="p">(</span><span class="n">age</span><span class="p">):</span> <span class="c1"># let&#39;s assume that we&#39;ve defined valid_number elsewhere</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We have to ask the user for input at least once, because the condition depends on the user input – so we have to do it once outside the loop.  This is inconvenient, because we have to repeat the contents of the loop body – and unnecessary repetition is usually a bad idea.  What if we want to change the message to the user later, and forget to change it in both places?  What if the loop body contains many lines of code?</p>
+<p>Many other languages offer a structure called a <em>do-while</em> loop, or a <em>repeat-until</em> loop, which checks the condition <em>after</em> executing the loop body.  That means that the loop body will always be executed at least once.  Python doesn’t have a structure like this, but we can simulate it with the help of the <code class="docutils literal notranslate"><span class="pre">break</span></code> statement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">valid_number</span><span class="p">(</span><span class="n">age</span><span class="p">):</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+<p>We have moved the condition <em>inside</em> the loop body, and we can check it at the end, <em>after</em> asking the user for input.  We have replaced the condition in the <code class="docutils literal notranslate"><span class="pre">while</span></code> statement with <code class="docutils literal notranslate"><span class="pre">True</span></code> – which is, of course, always true.  Now the <code class="docutils literal notranslate"><span class="pre">while</span></code> statement  will <em>never</em> terminate after checking the condition – it can <em>only</em> terminate if the <code class="docutils literal notranslate"><span class="pre">break</span></code> statement is triggered.</p>
+<p>This trick can help us to make this particular loop use case look better, but it has its disadvantages.  If we accidentally leave out the <code class="docutils literal notranslate"><span class="pre">break</span></code> statement, or write the loop in such a way that it can never be triggered, we will have an infinite loop!  This code can also be more difficult to understand, because the actual condition which makes the loop terminate is hidden inside the body of the loop.  You should therefore use this construct sparingly.  Sometimes it’s possible to rewrite the loop in such a way that the condition can be checked before the loop body <em>and</em> repetition is avoided:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">age</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># we can initialise age to something which is not a valid number</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">valid_number</span><span class="p">(</span><span class="n">age</span><span class="p">):</span> <span class="c1"># now we can use the condition before asking the user anything</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-6">
+<h3>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Write a program which repeatedly prompts the user for an integer. If the integer is even, print the integer. If the integer is odd, don’t print anything. Exit the program if the user enters the integer <code class="docutils literal notranslate"><span class="pre">99</span></code>.</p>
+</li>
+<li><p class="first">Some programs ask the user to input a variable number of data entries, and finally to enter a specific character or string (called a <em>sentinel</em>) which signifies that there are no more entries.  For example, you could be asked to enter your PIN followed by a hash (<code class="docutils literal notranslate"><span class="pre">#</span></code>). The hash is the sentinel which indicates that you have finished entering your PIN.</p>
+<p>Write a program which averages positive integers.  Your program should prompt the user to enter integers until the user enters a negative integer.  The negative integer should be discarded, and you should print the average of all the previously entered integers.</p>
+</li>
+<li><p class="first">Implement a simple calculator with a menu.  Display the following options to the user, prompt for a selection, and carry out the requested action (e.g. prompt for two numbers and add them).  After each operation, return the user to the menu. Exit the program when the user selects <code class="docutils literal notranslate"><span class="pre">0</span></code>. If the user enters a number which is not in the menu, ignore the input and redisplay the menu. You can assume that the user will enter a valid integer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Calculator</span> <span class="n">Menu</span> <span class="o">--</span>
+<span class="mf">0.</span> <span class="n">Quit</span>
+<span class="mf">1.</span> <span class="n">Add</span> <span class="n">two</span> <span class="n">numbers</span>
+<span class="mf">2.</span> <span class="n">Subtract</span> <span class="n">two</span> <span class="n">numbers</span>
+<span class="mf">3.</span> <span class="n">Multiply</span> <span class="n">two</span> <span class="n">numbers</span>
+<span class="mf">4.</span> <span class="n">Divide</span> <span class="n">two</span> <span class="n">numbers</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="using-loops-to-simplify-code">
+<h3>Using loops to simplify code<a class="headerlink" href="#using-loops-to-simplify-code" title="Permalink to this headline">¶</a></h3>
+<p>We can use our knowledge of loops to simplify some kinds of redundant code.  Consider this example, in which we prompt a user for some personal details:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your name: &quot;</span><span class="p">)</span>
+<span class="n">surname</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your surname: &quot;</span><span class="p">)</span>
+<span class="c1"># let&#39;s store these as strings for now, and convert them to numbers later</span>
+<span class="n">age</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your age: &quot;</span><span class="p">)</span>
+<span class="n">height</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your height: &quot;</span><span class="p">)</span>
+<span class="n">weight</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your weight: &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There’s a lot of repetition in this snippet of code.  Each line is exactly the same except for the name of the variable and the name of the property we ask for (and these values match each other, so there’s really only one difference).  When we write code like this we’re likely to do a lot of copying and pasting, and it’s easy to make a mistake.  If we ever want to change something, we’ll need to change each line.</p>
+<p>How can we improve on this?  We can separate the parts of these lines that differ from the parts that don’t, and use a loop to iterate over them.  Instead of storing the user input in separate variables, we are going to use a dictionary – we can easily use the property names as keys, and it’s a sensible way to group these values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">person</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;surname&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">]:</span>
+    <span class="n">person</span><span class="p">[</span><span class="n">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your </span><span class="si">%s</span><span class="s2">: &quot;</span> <span class="o">%</span> <span class="n">prop</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now there is no unnecessary duplication.  We can easily change the string that we use as a prompt, or add more code to execute for each property – we will only have to edit the code in one place, not in five places.  To add another property, all we have to do is add another name to the list.</p>
+</div>
+<div class="section" id="exercise-7">
+<h3>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Modify the example above to include type conversion of the properties: age should be an integer, height and weight should be floats, and name and surname should be strings.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">number</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">while</span> <span class="n">total</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="n">number</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">number</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">total</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Last number: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">number</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GUESSES_ALLOWED</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">SECRET_WORD</span> <span class="o">=</span> <span class="s2">&quot;caribou&quot;</span>
+
+<span class="n">guesses_left</span> <span class="o">=</span> <span class="n">GUESSES_ALLOWED</span>
+<span class="n">guessed_word</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">while</span> <span class="n">guessed_word</span> <span class="o">!=</span> <span class="n">SECRET_WORD</span> <span class="ow">and</span> <span class="n">guesses_left</span><span class="p">:</span>
+    <span class="n">guessed_word</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Guess a word: &quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">guessed_word</span> <span class="o">==</span> <span class="n">SECRET_WORD</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You guessed! Congratulations!&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">guesses_left</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incorrect! You have </span><span class="si">%d</span><span class="s2"> guesses left.&quot;</span> <span class="o">%</span> <span class="n">guesses_left</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Remember that we can use the <code class="docutils literal notranslate"><span class="pre">sum</span></code> function to sum a sequence:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter an integer: &quot;</span><span class="p">))</span>
+
+<span class="n">num_fac</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">num_fac</span> <span class="o">*=</span> <span class="n">i</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">! = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">num_fac</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">product</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter number </span><span class="si">%d</span><span class="s2">: &quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">))</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">num</span>
+    <span class="n">product</span> <span class="o">*=</span> <span class="n">num</span>
+
+<span class="n">average</span> <span class="o">=</span> <span class="n">total</span><span class="o">/</span><span class="mi">10</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum: </span><span class="si">%g</span><span class="se">\n</span><span class="s2">Product: </span><span class="si">%g</span><span class="se">\n</span><span class="s2">Average: </span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">average</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter number </span><span class="si">%d</span><span class="s2">: &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
+
+<span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">product</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">num</span>
+    <span class="n">product</span> <span class="o">*=</span> <span class="n">num</span>
+
+<span class="n">average</span> <span class="o">=</span> <span class="n">total</span><span class="o">/</span><span class="mi">10</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum: </span><span class="si">%g</span><span class="se">\n</span><span class="s2">Product: </span><span class="si">%g</span><span class="se">\n</span><span class="s2">Average: </span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">average</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">calendar</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+    <span class="n">month</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">month</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+    <span class="n">calendar</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">JANUARY</span><span class="p">,</span> <span class="n">FEBRUARY</span><span class="p">,</span> <span class="n">MARCH</span><span class="p">,</span> <span class="n">APRIL</span><span class="p">,</span> <span class="n">MAY</span><span class="p">,</span> <span class="n">JUNE</span><span class="p">,</span> <span class="n">JULY</span><span class="p">,</span> <span class="n">AUGUST</span><span class="p">,</span>
+<span class="n">SEPTEMBER</span><span class="p">,</span> <span class="n">OCTOBER</span><span class="p">,</span> <span class="n">NOVEMBER</span><span class="p">,</span> <span class="n">DECEMBER</span><span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">WEEK_1</span><span class="p">,</span> <span class="n">WEEK_2</span><span class="p">,</span> <span class="n">WEEK_3</span><span class="p">,</span> <span class="n">WEEK_4</span><span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">calendar</span><span class="p">[</span><span class="n">JULY</span><span class="p">][</span><span class="n">WEEK_2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Go on holiday!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-4">
+<h3>Answer to exercise 4<a class="headerlink" href="#answer-to-exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">months</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;January&quot;</span><span class="p">,</span> <span class="s2">&quot;February&quot;</span><span class="p">,</span> <span class="s2">&quot;March&quot;</span><span class="p">,</span> <span class="s2">&quot;April&quot;</span><span class="p">,</span> <span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;June&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;July&quot;</span><span class="p">,</span> <span class="s2">&quot;August&quot;</span><span class="p">,</span> <span class="s2">&quot;September&quot;</span><span class="p">,</span> <span class="s2">&quot;October&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;November&quot;</span><span class="p">,</span> <span class="s2">&quot;December&quot;</span><span class="p">)</span>
+
+<span class="n">num_days</span> <span class="o">=</span> <span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+
+<span class="n">month_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">month</span><span class="p">,</span> <span class="n">days</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">months</span><span class="p">,</span> <span class="n">days</span><span class="p">):</span>
+    <span class="n">month_dict</span><span class="p">[</span><span class="n">month</span><span class="p">]</span> <span class="o">=</span> <span class="n">days</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">months</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;January&quot;</span><span class="p">,</span> <span class="s2">&quot;February&quot;</span><span class="p">,</span> <span class="s2">&quot;March&quot;</span><span class="p">,</span> <span class="s2">&quot;April&quot;</span><span class="p">,</span> <span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;June&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;July&quot;</span><span class="p">,</span> <span class="s2">&quot;August&quot;</span><span class="p">,</span> <span class="s2">&quot;September&quot;</span><span class="p">,</span> <span class="s2">&quot;October&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;November&quot;</span><span class="p">,</span> <span class="s2">&quot;December&quot;</span><span class="p">)</span>
+
+<span class="n">num_days</span> <span class="o">=</span> <span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+
+<span class="c1"># the zipped output is a sequence of two-element tuples,</span>
+<span class="c1"># so we can just use a dict conversion.</span>
+<span class="n">month_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">months</span><span class="p">,</span> <span class="n">days</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-5">
+<h3>Answer to exercise 5<a class="headerlink" href="#answer-to-exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">number_string</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">number_string</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">calendar</span> <span class="o">=</span> <span class="p">[[[]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)]</span>
+
+<span class="p">(</span><span class="n">JANUARY</span><span class="p">,</span> <span class="n">FEBRUARY</span><span class="p">,</span> <span class="n">MARCH</span><span class="p">,</span> <span class="n">APRIL</span><span class="p">,</span> <span class="n">MAY</span><span class="p">,</span> <span class="n">JUNE</span><span class="p">,</span> <span class="n">JULY</span><span class="p">,</span> <span class="n">AUGUST</span><span class="p">,</span>
+<span class="n">SEPTEMBER</span><span class="p">,</span> <span class="n">OCTOBER</span><span class="p">,</span> <span class="n">NOVEMBER</span><span class="p">,</span> <span class="n">DECEMBER</span><span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">WEEK_1</span><span class="p">,</span> <span class="n">WEEK_2</span><span class="p">,</span> <span class="n">WEEK_3</span><span class="p">,</span> <span class="n">WEEK_4</span><span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">calendar</span><span class="p">[</span><span class="n">JULY</span><span class="p">][</span><span class="n">WEEK_2</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Go on holiday!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><div class="first highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">calendar</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)]</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-6">
+<h3>Answer to exercise 6<a class="headerlink" href="#answer-to-exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter an integer: &quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">99</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="nb">print</span> <span class="n">num</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter positive integers to be averaged. Enter a negative integer to terminate the list.&quot;</span><span class="p">)</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter a number: &quot;</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">break</span>
+
+    <span class="n">nums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+
+<span class="n">average</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;average = </span><span class="si">%g</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">average</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">menu</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;-- Calculator Menu --</span>
+<span class="s2">0. Quit</span>
+<span class="s2">1. Add two numbers</span>
+<span class="s2">2. Subtract two numbers</span>
+<span class="s2">3. Multiply two numbers</span>
+<span class="s2">4. Divide two numbers&quot;&quot;&quot;</span>
+
+<span class="n">selection</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">while</span> <span class="n">selection</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
+    <span class="n">selection</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Select an option: &quot;</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">selection</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid option: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">selection</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+    <span class="k">if</span> <span class="n">selection</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the first number: &quot;</span><span class="p">))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter the second number: &quot;</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">selection</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">selection</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">selection</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">selection</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The result is </span><span class="si">%g</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-7">
+<h3>Answer to exercise 7<a class="headerlink" href="#answer-to-exercise-7" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">person</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">properties</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;surname&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span> <span class="nb">float</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">prop</span><span class="p">,</span> <span class="n">p_type</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+    <span class="n">person</span><span class="p">[</span><span class="n">prop</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_type</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Please enter your </span><span class="si">%s</span><span class="s2">: &quot;</span> <span class="o">%</span> <span class="n">prop</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Loop control statements</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#the-while-statement">The <code class="docutils literal notranslate"><span class="pre">while</span></code> statement</a><ul>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-for-statement">The <code class="docutils literal notranslate"><span class="pre">for</span></code> statement</a><ul>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nested-loops">Nested loops</a><ul>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#iterables-iterators-and-generators">Iterables, iterators and generators</a><ul>
+<li><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#comprehensions">Comprehensions</a><ul>
+<li><a class="reference internal" href="#exercise-5">Exercise 5</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-break-and-continue-statements">The <code class="docutils literal notranslate"><span class="pre">break</span></code> and <code class="docutils literal notranslate"><span class="pre">continue</span></code> statements</a><ul>
+<li><a class="reference internal" href="#break"><code class="docutils literal notranslate"><span class="pre">break</span></code></a></li>
+<li><a class="reference internal" href="#continue"><code class="docutils literal notranslate"><span class="pre">continue</span></code></a></li>
+<li><a class="reference internal" href="#using-break-to-simulate-a-do-while-loop">Using <code class="docutils literal notranslate"><span class="pre">break</span></code> to simulate a <em>do-while</em> loop</a></li>
+<li><a class="reference internal" href="#exercise-6">Exercise 6</a></li>
+<li><a class="reference internal" href="#using-loops-to-simplify-code">Using loops to simplify code</a></li>
+<li><a class="reference internal" href="#exercise-7">Exercise 7</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-4">Answer to exercise 4</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-5">Answer to exercise 5</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-6">Answer to exercise 6</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-7">Answer to exercise 7</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Collections.html"
+                        title="previous chapter">Collections</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Errors_and_Exceptions.html"
+                        title="next chapter">Errors and exceptions</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Loop_Control_Statements.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Errors_and_Exceptions.html" title="Errors and exceptions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Collections.html" title="Collections"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

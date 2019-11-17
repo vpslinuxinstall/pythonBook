@@ -1,0 +1,821 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Classes &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Object-oriented programming" href="Object_Oriented_Programming.html" />
+    <link rel="prev" title="Functions" href="Functions.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Object_Oriented_Programming.html" title="Object-oriented programming"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Functions.html" title="Functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="classes">
+<h1>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h1>
+<p>We have already seen how we can use a dictionary to group related data together, and how we can use functions to create shortcuts for commonly used groups of statements.  A function performs an action using some set of input parameters.  Not all functions are applicable to all kinds of data.  <em>Classes</em> are a way of grouping together related data <em>and</em> functions which act upon that data.</p>
+<p>A class is a kind of data type, just like a string, integer or list.  When we create an object of that data type, we call it an <em>instance</em> of a class.</p>
+<p>As we have already mentioned, in some other languages some entities are objects and some are not.  In Python, everything is an object – everything is an instance of some class.  In earlier versions of Python a distinction was made between built-in types and user-defined classes, but these are now completely indistinguishable.  Classes and types are themselves objects, and they are of type <code class="docutils literal notranslate"><span class="pre">type</span></code>.  You can find out the type of any object using the <code class="docutils literal notranslate"><span class="pre">type</span></code> function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">any_object</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The data values which we store inside an object are called <em>attributes</em>, and the functions which are associated with the object are called <em>methods</em>.  We have already used the methods of some built-in objects, like strings and lists.</p>
+<p>When we design our own objects, we have to decide how we are going to group things together, and what our objects are going to represent.</p>
+<p>Sometimes we write objects which map very intuitively onto things in the real world.  For example, if we are writing code to simulate chemical reactions, we might have <code class="docutils literal notranslate"><span class="pre">Atom</span></code> objects which we can combine to make a <code class="docutils literal notranslate"><span class="pre">Molecule</span></code> object.  However, it isn’t always necessary, desirable or even possible to make all code objects perfectly analogous to their real-world counterparts.</p>
+<p>Sometimes we may create objects which don’t have any kind of real-world equivalent, just because it’s useful to group certain functions together.</p>
+<div class="section" id="defining-and-using-a-class">
+<h2>Defining and using a class<a class="headerlink" href="#defining-and-using-a-class" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example of a simple custom class which stores information about a person:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="c1"># we will use this for date objects</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">birthdate</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">telephone</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span> <span class="o">=</span> <span class="n">birthdate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">telephone</span> <span class="o">=</span> <span class="n">telephone</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+
+    <span class="k">def</span> <span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">year</span>
+
+        <span class="k">if</span> <span class="n">today</span> <span class="o">&lt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">day</span><span class="p">):</span>
+            <span class="n">age</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">age</span>
+
+<span class="n">person</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span>
+    <span class="s2">&quot;Jane&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
+    <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">1992</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="c1"># year, month, day</span>
+    <span class="s2">&quot;No. 12 Short Street, Greenville&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;555 456 0987&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;jane.doe@example.com&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="o">.</span><span class="n">age</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>We start the class definition with the <code class="docutils literal notranslate"><span class="pre">class</span></code> keyword, followed by the class name and a colon.  We would list any parent classes in between round brackets before the colon, but this class doesn’t have any, so we can leave them out.</p>
+<p>Inside the class body, we define two functions – these are our object’s methods.  The first is called <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, which is a special method.  When we call the class object, a new instance of the class is created, and the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method on this new object is immediately executed with all the parameters that we passed to the class object.  The purpose of this method is thus to set up a new object using data that we have provided.</p>
+<p>The second method is a custom method which calculates the age of our person using the birthdate and the current date.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">__init__</span></code> is sometimes called the object’s <em>constructor</em>, because it is used similarly to the way that constructors are used in other languages, but that is not technically correct – it’s better to call it the <em>initialiser</em>.  There is a different method called <code class="docutils literal notranslate"><span class="pre">__new__</span></code> which is more analogous to a constructor, but it is hardly ever used.</p>
+</div>
+<p>You may have noticed that both of these method definitions have <code class="docutils literal notranslate"><span class="pre">self</span></code> as the first parameter, and we use this variable inside the method bodies – but we don’t appear to pass this parameter in.  This is because whenever we call a method on an object, <em>the object itself</em> is automatically passed in as the first parameter.  This gives us a way to access the object’s properties from inside the object’s methods.</p>
+<p>In some languages this parameter is <em>implicit</em> – that is, it is not visible in the function signature – and we access it with a special keyword.  In Python it is explicitly exposed.  It doesn’t have to be called <code class="docutils literal notranslate"><span class="pre">self</span></code>, but this is a very strongly followed convention.</p>
+<p>Now you should be able to see that our <code class="docutils literal notranslate"><span class="pre">__init__</span></code> function creates attributes on the object and sets them to the values we have passed in as parameters.  We use the same names for the attributes and the parameters, but this is not compulsory.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">age</span></code> function doesn’t take any parameters except <code class="docutils literal notranslate"><span class="pre">self</span></code> – it only uses information stored in the object’s attributes, and the current date (which it retrieves using the <code class="docutils literal notranslate"><span class="pre">datetime</span></code> module).</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">birthdate</span></code> attribute is itself an object. The <code class="docutils literal notranslate"><span class="pre">date</span></code> class is defined in the <code class="docutils literal notranslate"><span class="pre">datetime</span></code> module, and we create a new instance of this class to use as the birthdate parameter when we create an instance of the <code class="docutils literal notranslate"><span class="pre">Person</span></code> class. We don’t have to assign it to an intermediate variable before using it as a parameter to <code class="docutils literal notranslate"><span class="pre">Person</span></code>; we can just create it when we call <code class="docutils literal notranslate"><span class="pre">Person</span></code>, just like we create the string literals for the other parameters.</p>
+<p>Remember that defining a function doesn’t make the function run.  Defining a class also doesn’t make anything run – it just tells Python about the class.  The class will not be defined until Python has executed the entirety of the definition, so you can be sure that you can reference any method from any other method on the same class, or even reference the class inside a method of the class.  By the time you call that method, the entire class will definitely be defined.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Explain what the following variables refer to, and their scope:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">Person</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">person</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">surname</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">self</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">age</span></code> (the function name)</li>
+<li><code class="docutils literal notranslate"><span class="pre">age</span></code> (the variable used inside the function)</li>
+<li><code class="docutils literal notranslate"><span class="pre">self.email</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">person.email</span></code></li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="instance-attributes">
+<h2>Instance attributes<a class="headerlink" href="#instance-attributes" title="Permalink to this headline">¶</a></h2>
+<p>It is important to note that the attributes set on the object in the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> function do not form an exhaustive list of all the attributes that our object is ever allowed to have.</p>
+<p>In some languages you must provide a list of the object’s attributes in the class definition, placeholders are created for these allowed attributes when the object is created, and you may not add new attributes to the object later.  In Python, you can add new attributes, and even new methods, to an object on the fly.  In fact, there is nothing special about the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> function when it comes to setting attributes.  We could store a cached age value on the object from inside the <code class="docutils literal notranslate"><span class="pre">age</span></code> function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_age&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
+
+    <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+
+    <span class="n">age</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">year</span>
+
+    <span class="k">if</span> <span class="n">today</span> <span class="o">&lt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">day</span><span class="p">):</span>
+        <span class="n">age</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">age</span>
+    <span class="k">return</span> <span class="n">age</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Starting an attribute or method name with an underscore (<code class="docutils literal notranslate"><span class="pre">_</span></code>) is a convention which we use to indicate that it is a “private” internal property and should not be accessed directly.  In a more realistic example, our cached value would sometimes expire and need to be recalculated – so we should always use the <code class="docutils literal notranslate"><span class="pre">age</span></code> method to make sure that we get the right value.</p>
+</div>
+<p>We could even add a completely unrelated attribute from outside the object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">person</span><span class="o">.</span><span class="n">pets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>It is very common for an object’s methods to <em>update</em> the values of the object’s attributes, but it is considered bad practice to <em>create</em> new attributes in a method without initialising them in the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method.  Setting arbitrary properties from outside the object is frowned upon even more, since it breaks the object-oriented paradigm (which we will discuss in the next chapter).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method will definitely be executed before anything else when we create the object – so it’s a good place to do all of our initialisation of the object’s data.  If we create a new attribute outside the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method, we run the risk that we will try to use it before it has been initialised.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">age</span></code> example above we have to check if an <code class="docutils literal notranslate"><span class="pre">_age</span></code> attribute exists on the object before we try to use it, because if we haven’t run the <code class="docutils literal notranslate"><span class="pre">age</span></code> method before it will not have been created yet. It would be much tidier if we called this method at least once from <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, to make sure that <code class="docutils literal notranslate"><span class="pre">_age</span></code> is created as soon as we create the object.</p>
+<p>Initialising all our attributes in <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, even if we just set them to empty values, makes our code less error-prone. It also makes it easier to read and understand – we can see at a glance what attributes our object has.</p>
+<p>An <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method doesn’t have to take any parameters (except <code class="docutils literal notranslate"><span class="pre">self</span></code>) and it can be completely absent.</p>
+<div class="section" id="getattr-setattr-and-hasattr">
+<h3><code class="docutils literal notranslate"><span class="pre">getattr</span></code>, <code class="docutils literal notranslate"><span class="pre">setattr</span></code> and <code class="docutils literal notranslate"><span class="pre">hasattr</span></code><a class="headerlink" href="#getattr-setattr-and-hasattr" title="Permalink to this headline">¶</a></h3>
+<p>What if we want to get or set the value of an attribute of an object without hard-coding its name?  We may sometimes want to loop over several attribute names and perform the same operation on all of them, as we do in this example which uses a dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mydict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>How can we do something similar with an object?  We can’t use the <code class="docutils literal notranslate"><span class="pre">.</span></code> operator, because it must be followed by the attribute name as a bare word.  If our attribute name is stored as a string value in a variable, we have to use the <code class="docutils literal notranslate"><span class="pre">getattr</span></code> function to retrieve the attribute value from an object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">myobject</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">getattr</span></code> is a built-in function, not a method on the object: it takes the object as its first parameter.  The second parameter is the name of the variable as a string, and the optional third parameter is the default value to be returned if the attribute does not exist.  If we do not specify a default value, <code class="docutils literal notranslate"><span class="pre">getattr</span></code> will raise an exception if the attribute does not exist.</p>
+<p>Similarly, <code class="docutils literal notranslate"><span class="pre">setattr</span></code> allows us to set the value of an attribute.  In this example, we copy data from a dictionary to an object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]:</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">myobject</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mydict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The first parameter of <code class="docutils literal notranslate"><span class="pre">setattr</span></code> is the object, the second is the name of the function, and the third is the new value for the attribute.</p>
+<p>As we saw in the previous <code class="docutils literal notranslate"><span class="pre">age</span></code> function example, <code class="docutils literal notranslate"><span class="pre">hasattr</span></code> detects whether an attribute exists.</p>
+<p>There’s nothing preventing us from using <code class="docutils literal notranslate"><span class="pre">getattr</span></code> on attributes even if the name can be hard-coded, but this is not recommended: it’s an unnecessarily verbose and round-about way of accessing attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">getattr</span><span class="p">(</span><span class="n">myobject</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+
+<span class="c1"># means the same thing as</span>
+
+<span class="n">myobject</span><span class="o">.</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>You should only use these functions if you have a good reason to do so.</p>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Rewrite the <code class="docutils literal notranslate"><span class="pre">Person</span></code> class so that a person’s age is calculated for the first time when a new person instance is created, and recalculated (when it is requested) if the day has changed since the last time that it was calculated.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="class-attributes">
+<h2>Class attributes<a class="headerlink" href="#class-attributes" title="Permalink to this headline">¶</a></h2>
+<p>All the attributes which are defined on a <code class="docutils literal notranslate"><span class="pre">Person</span></code> instance are <em>instance attributes</em> – they are added to the instance when the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method is executed.  We can, however, also define attributes which are set on the <em>class</em>.  These attributes will be shared by all instances of that class.  In many ways they behave just like instance attributes, but there are some caveats that you should be aware of.</p>
+<p>We define class attributes in the body of a class, at the same indentation level as method definitions (one level up from the insides of methods):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+
+    <span class="n">TITLES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Dr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mrs&#39;</span><span class="p">,</span> <span class="s1">&#39;Ms&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">TITLES</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not a valid title.&quot;</span> <span class="o">%</span> <span class="n">title</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+</pre></div>
+</div>
+<p>As you can see, we access the class attribute <code class="docutils literal notranslate"><span class="pre">TITLES</span></code> just like we would access an instance attribute – it is made available as a property on the instance object, which we access inside the method through the <code class="docutils literal notranslate"><span class="pre">self</span></code> variable.</p>
+<p>All the <code class="docutils literal notranslate"><span class="pre">Person</span></code> objects we create will share the same <code class="docutils literal notranslate"><span class="pre">TITLES</span></code> class attribute.</p>
+<p>Class attributes are often used to define constants which are closely associated with a particular class.  Although we can use class attributes from class instances, we can also use them from class objects, without creating an instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># we can access a class attribute from an instance</span>
+<span class="n">person</span><span class="o">.</span><span class="n">TITLES</span>
+
+<span class="c1"># but we can also access it from the class</span>
+<span class="n">Person</span><span class="o">.</span><span class="n">TITLES</span>
+</pre></div>
+</div>
+<p>Note that the class object doesn’t have access to any <em>instance</em> attributes – those are only created when an instance is created!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This will give us an error</span>
+<span class="n">Person</span><span class="o">.</span><span class="n">name</span>
+<span class="n">Person</span><span class="o">.</span><span class="n">surname</span>
+</pre></div>
+</div>
+<p>Class attributes can also sometimes be used to provide default attribute values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="n">deceased</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">mark_as_deceased</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deceased</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>When we set an attribute on an instance which has the same name as a class attribute, we are <em>overriding</em> the class attribute with an instance attribute, which will take precedence over it. If we create two <code class="docutils literal notranslate"><span class="pre">Person</span></code> objects and call the <code class="docutils literal notranslate"><span class="pre">mark_as_deceased</span></code> method on one of them, we will not affect the other one.  We should, however, be careful when a class attribute is of a mutable type – because if we modify it in-place, we <em>will</em> affect all objects of that class at the same time. Remember that all instances share the same class attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="n">pets</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_pet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pet</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pet</span><span class="p">)</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+<span class="n">bob</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+
+<span class="n">jane</span><span class="o">.</span><span class="n">add_pet</span><span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">pets</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bob</span><span class="o">.</span><span class="n">pets</span><span class="p">)</span> <span class="c1"># oops!</span>
+</pre></div>
+</div>
+<p>What we <em>should</em> do in cases like this is initialise the mutable attribute <em>as an instance attribute</em>, inside <code class="docutils literal notranslate"><span class="pre">__init__</span></code>.  Then every instance will have its own separate copy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pets</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_pet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pet</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pet</span><span class="p">)</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+<span class="n">bob</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+
+<span class="n">jane</span><span class="o">.</span><span class="n">add_pet</span><span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">pets</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bob</span><span class="o">.</span><span class="n">pets</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that method definitions are in the same scope as class attribute definitions, so we can use class attribute names as variables in method definitions (without <code class="docutils literal notranslate"><span class="pre">self</span></code>, which is only defined <em>inside</em> the methods):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="n">TITLES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Dr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mrs&#39;</span><span class="p">,</span> <span class="s1">&#39;Ms&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">allowed_titles</span><span class="o">=</span><span class="n">TITLES</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_titles</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not a valid title.&quot;</span> <span class="o">%</span> <span class="n">title</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+</pre></div>
+</div>
+<p>Can we have class <em>methods</em>? Yes, we can.  In the next section we will see how to define them using a decorator.</p>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Explain the differences between the attributes <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">surname</span></code> and <code class="docutils literal notranslate"><span class="pre">profession</span></code>, and what values they can have in different instances of this class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Smith</span><span class="p">:</span>
+    <span class="n">surname</span> <span class="o">=</span> <span class="s2">&quot;Smith&quot;</span>
+    <span class="n">profession</span> <span class="o">=</span> <span class="s2">&quot;smith&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">profession</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="n">profession</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profession</span> <span class="o">=</span> <span class="n">profession</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="class-decorators">
+<h2>Class decorators<a class="headerlink" href="#class-decorators" title="Permalink to this headline">¶</a></h2>
+<p>In the previous chapter we learned about decorators – functions which are used to modify the behaviour of other functions.  There are some built-in decorators which are often used in class definitions.</p>
+<div class="section" id="classmethod">
+<h3><code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code><a class="headerlink" href="#classmethod" title="Permalink to this headline">¶</a></h3>
+<p>Just like we can define class <em>attributes</em>, which are shared between all instances of a class, we can define class <em>methods</em>.  We do this by using the <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code> decorator to decorate an ordinary method.</p>
+<p>A class method still has its calling object as the first parameter, but by convention we rename this parameter from <code class="docutils literal notranslate"><span class="pre">self</span></code> to <code class="docutils literal notranslate"><span class="pre">cls</span></code>.  If we call the class method from an instance, this parameter will contain the instance object, but if we call it from the class it will contain the class object.  By calling the parameter <code class="docutils literal notranslate"><span class="pre">cls</span></code> we remind ourselves that it is not guaranteed to have any <em>instance</em> attributes.</p>
+<p>What are class methods good for?  Sometimes there are tasks associated with a class which we can perform using constants and other class attributes, without needing to create any class instances.  If we had to use instance methods for these tasks, we would need to create an instance for no reason, which would be wasteful.  Sometimes we write classes purely to group related constants together with functions which act on them – we may never instantiate these classes at all.</p>
+<p>Sometimes it is useful to write a class method which creates an instance of the class after processing the input so that it is in the right format to be passed to the class constructor.  This allows the constructor to be straightforward and not have to implement any complicated parsing or clean-up code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">birthdate</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">telephone</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="c1"># (...)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_text_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="c1"># extract all the parameters from the text file</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span> <span class="c1"># this is the same as calling Person(*params)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="staticmethod">
+<h3><code class="docutils literal notranslate"><span class="pre">&#64;staticmethod</span></code><a class="headerlink" href="#staticmethod" title="Permalink to this headline">¶</a></h3>
+<p>A static method doesn’t have the calling object passed into it as the first parameter.  This means that it doesn’t have access to the rest of the class or instance at all.  We can call them from an instance or a class object, but they are most commonly called from class objects, like class methods.</p>
+<p>If we are using a class to group together related methods which don’t need to access each other or any other data on the class, we may want to use this technique.  The advantage of using static methods is that we eliminate unnecessary <code class="docutils literal notranslate"><span class="pre">cls</span></code> or <code class="docutils literal notranslate"><span class="pre">self</span></code> parameters from our method definitions.  The disadvantage is that if we do occasionally want to refer to another class method or attribute inside a static method we have to write the class name out in full, which can be much more verbose than using the <code class="docutils literal notranslate"><span class="pre">cls</span></code> variable which is available to us inside a class method.</p>
+<p>Here is a brief example comparing the three method types:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="n">TITLES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Dr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mrs&#39;</span><span class="p">,</span> <span class="s1">&#39;Ms&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># instance method</span>
+        <span class="c1"># instance object accessible through self</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">allowed_titles_starting_with</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">startswith</span><span class="p">):</span> <span class="c1"># class method</span>
+        <span class="c1"># class or instance object accessible through cls</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">TITLES</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">startswith</span><span class="p">)]</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">allowed_titles_ending_with</span><span class="p">(</span><span class="n">endswith</span><span class="p">):</span> <span class="c1"># static method</span>
+        <span class="c1"># no parameter for class or instance object</span>
+        <span class="c1"># we have to use Person directly</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">Person</span><span class="o">.</span><span class="n">TITLES</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">endswith</span><span class="p">)]</span>
+
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">fullname</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">allowed_titles_starting_with</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">allowed_titles_starting_with</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">allowed_titles_ending_with</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Person</span><span class="o">.</span><span class="n">allowed_titles_ending_with</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="property">
+<h3><code class="docutils literal notranslate"><span class="pre">&#64;property</span></code><a class="headerlink" href="#property" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes we use a method to generate a property of an object dynamically, calculating it from the object’s other properties.  Sometimes you can simply use a method to access a single attribute and return it.  You can also use a different method to update the value of the attribute instead of accessing it directly.  Methods like this are called <em>getters</em> and <em>setters</em>, because they “get” and “set” the values of attributes, respectively.</p>
+<p>In some languages you are encouraged to use getters and setters for all attributes, and never to access their values directly – and there are language features which can make attributes inaccessible except through setters and getters.  In Python, accessing simple attributes directly is perfectly acceptable, and writing getters and setters for all of them is considered unnecessarily verbose.  Setters can be inconvenient because they don’t allow use of compound assignment operators:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+
+    <span class="k">def</span> <span class="nf">get_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+
+    <span class="k">def</span> <span class="nf">set_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="mi">153</span><span class="p">)</span> <span class="c1"># Jane is 153cm tall</span>
+
+<span class="n">jane</span><span class="o">.</span><span class="n">height</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># Jane grows by a centimetre</span>
+<span class="n">jane</span><span class="o">.</span><span class="n">set_height</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Jane grows again</span>
+</pre></div>
+</div>
+<p>As we can see, incrementing the height attribute through a setter is much more verbose. Of course we could write a <em>second</em> setter which increments the attribute by the given parameter – but we would have to do something similar for every attribute and every kind of modification that we want to perform.  We would have a similar issue with in-place modifications, like adding values to lists.</p>
+<p>Something which is often considered an <em>advantage</em> of setters and getters is that we can change the way that an attribute is generated inside the object without affecting any code which uses the object.  For example, suppose that we initially created a <code class="docutils literal notranslate"><span class="pre">Person</span></code> class which has a <code class="docutils literal notranslate"><span class="pre">fullname</span></code> attribute, but later we want to change the class to have separate <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">surname</span></code> attributes which we combine to create a full name.  If we always access the <code class="docutils literal notranslate"><span class="pre">fullname</span></code> attribute through a setter, we can just rewrite the setter – none of the code which calls the setter will have to be changed.</p>
+<p>But what if our code accesses the <code class="docutils literal notranslate"><span class="pre">fullname</span></code> attribute directly?  We can write a <code class="docutils literal notranslate"><span class="pre">fullname</span></code> method which returns the right value, but a method has to be <em>called</em>.  Fortunately, the <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code> decorator lets us make a method behave like an attribute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">fullname</span><span class="p">)</span> <span class="c1"># no brackets!</span>
+</pre></div>
+</div>
+<p>There are also decorators which we can use to define a setter and a deleter for our attribute (a deleter will delete the attribute from our object). The getter, setter and deleter methods must all have the same name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span>
+
+    <span class="nd">@fullname</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># this is much more complicated in real life</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">surname</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+
+    <span class="nd">@fullname</span><span class="o">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">fullname</span><span class="p">)</span>
+
+<span class="n">jane</span><span class="o">.</span><span class="n">fullname</span> <span class="o">=</span> <span class="s2">&quot;Jane Doe&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">fullname</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Create a class called <code class="docutils literal notranslate"><span class="pre">Numbers</span></code>, which has a single class attribute called <code class="docutils literal notranslate"><span class="pre">MULTIPLIER</span></code>, and a constructor which takes the parameters <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> (these should all be numbers).</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Write a method called <code class="docutils literal notranslate"><span class="pre">add</span></code> which returns the sum of the attributes <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</li>
+<li>Write a class method called <code class="docutils literal notranslate"><span class="pre">multiply</span></code>, which takes a single number parameter <code class="docutils literal notranslate"><span class="pre">a</span></code> and returns the product of <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">MULTIPLIER</span></code>.</li>
+<li>Write a static method called <code class="docutils literal notranslate"><span class="pre">subtract</span></code>, which takes two number parameters, <code class="docutils literal notranslate"><span class="pre">b</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code>, and returns <code class="docutils literal notranslate"><span class="pre">b</span></code> - <code class="docutils literal notranslate"><span class="pre">c</span></code>.</li>
+<li>Write a method called <code class="docutils literal notranslate"><span class="pre">value</span></code> which returns a tuple containing the values of <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>. Make this method into a property, and write a setter and a deleter for manipulating the values of <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="inspecting-an-object">
+<h2>Inspecting an object<a class="headerlink" href="#inspecting-an-object" title="Permalink to this headline">¶</a></h2>
+<p>We can check what properties are defined on an object using the <code class="docutils literal notranslate"><span class="pre">dir</span></code> function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span><span class="p">)</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">jane</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Now we can see our attributes and our method – but what’s all that other stuff?  We will discuss <em>inheritance</em> in the next chapter, but for now all you need to know is that any class that you define has <code class="docutils literal notranslate"><span class="pre">object</span></code> as its parent class even if you don’t explicitly say so – so your class will have a lot of default attributes and methods that any Python object has.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">in Python 2 we have to inherit from <code class="docutils literal notranslate"><span class="pre">object</span></code> explicitly, otherwise our class will be almost completely empty except for our own custom properties.  Classes which don’t inherit from <code class="docutils literal notranslate"><span class="pre">object</span></code> are called “old-style classes”, and using them is not recommended.  If we were to write the person class in Python 2 we would write the first line as <code class="docutils literal notranslate"><span class="pre">class</span> <span class="pre">Person(object):</span></code>.</p>
+</div>
+<p>This is why you can just leave out the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method out of your class if you don’t have any initialisation to do – the default that you inherited from <code class="docutils literal notranslate"><span class="pre">object</span></code> (which does nothing) will be used instead.  If you do write your own <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method, it will <em>override</em> the default method.  Sometimes we also call this <em>overloading</em>.</p>
+<p>Many default methods and attributes that are found in built-in Python objects have names which begin and end in double underscores, like <code class="docutils literal notranslate"><span class="pre">__init__</span></code> or <code class="docutils literal notranslate"><span class="pre">__str__</span></code>.  These names indicate that these properties have a special meaning – you shouldn’t create your own methods or attributes with the same names unless you mean to overload them.  These properties are usually methods, and they are sometimes called <em>magic methods</em>.</p>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">dir</span></code> on any object. You can try to use it on all kinds of objects which we have already seen before, like numbers, lists, strings and functions, to see what built-in properties these objects have in common.</p>
+<p>Here are some examples of special object properties:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">__init__</span></code>: the initialisation method of an object, which is called when the object is created.</li>
+<li><code class="docutils literal notranslate"><span class="pre">__str__</span></code>: the string representation method of an object, which is called when you use the <code class="docutils literal notranslate"><span class="pre">str</span></code> function to convert that object to a string.</li>
+<li><code class="docutils literal notranslate"><span class="pre">__class__</span></code>: an attribute which stores the the class (or type) of an object – this is what is returned when you use the <code class="docutils literal notranslate"><span class="pre">type</span></code> function on the object.</li>
+<li><code class="docutils literal notranslate"><span class="pre">__eq__</span></code>: a method which determines whether this object is equal to another.  There are also other methods for determining if it’s not equal, less than, etc.. These methods are used in object comparisons, for example when we use the equality operator <code class="docutils literal notranslate"><span class="pre">==</span></code> to check if two objects are equal.</li>
+<li><code class="docutils literal notranslate"><span class="pre">__add__</span></code> is a method which allows this object to be added to another object. There are equivalent methods for all the other arithmetic operators.  Not all objects support all arithemtic operations – numbers have all of these methods defined, but other objects may only have a subset.</li>
+<li><code class="docutils literal notranslate"><span class="pre">__iter__</span></code>: a method which returns an iterator over the object – we will find it on strings, lists and other iterables.  It is executed when we use the <code class="docutils literal notranslate"><span class="pre">iter</span></code> function on the object.</li>
+<li><code class="docutils literal notranslate"><span class="pre">__len__</span></code>: a method which calculates the length of an object – we will find it on sequences.  It is executed when we use the <code class="docutils literal notranslate"><span class="pre">len</span></code> function of an object.</li>
+<li><code class="docutils literal notranslate"><span class="pre">__dict__</span></code>: a dictionary which contains all the instance attributes of an object, with their names as keys.  It can be useful if we want to iterate over all the attributes of an object. <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> does not include any methods, class attributes or special default attributes like <code class="docutils literal notranslate"><span class="pre">__class__</span></code>.</li>
+</ul>
+<div class="section" id="exercise-5">
+<h3>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Create an instance of the <code class="docutils literal notranslate"><span class="pre">Person</span></code> class from example 2.  Use the <code class="docutils literal notranslate"><span class="pre">dir</span></code> function on the instance.  Then use the <code class="docutils literal notranslate"><span class="pre">dir</span></code> function on the class.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>What happens if you call the <code class="docutils literal notranslate"><span class="pre">__str__</span></code> method on the instance? Verify that you get the same result if you call the <code class="docutils literal notranslate"><span class="pre">str</span></code> function with the instance as a parameter.</li>
+<li>What is the type of the instance?</li>
+<li>What is the type of the class?</li>
+<li>Write a function which prints out the names and values of all the custom attributes of any object that is passed in as a parameter.</li>
+</ol>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="overriding-magic-methods">
+<h2>Overriding magic methods<a class="headerlink" href="#overriding-magic-methods" title="Permalink to this headline">¶</a></h2>
+<p>We have already seen how to overload the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method so that we can customise it to initialise our class.  We can also overload other special methods.  For example, the purpose of the <code class="docutils literal notranslate"><span class="pre">__str__</span></code> method is to output a useful string representation of our object. but by default if we use the <code class="docutils literal notranslate"><span class="pre">str</span></code> function on a person object (which will call the <code class="docutils literal notranslate"><span class="pre">__str__</span></code> method), all that we will get is the class name and an ID. That’s not very useful!  Let’s write a custom <code class="docutils literal notranslate"><span class="pre">__str__</span></code> method which shows the values of all of the object’s properties:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">birthdate</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">telephone</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span> <span class="o">=</span> <span class="n">birthdate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">telephone</span> <span class="o">=</span> <span class="n">telephone</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">, born </span><span class="si">%s</span><span class="se">\n</span><span class="s2">Address: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">Telephone: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">Email:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">telephone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span>
+    <span class="s2">&quot;Jane&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
+    <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">1992</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="c1"># year, month, day</span>
+    <span class="s2">&quot;No. 12 Short Street, Greenville&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;555 456 0987&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;jane.doe@example.com&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jane</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that when we insert the birthdate object into the output string with <code class="docutils literal notranslate"><span class="pre">%s</span></code> it will itself be converted to a string, so we don’t need to do it ourselves (unless we want to change the format).</p>
+<p>It is also often useful to overload the comparison methods, so that we can use comparison operators on our person objects.  By default, our person objects are only equal if they are the same object, and you can’t test whether one person object is greater than another because person objects have no default order.</p>
+<p>Suppose that we want our person objects to be equal if all their attributes have the same values, and we want to be able to order them alphabetically by surname and then by first name.  All of the magic comparison methods are independent of each other, so we will need to overload all of them if we want all of them to work – but fortunately once we have defined equality and one of the basic order methods the rest are easy to do.  Each of these methods takes two parameters – <code class="docutils literal notranslate"><span class="pre">self</span></code> for the current object, and <code class="docutils literal notranslate"><span class="pre">other</span></code> for the other object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="c1"># does self == other?</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">surname</span>
+
+    <span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="c1"># is self &gt; other?</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">surname</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">surname</span>
+
+    <span class="c1"># now we can define all the other methods in terms of the first two</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="c1"># does self != other?</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span> <span class="c1"># this calls self.__eq__(other)</span>
+
+    <span class="k">def</span> <span class="nf">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="c1"># is self &lt;= other?</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">&gt;</span> <span class="n">other</span> <span class="c1"># this calls self.__gt__(other)</span>
+
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="c1"># is self &lt; other?</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span> <span class="o">&gt;</span> <span class="n">other</span> <span class="ow">or</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="c1"># is self &gt;= other?</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">other</span>
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">other</span></code> is not guaranteed to be another person object, and we haven’t put in any checks to make sure that it is.  Our method will crash if the other object doesn’t have a <code class="docutils literal notranslate"><span class="pre">name</span></code> or <code class="docutils literal notranslate"><span class="pre">surname</span></code> attribute, but if they are present the comparison will work.  Whether that makes sense or not is something that we will need to think about if we create similar types of objects.</p>
+<p>Sometimes it makes sense to exit with an error if the other object is not of the same type as our object, but sometimes we can compare two compatible objects even if they are not of the same type.  For example, it makes sense to compare <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">2.5</span></code> because they are both numbers, even though one is an integer and the other is a float.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Python 2 also has a <code class="docutils literal notranslate"><span class="pre">__cmp__</span></code> method which was introduced to the language before the individual comparison methods (called <em>rich comparisons</em>) described above. It is used if the rich comparisons are not defined.  You should overload it in a way which is consistent with the rich comparison methods, otherwise you may encounter some very strange behaviour.</p>
+</div>
+<div class="section" id="exercise-6">
+<h3>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a class for creating completely generic objects: its <code class="docutils literal notranslate"><span class="pre">__init__</span></code> function should accept any number of keyword parameters, and set them on the object as attributes with the keys as names.  Write a <code class="docutils literal notranslate"><span class="pre">__str__</span></code> method for the class – the string it returns should include the name of the class and the values of all the object’s custom instance attributes.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><ol class="first arabic">
+<li><code class="docutils literal notranslate"><span class="pre">Person</span></code> is a class defined in the global scope. It is a global variable.</li>
+<li><code class="docutils literal notranslate"><span class="pre">person</span></code> is an instance of the <code class="docutils literal notranslate"><span class="pre">Person</span></code> class. It is also a global variable.</li>
+<li><code class="docutils literal notranslate"><span class="pre">surname</span></code> is a parameter passed into the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method – it is a local variable in the scope if the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method.</li>
+<li><code class="docutils literal notranslate"><span class="pre">self</span></code> is a parameter passed into each instance method of the class – it will be replaced by the instance object when the method is called on the object with the <code class="docutils literal notranslate"><span class="pre">.</span></code> operator.  It is a new local variable inside the scope of each of the methods – it just always has the same value, and by convention it is always given the same name to reflect this.</li>
+<li><code class="docutils literal notranslate"><span class="pre">age</span></code> is a method of the <code class="docutils literal notranslate"><span class="pre">Person</span></code> class. It is a local variable in the scope of the class.</li>
+<li><code class="docutils literal notranslate"><span class="pre">age</span></code> (the variable used inside the function) is a local variable inside the scope of the <code class="docutils literal notranslate"><span class="pre">age</span></code> method.</li>
+<li><code class="docutils literal notranslate"><span class="pre">self.email</span></code> isn’t really a separate variable. It’s an example of how we can refer to attributes and methods of an object using a variable which refers to the object, the <code class="docutils literal notranslate"><span class="pre">.</span></code> operator and the name of the attribute or method. We use the <code class="docutils literal notranslate"><span class="pre">self</span></code> variable to refer to an object inside one of the object’s own methods – wherever the variable <code class="docutils literal notranslate"><span class="pre">self</span></code> is defined, we can use <code class="docutils literal notranslate"><span class="pre">self.email</span></code>, <code class="docutils literal notranslate"><span class="pre">self.age()</span></code>, etc..</li>
+<li><code class="docutils literal notranslate"><span class="pre">person.email</span></code> is another example of the same thing. In the global scope, our person instance is referred to by the variable name <code class="docutils literal notranslate"><span class="pre">person</span></code>.  Wherever <code class="docutils literal notranslate"><span class="pre">person</span></code> is defined, we can use <code class="docutils literal notranslate"><span class="pre">person.email</span></code>, <code class="docutils literal notranslate"><span class="pre">person.age()</span></code>, etc..</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">birthdate</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">telephone</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span> <span class="o">=</span> <span class="n">birthdate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">telephone</span> <span class="o">=</span> <span class="n">telephone</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+
+        <span class="c1"># This isn&#39;t strictly necessary, but it clearly introduces these attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_age_last_recalculated</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recalculate_age</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_recalculate_age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">year</span>
+
+        <span class="k">if</span> <span class="n">today</span> <span class="o">&lt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">birthdate</span><span class="o">.</span><span class="n">day</span><span class="p">):</span>
+            <span class="n">age</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_age</span> <span class="o">=</span> <span class="n">age</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_age_last_recalculated</span> <span class="o">=</span> <span class="n">today</span>
+
+    <span class="k">def</span> <span class="nf">age</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age_last_recalculated</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_recalculate_age</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_age</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">name</span></code> is always an instance attribute which is set in the constructor, and each class instance can have a different name value.  <code class="docutils literal notranslate"><span class="pre">surname</span></code> is always a class attribute, and cannot be overridden in the constructor – every instance will have a surname value of <code class="docutils literal notranslate"><span class="pre">Smith</span></code>.  <code class="docutils literal notranslate"><span class="pre">profession</span></code> is a class attribute, but it can optionally be overridden by an instance attribute in the constructor.  Each instance will have a profession value of <code class="docutils literal notranslate"><span class="pre">smith</span></code> unless the optional <code class="docutils literal notranslate"><span class="pre">surname</span></code> parameter is passed into the constructor with a different value.</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-4">
+<h3>Answer to exercise 4<a class="headerlink" href="#answer-to-exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Numbers</span><span class="p">:</span>
+    <span class="n">MULTIPLIER</span> <span class="o">=</span> <span class="mf">3.5</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">MULTIPLIER</span> <span class="o">*</span> <span class="n">a</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">b</span> <span class="o">-</span> <span class="n">c</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xy_tuple</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">xy_tuple</span>
+
+    <span class="nd">@value</span><span class="o">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-5">
+<h3>Answer to exercise 5<a class="headerlink" href="#answer-to-exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><ol class="first arabic">
+<li><p class="first">You should see something like <code class="docutils literal notranslate"><span class="pre">'&lt;__main__.Person</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fcb233301d0&gt;'</span></code>.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;class</span> <span class="pre">'__main__.Person'&gt;</span></code> – <code class="docutils literal notranslate"><span class="pre">__main__</span></code> is Python’s name for the program you are executing.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;class</span> <span class="pre">'type'&gt;</span></code> – any class has the type <code class="docutils literal notranslate"><span class="pre">type</span></code>.</p>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_object_attrs</span><span class="p">(</span><span class="n">any_object</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">any_object</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-6">
+<h3>Answer to exercise 6<a class="headerlink" href="#answer-to-exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AnyClass</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+        <span class="n">classname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">classname</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">attrs</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Classes</a><ul>
+<li><a class="reference internal" href="#defining-and-using-a-class">Defining and using a class</a><ul>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#instance-attributes">Instance attributes</a><ul>
+<li><a class="reference internal" href="#getattr-setattr-and-hasattr"><code class="docutils literal notranslate"><span class="pre">getattr</span></code>, <code class="docutils literal notranslate"><span class="pre">setattr</span></code> and <code class="docutils literal notranslate"><span class="pre">hasattr</span></code></a></li>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#class-attributes">Class attributes</a><ul>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#class-decorators">Class decorators</a><ul>
+<li><a class="reference internal" href="#classmethod"><code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code></a></li>
+<li><a class="reference internal" href="#staticmethod"><code class="docutils literal notranslate"><span class="pre">&#64;staticmethod</span></code></a></li>
+<li><a class="reference internal" href="#property"><code class="docutils literal notranslate"><span class="pre">&#64;property</span></code></a></li>
+<li><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inspecting-an-object">Inspecting an object</a><ul>
+<li><a class="reference internal" href="#exercise-5">Exercise 5</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#overriding-magic-methods">Overriding magic methods</a><ul>
+<li><a class="reference internal" href="#exercise-6">Exercise 6</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-4">Answer to exercise 4</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-5">Answer to exercise 5</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-6">Answer to exercise 6</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Functions.html"
+                        title="previous chapter">Functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Object_Oriented_Programming.html"
+                        title="next chapter">Object-oriented programming</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Classes.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Object_Oriented_Programming.html" title="Object-oriented programming"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Functions.html" title="Functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

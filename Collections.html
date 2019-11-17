@@ -1,0 +1,942 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Collections &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Loop control statements" href="Loop_Control_Statements.html" />
+    <link rel="prev" title="Selection control statements" href="Selection_Control_Statements.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Loop_Control_Statements.html" title="Loop control statements"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Selection_Control_Statements.html" title="Selection control statements"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="collections">
+<h1>Collections<a class="headerlink" href="#collections" title="Permalink to this headline">¶</a></h1>
+<p>We have already encountered some simple Python types like numbers, strings and booleans.  Now we will see how we can group multiple values together in a <em>collection</em> – like a <em>list</em> of numbers, or a <em>dictionary</em> which we can use to store and retrieve key-value pairs.  Many useful collections are built-in types in Python, and we will encounter them quite often.</p>
+<div class="section" id="lists">
+<h2>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h2>
+<p>The Python list type is called <code class="docutils literal notranslate"><span class="pre">list</span></code>.  It is a type of sequence – we can use it to store multiple values, and access them sequentially, by their position, or <em>index</em>, in the list.  We define a list <em>literal</em> by putting a comma-separated list of values inside square brackets (<code class="docutils literal notranslate"><span class="pre">[</span></code> and <code class="docutils literal notranslate"><span class="pre">]</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># a list of strings</span>
+<span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;fish&#39;</span><span class="p">,</span> <span class="s1">&#39;bison&#39;</span><span class="p">]</span>
+
+<span class="c1"># a list of integers</span>
+<span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+
+<span class="c1"># an empty list</span>
+<span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># a list of variables we defined somewhere else</span>
+<span class="n">things</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">one_variable</span><span class="p">,</span>
+    <span class="n">another_variable</span><span class="p">,</span>
+    <span class="n">third_variable</span><span class="p">,</span> <span class="c1"># this trailing comma is legal in Python</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>As you can see, we have used plural nouns to name most of our list variables.  This is a common convention, and it’s useful to follow it in most cases.</p>
+<p>To refer to an element in the list, we use the list identifier followed by the index inside square brackets.  Indices are integers which <em>start from zero</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># cat</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># 7</span>
+
+<span class="c1"># This will give us an error, because the list only has four elements</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>We can also count from the end:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># the last element -- bison</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="c1"># the second-last element -- 20</span>
+</pre></div>
+</div>
+<p>We can extract a subset of a list, which will itself be a list, using a <em>slice</em>.  This uses almost the same syntax as accessing a single element, but instead of specifying a single index between the square brackets we need to specify an upper and lower bound.   Note that our sublist will <em>include</em> the element at the lower bound, but <em>exclude</em> the element at the upper bound:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span> <span class="c1"># [&#39;dog&#39;, &#39;fish&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># [&#39;dog&#39;, &#39;fish&#39;]</span>
+</pre></div>
+</div>
+<p>If one of the bounds is one of the ends of the list, we can leave it out. A slice with neither bound specified gives us a copy of the list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span> <span class="c1"># [&#39;fish&#39;, &#39;bison&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span> <span class="c1"># [&#39;cat&#39;, &#39;dog&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[:])</span> <span class="c1"># a copy of the whole list</span>
+</pre></div>
+</div>
+<p>We can even include a third parameter to specify the step size:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span> <span class="c1"># [&#39;cat&#39;, &#39;fish&#39;]</span>
+</pre></div>
+</div>
+<p>Lists are mutable – we can modify elements, add elements to them or remove elements from them.  A list will change size dynamically when we add or remove elements – we don’t have to manage this ourselves:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># assign a new value to an existing element</span>
+<span class="n">animals</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hamster&quot;</span>
+
+<span class="c1"># add a new element to the end of the list</span>
+<span class="n">animals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;squirrel&quot;</span><span class="p">)</span>
+
+<span class="c1"># remove an element by its index</span>
+<span class="k">del</span> <span class="n">animals</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Because lists are mutable, we can <em>modify</em> a list variable without assigning the variable a completely new value.  Remember that if we assign the same <code class="docutils literal notranslate"><span class="pre">list</span></code> value to two variables, any in-place changes that we make while referring to the list by one variable name will also be reflected when we access the list through the other variable name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;goldfish&#39;</span><span class="p">,</span> <span class="s1">&#39;canary&#39;</span><span class="p">]</span>
+<span class="n">pets</span> <span class="o">=</span> <span class="n">animals</span> <span class="c1"># now both variables refer to the same list object</span>
+
+<span class="n">animals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;aardvark&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pets</span><span class="p">)</span> <span class="c1"># pets is still the same list as animals</span>
+
+<span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rat&#39;</span><span class="p">,</span> <span class="s1">&#39;gerbil&#39;</span><span class="p">,</span> <span class="s1">&#39;hamster&#39;</span><span class="p">]</span> <span class="c1"># now we assign a new list value to animals</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pets</span><span class="p">)</span> <span class="c1"># pets still refers to the old list</span>
+
+<span class="n">pets</span> <span class="o">=</span> <span class="n">animals</span><span class="p">[:]</span> <span class="c1"># assign a *copy* of animals to pets</span>
+<span class="n">animals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;aardvark&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pets</span><span class="p">)</span> <span class="c1"># pets remains unchanged, because it refers to a copy, not the original list</span>
+</pre></div>
+</div>
+<p>We can mix the types of values that we store in a list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mf">35.8</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>How do we check whether a list contains a particular value?  We use <code class="docutils literal notranslate"><span class="pre">in</span></code> or <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">in</span></code>, the membership operators:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">34</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">29</span><span class="p">]</span>
+<span class="n">my_number</span> <span class="o">=</span> <span class="mi">67</span>
+
+<span class="k">if</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> is in the list!&quot;</span> <span class="o">%</span> <span class="n">number</span><span class="p">)</span>
+
+<span class="n">my_number</span> <span class="o">=</span> <span class="mi">90</span>
+<span class="k">if</span> <span class="n">number</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> is not in the list!&quot;</span> <span class="o">%</span> <span class="n">number</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">in</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">in</span></code> fall between the logical operators (<code class="docutils literal notranslate"><span class="pre">and</span></code>, <code class="docutils literal notranslate"><span class="pre">or</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span></code>) and the identity operators (<code class="docutils literal notranslate"><span class="pre">is</span></code> and <code class="docutils literal notranslate"><span class="pre">is</span> <span class="pre">not</span></code>) in the order of precedence.</p>
+</div>
+<div class="section" id="list-methods-and-functions">
+<h3>List methods and functions<a class="headerlink" href="#list-methods-and-functions" title="Permalink to this headline">¶</a></h3>
+<p>There are many built-in functions which we can use on lists and other sequences:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># the length of a list</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">animals</span><span class="p">)</span>
+
+<span class="c1"># the sum of a list of numbers</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+
+<span class="c1"># are any of these values true?</span>
+<span class="nb">any</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># are all of these values true?</span>
+<span class="nb">all</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>List objects also have useful methods which we can call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="c1"># we already saw how to add an element to the end</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># count how many times a value appears in the list</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># append several values at once to the end</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">56</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
+
+<span class="c1"># find the index of a value</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># if the value appears more than once, we will get the index of the first one</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># if the value is not in the list, we will get a ValueError!</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># insert a value at a particular index</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span> <span class="c1"># insert 45 at the beginning of the list</span>
+
+<span class="c1"># remove an element by its index and assign it to a variable</span>
+<span class="n">my_number</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># remove an element by its value</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="c1"># if the value appears more than once, only the first one will be removed</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If we want to sort or reverse a list, we can either call a method on the list to modify it <em>in-place</em>, or use a function to return a modified copy of the list while leaving the original list untouched:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># these return a modified copy, which we can print</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">numbers</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">numbers</span><span class="p">)))</span>
+
+<span class="c1"># the original list is unmodified</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+
+<span class="c1"># now we can modify it in place</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">numbers</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">reversed</span></code> function actually returns a generator, not a list (we will look at generators in the next chapter), so we have to convert it to a list before we can print the contents.  To do this, we call the <code class="docutils literal notranslate"><span class="pre">list</span></code> type like a function, just like we would call <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code> to convert numbers.  We can also use <code class="docutils literal notranslate"><span class="pre">list</span></code> as another way to make a copy of a list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;goldfish&#39;</span><span class="p">,</span> <span class="s1">&#39;canary&#39;</span><span class="p">]</span>
+<span class="n">pets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">animals</span><span class="p">)</span>
+
+<span class="n">animals</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">pets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;gerbil&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pets</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-arithmetic-operators-with-lists">
+<h3>Using arithmetic operators with lists<a class="headerlink" href="#using-arithmetic-operators-with-lists" title="Permalink to this headline">¶</a></h3>
+<p>Some of the arithmetic operators we have used on numbers before can also be used on lists, but the effect may not always be what we expect:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># we can concatenate two lists by adding them</span>
+<span class="nb">print</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+
+<span class="c1"># we can concatenate a list with itself by multiplying it by an integer</span>
+<span class="nb">print</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># not all arithmetic operators can be used on lists -- this will give us an error!</span>
+<span class="nb">print</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lists-vs-arrays">
+<h3>Lists vs arrays<a class="headerlink" href="#lists-vs-arrays" title="Permalink to this headline">¶</a></h3>
+<p>Many other languages don’t have a built-in type which behaves like Python’s list.  You can use an implementation from a library, or write your own, but often programmers who use these languages use <em>arrays</em> instead.  Arrays are simpler, more low-level data structures, which don’t have all the functionality of a list.  Here are some major differences between lists and arrays:</p>
+<ul class="simple">
+<li>An array has a fixed size which you specify when you create it.  If you need to add or remove elements, you have to make a new array.</li>
+<li>If the language is statically typed, you also have to specify a single type for the values which you are going to put in the array when you create it.</li>
+<li>In languages which have <em>primitive types</em>, arrays are usually not objects, so they don’t have any methods – they are just containers.</li>
+</ul>
+<p>Arrays are less easy to use in many ways, but they also have some advantages: because they are so simple, and there are so many restrictions on what you can do with them, the computer can handle them very efficiently. That means that it is often much faster to use an array than to use an object which behaves like a list.  A lot of programmers use them when it is important for their programs to be fast.</p>
+<p>Python has a built-in <code class="docutils literal notranslate"><span class="pre">array</span></code> type.  It’s not quite as restricting as an array in C or Java – you have to specify a type for the contents of the array, and you can only use it to store numeric values, but you can resize it dynamically, like a list.  You will probably never need to use it.</p>
+</div>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a list <code class="docutils literal notranslate"><span class="pre">a</span></code> which contains the first three odd positive integers and a list <code class="docutils literal notranslate"><span class="pre">b</span></code> which contains the first three even positive integers.</li>
+<li>Create a new list <code class="docutils literal notranslate"><span class="pre">c</span></code> which combines the numbers from both lists (order is unimportant).</li>
+<li>Create a new list <code class="docutils literal notranslate"><span class="pre">d</span></code> which is a sorted copy of <code class="docutils literal notranslate"><span class="pre">c</span></code>, leaving <code class="docutils literal notranslate"><span class="pre">c</span></code> unchanged.</li>
+<li>Reverse <code class="docutils literal notranslate"><span class="pre">d</span></code> in-place.</li>
+<li>Set the fourth element of <code class="docutils literal notranslate"><span class="pre">c</span></code> to <code class="docutils literal notranslate"><span class="pre">42</span></code>.</li>
+<li>Append <code class="docutils literal notranslate"><span class="pre">10</span></code> to the end of <code class="docutils literal notranslate"><span class="pre">d</span></code>.</li>
+<li>Append <code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">8</span></code> and <code class="docutils literal notranslate"><span class="pre">9</span></code> to the end of <code class="docutils literal notranslate"><span class="pre">c</span></code>.</li>
+<li>Print the first three elements of <code class="docutils literal notranslate"><span class="pre">c</span></code>.</li>
+<li>Print the last element of <code class="docutils literal notranslate"><span class="pre">d</span></code> without using its length.</li>
+<li>Print the length of <code class="docutils literal notranslate"><span class="pre">d</span></code>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="tuples">
+<h2>Tuples<a class="headerlink" href="#tuples" title="Permalink to this headline">¶</a></h2>
+<p>Python has another sequence type which is called <code class="docutils literal notranslate"><span class="pre">tuple</span></code>.  Tuples are similar to lists in many ways, but they are immutable.  We define a tuple <em>literal</em> by putting a comma-separated list of values inside round brackets (<code class="docutils literal notranslate"><span class="pre">(</span></code> and <code class="docutils literal notranslate"><span class="pre">)</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WEEKDAYS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Monday&#39;</span><span class="p">,</span> <span class="s1">&#39;Tuesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Wednesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Thursday&#39;</span><span class="p">,</span> <span class="s1">&#39;Friday&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunday&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can use tuples in much the same way as we use lists, except that we can’t modify them:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">animals</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;fish&#39;</span><span class="p">)</span>
+
+<span class="c1"># an empty tuple</span>
+<span class="n">my_tuple</span> <span class="o">=</span> <span class="p">()</span>
+
+<span class="c1"># we can access a single element</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># we can get a slice</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="c1"># note that our slice will be a new tuple, not a list</span>
+
+<span class="c1"># we can count values or look up an index</span>
+<span class="n">animals</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">)</span>
+<span class="n">animals</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">)</span>
+
+<span class="c1"># ... but this is not allowed:</span>
+<span class="n">animals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;canary&#39;</span><span class="p">)</span>
+<span class="n">animal</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gerbil&#39;</span>
+</pre></div>
+</div>
+<p>What are tuples good for?  We can use them to create a sequence of values that we don’t want to modify.  For example, the list of weekday names is never going to change.  If we store it in a tuple, we can make sure it is never modified accidentally in an unexpected place:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here&#39;s what can happen if we put our weekdays in a mutable list</span>
+
+<span class="n">WEEKDAYS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Monday&#39;</span><span class="p">,</span> <span class="s1">&#39;Tuesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Wednesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Thursday&#39;</span><span class="p">,</span> <span class="s1">&#39;Friday&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunday&#39;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">print_funny_weekday_list</span><span class="p">(</span><span class="n">weekdays</span><span class="p">):</span>
+    <span class="n">weekdays</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Caturday&#39;</span> <span class="c1"># this is going to modify the original list!</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">weekdays</span><span class="p">)</span>
+
+<span class="n">print_funny_weekday_list</span><span class="p">(</span><span class="n">WEEKDAYS</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">WEEKDAYS</span><span class="p">)</span> <span class="c1"># oops</span>
+</pre></div>
+</div>
+<p>We have already been using tuples when inserting multiple values into a formatted string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2"> </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>How do we define a tuple with a single element?  We can’t just put round brackets around a value, because round brackets are also used to change the order of precedence in an expression – a value in brackets is just another way of writing the value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="mi">3</span><span class="p">))</span> <span class="c1"># this is still just 3</span>
+</pre></div>
+</div>
+<p>To let Python know that we want to create a tuple, we have to add a trailing comma:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span>
+</pre></div>
+</div>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a tuple <code class="docutils literal notranslate"><span class="pre">a</span></code> which contains the first four positive integers and a tuple <code class="docutils literal notranslate"><span class="pre">b</span></code> which contains the next four positive integers.</li>
+<li>Create a tuple <code class="docutils literal notranslate"><span class="pre">c</span></code> which combines all the numbers from <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> in any order.</li>
+<li>Create a tuple <code class="docutils literal notranslate"><span class="pre">d</span></code> which is a sorted copy of <code class="docutils literal notranslate"><span class="pre">c</span></code>.</li>
+<li>Print the third element of <code class="docutils literal notranslate"><span class="pre">d</span></code>.</li>
+<li>Print the last three elements of <code class="docutils literal notranslate"><span class="pre">d</span></code> without using its length.</li>
+<li>Print the length of <code class="docutils literal notranslate"><span class="pre">d</span></code>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="sets">
+<h2>Sets<a class="headerlink" href="#sets" title="Permalink to this headline">¶</a></h2>
+<p>The Python set type is called <code class="docutils literal notranslate"><span class="pre">set</span></code>.  A set is a collection of <em>unique elements</em>.  If we add multiple copies of the same element to a set, the duplicates will be eliminated, and we will be left with one of each element.  To define a set literal, we put a comma-separated list of values inside curly brackets (<code class="docutils literal notranslate"><span class="pre">{</span></code> and <code class="docutils literal notranslate"><span class="pre">}</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">animals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;goldfish&#39;</span><span class="p">,</span> <span class="s1">&#39;canary&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">)</span> <span class="c1"># the set will only contain one cat</span>
+</pre></div>
+</div>
+<p>We can perform various set operations on sets:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">even_numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">}</span>
+<span class="n">big_numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">}</span>
+
+<span class="c1"># subtraction: big numbers which are not even</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">big_numbers</span> <span class="o">-</span> <span class="n">even_numbers</span><span class="p">)</span>
+
+<span class="c1"># union: numbers which are big or even</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">big_numbers</span> <span class="o">|</span> <span class="n">even_numbers</span><span class="p">)</span>
+
+<span class="c1"># intersection: numbers which are big and even</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">big_numbers</span> <span class="o">&amp;</span> <span class="n">even_numbers</span><span class="p">)</span>
+
+<span class="c1"># numbers which are big or even but not both</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">big_numbers</span> <span class="o">^</span> <span class="n">even_numbers</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is important to note that unlike lists and tuples sets are <em>not ordered</em>.  When we print a set, the order of the elements will be random.  If we want to process the contents of a set in a particular order, we will first need to convert it to a list or tuple and sort it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">animals</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">animals</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">sorted</span></code> function returns a <code class="docutils literal notranslate"><span class="pre">list</span></code> object.</p>
+<p>How do we make an empty set?  We have to use the <code class="docutils literal notranslate"><span class="pre">set</span></code> function.  Dictionaries, which we will discuss in the next section, used curly brackets before sets adopted them, so an empty set of curly brackets is actually an empty dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is an empty dictionary</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># this is how we make an empty set</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">list</span></code>, <code class="docutils literal notranslate"><span class="pre">tuple</span></code>, <code class="docutils literal notranslate"><span class="pre">dict</span></code> and even <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code> functions in the same way – they all have sensible defaults – but we will probably seldom find a reason to do so.</p>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a set <code class="docutils literal notranslate"><span class="pre">a</span></code> which contains the first four positive integers and a set <code class="docutils literal notranslate"><span class="pre">b</span></code> which contains the first four odd positive integers.</li>
+<li>Create a set <code class="docutils literal notranslate"><span class="pre">c</span></code> which combines all the numbers which are in <code class="docutils literal notranslate"><span class="pre">a</span></code> or <code class="docutils literal notranslate"><span class="pre">b</span></code> (or both).</li>
+<li>Create a set <code class="docutils literal notranslate"><span class="pre">d</span></code> which contains all the numbers in <code class="docutils literal notranslate"><span class="pre">a</span></code> but not in <code class="docutils literal notranslate"><span class="pre">b</span></code>.</li>
+<li>Create a set <code class="docutils literal notranslate"><span class="pre">e</span></code> which contains all the numbers in <code class="docutils literal notranslate"><span class="pre">b</span></code> but not in <code class="docutils literal notranslate"><span class="pre">a</span></code>.</li>
+<li>Create a set <code class="docutils literal notranslate"><span class="pre">f</span></code> which contains all the numbers which are both in <code class="docutils literal notranslate"><span class="pre">a</span></code> and in <code class="docutils literal notranslate"><span class="pre">b</span></code>.</li>
+<li>Create a set <code class="docutils literal notranslate"><span class="pre">g</span></code> which contains all the numbers which are either in <code class="docutils literal notranslate"><span class="pre">a</span></code> or in <code class="docutils literal notranslate"><span class="pre">b</span></code> but not in both.</li>
+<li>Print the number of elements in <code class="docutils literal notranslate"><span class="pre">c</span></code>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="ranges">
+<h2>Ranges<a class="headerlink" href="#ranges" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">range</span></code> is another kind of immutable sequence type. It is very specialised – we use it to create ranges of integers.  Ranges are also <em>generators</em>.  We will find out more about generators in the next chapter, but for now we just need to know that the numbers in the range are generated one at a time as they are needed, and not all at once.  In the examples below, we convert each range to a list so that all the numbers are generated and we can print them out:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># print the integers from 0 to 9</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+
+<span class="c1"># print the integers from 1 to 10</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)))</span>
+
+<span class="c1"># print the odd integers from 1 to 10</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>We create a range by calling the <code class="docutils literal notranslate"><span class="pre">range</span></code> function.  As you can see, if we pass a single parameter to the <code class="docutils literal notranslate"><span class="pre">range</span></code> function, it is used as the upper bound.  If we use two parameters, the first is the lower bound and the second is the upper bound.  If we use three, the third parameter is the step size.  The default lower bound is zero, and the default step size is one.  Note that the range <em>includes</em> the lower bound and <em>excludes</em> the upper bound.</p>
+<div class="section" id="exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a range <code class="docutils literal notranslate"><span class="pre">a</span></code> which starts from <code class="docutils literal notranslate"><span class="pre">0</span></code> and goes on for 20 numbers.</li>
+<li>Create a range <code class="docutils literal notranslate"><span class="pre">b</span></code> which starts from <code class="docutils literal notranslate"><span class="pre">3</span></code> and ends on <code class="docutils literal notranslate"><span class="pre">12</span></code>.</li>
+<li>Create a range <code class="docutils literal notranslate"><span class="pre">c</span></code> which contains every third integer starting from <code class="docutils literal notranslate"><span class="pre">2</span></code> and ending at <code class="docutils literal notranslate"><span class="pre">50</span></code>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="dictionaries">
+<h2>Dictionaries<a class="headerlink" href="#dictionaries" title="Permalink to this headline">¶</a></h2>
+<p>The Python dictionary type is called <code class="docutils literal notranslate"><span class="pre">dict</span></code>.  We can use a dictionary to store key-value pairs.  To define a dictionary literal, we put a comma-separated list of key-value pairs between curly brackets.  We use a colon to separate each key from its value.  We access values in the dictionary in much the same way as list or tuple elements, but we use keys instead of indices:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">marbles</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;red&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;brown&quot;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">:</span> <span class="mi">29</span> <span class="p">}</span>
+
+<span class="n">personal_details</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Jane Doe&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">38</span><span class="p">,</span> <span class="c1"># trailing comma is legal</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">marbles</span><span class="p">[</span><span class="s2">&quot;green&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">personal_details</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+
+<span class="c1"># This will give us an error, because there is no such key in the dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">marbles</span><span class="p">[</span><span class="s2">&quot;blue&quot;</span><span class="p">])</span>
+
+<span class="c1"># modify a value</span>
+<span class="n">marbles</span><span class="p">[</span><span class="s2">&quot;red&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">3</span>
+<span class="n">personal_details</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Jane Q. Doe&quot;</span>
+</pre></div>
+</div>
+<p>The keys of a dictionary don’t have to be strings – they can be <em>any immutable type</em>, including numbers and even tuples. We can mix different types of keys and different types of values in one dictionary.  Keys are unique – if we repeat a key, we will overwrite the old value with the new value.  When we store a value in a dictionary, the key doesn’t have to exist – it will be created automatically:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">battleship_guesses</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">surnames</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># this is an empty dictionary</span>
+<span class="n">surnames</span><span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Smith&quot;</span>
+<span class="n">surnames</span><span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Doe&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">surnames</span><span class="p">)</span> <span class="c1"># we overwrote the older surname</span>
+
+<span class="n">marbles</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;red&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;brown&quot;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">:</span> <span class="mi">29</span> <span class="p">}</span>
+<span class="n">marbles</span><span class="p">[</span><span class="s2">&quot;blue&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1"># this will work</span>
+<span class="n">marbles</span><span class="p">[</span><span class="s2">&quot;purple&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">2</span> <span class="c1"># this will fail -- the increment operator needs an existing value to modify!</span>
+</pre></div>
+</div>
+<p>Like sets, dictionaries are not ordered – if we print a dictionary, the order will be random.</p>
+<p>Here are some commonly used methods of dictionary objects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">marbles</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;red&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;brown&quot;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">:</span> <span class="mi">29</span> <span class="p">}</span>
+
+<span class="c1"># Get a value by its key, or None if it doesn&#39;t exist</span>
+<span class="n">marbles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+<span class="c1"># We can specify a different default</span>
+<span class="n">marbles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Add several items to the dictionary at once</span>
+<span class="n">marbles</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;orange&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span> <span class="s2">&quot;purple&quot;</span><span class="p">:</span> <span class="mi">36</span><span class="p">})</span>
+
+<span class="c1"># All the keys in the dictionary</span>
+<span class="n">marbles</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="c1"># All the values in the dictionary</span>
+<span class="n">marbles</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="c1"># All the items in the dictionary</span>
+<span class="n">marbles</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The last three methods return special sequence types which are read-only <em>views</em> of various properties of the dictionary.  We cannot edit them directly, but they will be updated when we modify the dictionary.  We most often access these properties because we want to iterate over them (something we will discuss in the next chapter), but we can also convert them to other sequence types if we need to.</p>
+<p>We can check if a key is in the dictionary using <code class="docutils literal notranslate"><span class="pre">in</span></code> and <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">in</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;purple&quot;</span> <span class="ow">in</span> <span class="n">marbles</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;white&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">marbles</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can also check if a value is in the dictionary using <code class="docutils literal notranslate"><span class="pre">in</span></code> in conjunction with the <code class="docutils literal notranslate"><span class="pre">values</span></code> method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Smith&quot;</span> <span class="ow">in</span> <span class="n">surnames</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>You should avoid using <code class="docutils literal notranslate"><span class="pre">mykey</span> <span class="pre">in</span> <span class="pre">mydict.keys()</span></code> to check for key membership, however, because it’s less efficient than <code class="docutils literal notranslate"><span class="pre">mykey</span> <span class="pre">in</span> <span class="pre">mydict</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">in Python 2, <code class="docutils literal notranslate"><span class="pre">keys</span></code>, <code class="docutils literal notranslate"><span class="pre">values</span></code> and <code class="docutils literal notranslate"><span class="pre">items</span></code> return list copies of these sequences, <code class="docutils literal notranslate"><span class="pre">iterkeys</span></code>, <code class="docutils literal notranslate"><span class="pre">itervalues</span></code> and <code class="docutils literal notranslate"><span class="pre">iteritems</span></code> return iterator objects, and <code class="docutils literal notranslate"><span class="pre">viewkeys</span></code>, <code class="docutils literal notranslate"><span class="pre">viewvalues</span></code> and <code class="docutils literal notranslate"><span class="pre">viewitems</span></code> return the view objects which are the default in Python 3 (but these are only available in Python 2.7 and above). In Python 2 you should <em>really</em> not use <code class="docutils literal notranslate"><span class="pre">mykey</span> <span class="pre">in</span> <span class="pre">mydict.keys()</span></code> to check for key membership – if you do, you will be searching the entire list of keys sequentially, which is much slower than a direct dictionary lookup.</p>
+</div>
+<div class="section" id="exercise-5">
+<h3>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Create a dict <code class="docutils literal notranslate"><span class="pre">directory</span></code> which stores telephone numbers (as string values), and populate it with these key-value pairs:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Telephone number</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Jane Doe</td>
+<td>+27 555 5367</td>
+</tr>
+<tr class="row-odd"><td>John Smith</td>
+<td>+27 555 6254</td>
+</tr>
+<tr class="row-even"><td>Bob Stone</td>
+<td>+27 555 5689</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first">Change Jane’s number to <em>+27 555 1024</em></p>
+</li>
+<li><p class="first">Add a new entry for a person called <em>Anna Cooper</em> with the phone number <em>+27 555 3237</em></p>
+</li>
+<li><p class="first">Print Bob’s number.</p>
+</li>
+<li><p class="first">Print Bob’s number in such a way that <code class="docutils literal notranslate"><span class="pre">None</span></code> would be printed if Bob’s name were not in the dictionary.</p>
+</li>
+<li><p class="first">Print all the keys. The format is unimportant, as long as they’re all visible.</p>
+</li>
+<li><p class="first">Print all the values.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="converting-between-collection-types">
+<h2>Converting between collection types<a class="headerlink" href="#converting-between-collection-types" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="implicit-conversions">
+<h3>Implicit conversions<a class="headerlink" href="#implicit-conversions" title="Permalink to this headline">¶</a></h3>
+<p>If we try to iterate over a collection in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop (something we will discuss in the next chapter), Python will try to convert it into something that we can iterate over if it knows how to.  For example, the dictionary views we saw above are not actually iterators, but Python knows how to make them into iterators – so we can use them in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop without having to convert them ourselves.</p>
+<p>Sometimes the iterator we get by default may not be what we expected – if we iterate over a dictionary in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, we will iterate over the <em>keys</em>.  If what we actually want to do is iterate over the values, or key and value pairs, we will have to specify that ourselves by using the dictionary’s <code class="docutils literal notranslate"><span class="pre">values</span></code> or <code class="docutils literal notranslate"><span class="pre">items</span></code> view instead.</p>
+</div>
+<div class="section" id="explicit-conversions">
+<h3>Explicit conversions<a class="headerlink" href="#explicit-conversions" title="Permalink to this headline">¶</a></h3>
+<p>We can convert between the different sequence types quite easily by using the type functions to <em>cast</em> sequences to the desired types – just like we would use <code class="docutils literal notranslate"><span class="pre">float</span></code> and <code class="docutils literal notranslate"><span class="pre">int</span></code> to convert numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;goldfish&#39;</span><span class="p">,</span> <span class="s1">&#39;canary&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">]</span>
+
+<span class="n">animals_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">animals</span><span class="p">)</span>
+<span class="n">animals_unique_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">animals_set</span><span class="p">)</span>
+<span class="n">animals_unique_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">animals_unique_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We have to be more careful when converting a dictionary to a sequence: do we want to use the keys, the values or pairs of keys and values?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">marbles</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;red&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;brown&quot;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">:</span> <span class="mi">29</span> <span class="p">}</span>
+
+<span class="n">colours</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">marbles</span><span class="p">)</span> <span class="c1"># the keys will be used by default</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">marbles</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="c1"># but we can use a view to get the values</span>
+<span class="n">marbles_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">marbles</span><span class="o">.</span><span class="n">items</span><span class="p">())</span> <span class="c1"># or the key-value pairs</span>
+</pre></div>
+</div>
+<p>If we convert the key-value pairs of a dictionary to a sequence, each pair will be converted to a tuple containing the key followed by the value.</p>
+<p>We can also convert a sequence to a dictionary, but only if it’s a sequence of <em>pairs</em> – each pair must itself be a sequence with two values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Python doesn&#39;t know how to convert this into a dictionary</span>
+<span class="nb">dict</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+
+<span class="c1"># but this will work</span>
+<span class="nb">dict</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>We will revisit conversions in the next chapter, when we learn about <em>comprehensions</em> – an efficient syntax for filtering sequences or dictionaries.  By using the right kind of comprehension, we can filter a collection and convert it to a different type of collection at the same time.</p>
+</div>
+<div class="section" id="another-look-at-strings">
+<h3>Another look at strings<a class="headerlink" href="#another-look-at-strings" title="Permalink to this headline">¶</a></h3>
+<p>Strings are also a kind of sequence type – they are sequences of characters, and share some properties with other sequences.  For example, we can find the length of a string or the index of a character in the string, and we can access individual elements of strings or slices:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;abracadabra&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Remember that strings are immutable – modifying characters in-place isn’t allowed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this will give us an error</span>
+<span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+</pre></div>
+</div>
+<p>The membership operator has special behaviour when applied to strings: we can use it to determine if a string contains a single character as an element, but we can also use it to check if a string contains a substring:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a&#39;</span> <span class="ow">in</span> <span class="s1">&#39;abcd&#39;</span><span class="p">)</span> <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span> <span class="ow">in</span> <span class="s1">&#39;abcd&#39;</span><span class="p">)</span> <span class="c1"># also True</span>
+
+<span class="c1"># this doesn&#39;t work for lists</span>
+<span class="nb">print</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">])</span> <span class="c1"># False</span>
+</pre></div>
+</div>
+<p>We can easily convert a string to a list of characters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abc_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;abracadabra&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What if we want to convert a list of characters into a string? Using the <code class="docutils literal notranslate"><span class="pre">str</span></code> function on the list will just give us a printable string of the list, including commas, quotes and brackets.  To join a sequence of characters (or longer strings) together into a single string, we have to use <code class="docutils literal notranslate"><span class="pre">join</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">join</span></code> is not a function or a sequence method – it’s a <em>string</em> method which takes a sequence of strings as a parameter.  When we call a string’s <code class="docutils literal notranslate"><span class="pre">join</span></code> method, we are using that string to glue the strings in the sequence together.  For example, to join a list of single characters into a string, with no spaces between them, we call the <code class="docutils literal notranslate"><span class="pre">join</span></code> method on the <em>empty string</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">]</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can use any string we like to join a sequence of strings together:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">animals</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;fish&#39;</span><span class="p">)</span>
+
+<span class="c1"># a space-separated list</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">animals</span><span class="p">))</span>
+
+<span class="c1"># a comma-separated list</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">animals</span><span class="p">))</span>
+
+<span class="c1"># a comma-separated list with spaces</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">animals</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The opposite of <em>joining</em> is <em>splitting</em>.  We can split up a string into a list of strings by using the <code class="docutils literal notranslate"><span class="pre">split</span></code> method.  If called without any parameters, <code class="docutils literal notranslate"><span class="pre">split</span></code> divides up a string into words, using any number of consecutive whitespace characters as a delimiter.  We can use additional parameters to specify a different delimiter as well as a limit on the maximum number of splits to perform:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cat    dog fish</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cat|dog|fish&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cat, dog, fish&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cat, dog, fish&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-6">
+<h3>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Convert a list which contains the numbers <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code> and <code class="docutils literal notranslate"><span class="pre">3</span></code>, and convert it to a tuple <code class="docutils literal notranslate"><span class="pre">a</span></code>.</li>
+<li>Convert <code class="docutils literal notranslate"><span class="pre">a</span></code> to a list <code class="docutils literal notranslate"><span class="pre">b</span></code>. Print its length.</li>
+<li>Convert <code class="docutils literal notranslate"><span class="pre">b</span></code> to a set <code class="docutils literal notranslate"><span class="pre">c</span></code>. Print its length.</li>
+<li>Convert <code class="docutils literal notranslate"><span class="pre">c</span></code> to a list <code class="docutils literal notranslate"><span class="pre">d</span></code>. Print its length.</li>
+<li>Create a range which starts at <code class="docutils literal notranslate"><span class="pre">1</span></code> and ends at <code class="docutils literal notranslate"><span class="pre">10</span></code>. Convert it to a list <code class="docutils literal notranslate"><span class="pre">e</span></code>.</li>
+<li>Create the <code class="docutils literal notranslate"><span class="pre">directory</span></code> dict from the previous example. Create a list <code class="docutils literal notranslate"><span class="pre">t</span></code> which contains all the key-value pairs from the dictionary as tuples.</li>
+<li>Create a list <code class="docutils literal notranslate"><span class="pre">v</span></code> of all the values in the dictionary.</li>
+<li>Create a list <code class="docutils literal notranslate"><span class="pre">k</span></code> of all the keys in he dictionary.</li>
+<li>Create a string <code class="docutils literal notranslate"><span class="pre">s</span></code> which contains the word <code class="docutils literal notranslate"><span class="pre">&quot;antidisestablishmentarianism&quot;</span></code>. Use the <code class="docutils literal notranslate"><span class="pre">sorted</span></code> function on it. What is the output type? Concatenate the letters in the output to a string <code class="docutils literal notranslate"><span class="pre">s2</span></code>.</li>
+<li>Split the string <code class="docutils literal notranslate"><span class="pre">&quot;the</span> <span class="pre">quick</span> <span class="pre">brown</span> <span class="pre">fox</span> <span class="pre">jumped</span> <span class="pre">over</span> <span class="pre">the</span> <span class="pre">lazy</span> <span class="pre">dog&quot;</span></code> into a list <code class="docutils literal notranslate"><span class="pre">w</span></code> of individual words.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="two-dimensional-sequences">
+<h2>Two-dimensional sequences<a class="headerlink" href="#two-dimensional-sequences" title="Permalink to this headline">¶</a></h2>
+<p>Most of the sequences we have seen so far have been one-dimensional: each sequence is a row of elements.  What if we want to use a sequence to represent a two-dimensional data structure, which has both rows and columns?  The easiest way to do this is to make a sequence in which each element is also a sequence.  For example, we can create a list of lists:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_table</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The outer list has four elements, and each of these elements is a list with three elements (which are numbers).  To access one of these numbers, we need to use two indices – one for the outer list, and one for the inner list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_table</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># lists are mutable, so we can do this</span>
+<span class="n">my_table</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+</pre></div>
+</div>
+<p>We have already seen an example of this in the previous chapter, when we created a list of tuples to convert into a dict.</p>
+<p>When we use a two-dimensional sequence to represent tabular data, each inner sequence will have the same length, because a table is rectangular – but nothing is stopping us from constructing two-dimensional sequences which don’t have this property:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_2d_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>We can also make a three-dimensional sequence by making a list of lists of lists:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_3d_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span>
+    <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]],</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">my_3d_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Of course we can also make a list of lists of lists of lists and so forth – we can nest lists as many times as we like.</p>
+<p>If we wanted to make a two-dimensional list to represent a weekly timetable, we could either have days as the outer list and time slots as the inner list or the other way around – we would have to remember which range we picked to be the rows and which the columns.</p>
+<p>Suppose that we wanted to initialise the timetable with an empty string in each time slot – let us say that we have 24 hour-long time slots in each day.  That’s seven lists of 24 elements each – quite long and unwieldy to define using literals, the way we defined the smaller lists in the examples above!</p>
+<p>This brings us to a common pitfall.  You may recall from a previous section that we can use the multiplication operator on lists – this can be a convenient way to construct a long list in which all the elements are the same:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_long_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span> <span class="c1"># a long list of zeros</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_long_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You might think of using this method to construct our timetable.  We can certainly use it to create a list of empty strings to represent a day:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">day</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">24</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">day</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But what happens if we repeat a day seven times to make a week?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">timetable</span> <span class="o">=</span> <span class="n">day</span> <span class="o">*</span> <span class="mi">7</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">timetable</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Everything looks fine so far, so what’s the problem?  Well, let’s see what happens when we try to schedule a meeting for Monday afternoon:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">timetable</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">15</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;meeting with Jane&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">timetable</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Every day has the same afternoon meeting!  How did that happen?  When we multiplied our day list by seven, we filled our timetable with <em>the same list object</em>, repeated seven times.  All the elements in our timetable are the same day, so no matter which one we modify we modify all of them at once.</p>
+<p>Why didn’t this matter when we made the day list by multiplying the same empty string 24 times?  Because strings are immutable.  We can only change the values of the strings in the day list by assigning them new values – we can’t modify them in-place, so it doesn’t matter that they all start off as the same string object.  But because we <em>can</em> modify lists in-place, it does matter that all our day lists are the same list.  What we actually want is seven <em>copies</em> of a day list in our timetable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">timetable</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">24</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Here we construct the timetable with a list comprehension instead.  We will learn more about comprehensions in the next chapter – for now, it is important for us to know that this method creates a <em>new</em> list of empty strings for each day, unlike the multiplication operator.</p>
+<div class="section" id="exercise-7">
+<h3>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Create a list <code class="docutils literal notranslate"><span class="pre">a</span></code> which contains three tuples. The first tuple should contain a single element, the second two elements and the third three elements.</li>
+<li>Print the second element of the second element of <code class="docutils literal notranslate"><span class="pre">a</span></code>.</li>
+<li>Create a list <code class="docutils literal notranslate"><span class="pre">b</span></code> which contains four lists, each of which contains four elements.</li>
+<li>Print the last two elements of the first element of <code class="docutils literal notranslate"><span class="pre">b</span></code>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+
+<span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">d</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">}</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">|</span> <span class="n">b</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">a</span> <span class="o">^</span> <span class="n">b</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="answer-to-exercise-4">
+<h3>Answer to exercise 4<a class="headerlink" href="#answer-to-exercise-4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="answer-to-exercise-5">
+<h3>Answer to exercise 5<a class="headerlink" href="#answer-to-exercise-5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">directory</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Jane Doe&quot;</span><span class="p">:</span> <span class="s2">&quot;+27 555 5367&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;John Smith&quot;</span><span class="p">:</span> <span class="s2">&quot;+27 555 6254&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Bob Stone&quot;</span><span class="p">:</span> <span class="s2">&quot;+27 555 5689&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">directory</span><span class="p">[</span><span class="s2">&quot;Jane Doe&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;+27 555 1024&quot;</span>
+<span class="n">directory</span><span class="p">[</span><span class="s2">&quot;Anna Cooper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;+27 555 3237&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">directory</span><span class="p">[</span><span class="s2">&quot;Bob Stone&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">directory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Bob Stone&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">directory</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">directory</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="answer-to-exercise-6">
+<h3>Answer to exercise 6<a class="headerlink" href="#answer-to-exercise-6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+
+<span class="n">directory</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Jane Doe&quot;</span><span class="p">:</span> <span class="s2">&quot;+27 555 5367&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;John Smith&quot;</span><span class="p">:</span> <span class="s2">&quot;+27 555 6254&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Bob Stone&quot;</span><span class="p">:</span> <span class="s2">&quot;+27 555 5689&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">directory</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="n">v</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">directory</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">k</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;antidisestablishmentarianism&quot;</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="s2">&quot;the quick brown fox jumped over the lazy dog&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="answer-to-exercise-7">
+<h3>Answer to exercise 7<a class="headerlink" href="#answer-to-exercise-7" title="Permalink to this headline">¶</a></h3>
+<p>Here is a code example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,),</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)),</span>
+    <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)),</span>
+    <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">)),</span>
+    <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">)),</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Collections</a><ul>
+<li><a class="reference internal" href="#lists">Lists</a><ul>
+<li><a class="reference internal" href="#list-methods-and-functions">List methods and functions</a></li>
+<li><a class="reference internal" href="#using-arithmetic-operators-with-lists">Using arithmetic operators with lists</a></li>
+<li><a class="reference internal" href="#lists-vs-arrays">Lists vs arrays</a></li>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tuples">Tuples</a><ul>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sets">Sets</a><ul>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ranges">Ranges</a><ul>
+<li><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dictionaries">Dictionaries</a><ul>
+<li><a class="reference internal" href="#exercise-5">Exercise 5</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#converting-between-collection-types">Converting between collection types</a><ul>
+<li><a class="reference internal" href="#implicit-conversions">Implicit conversions</a></li>
+<li><a class="reference internal" href="#explicit-conversions">Explicit conversions</a></li>
+<li><a class="reference internal" href="#another-look-at-strings">Another look at strings</a></li>
+<li><a class="reference internal" href="#exercise-6">Exercise 6</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#two-dimensional-sequences">Two-dimensional sequences</a><ul>
+<li><a class="reference internal" href="#exercise-7">Exercise 7</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-4">Answer to exercise 4</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-5">Answer to exercise 5</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-6">Answer to exercise 6</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-7">Answer to exercise 7</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Selection_Control_Statements.html"
+                        title="previous chapter">Selection control statements</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Loop_Control_Statements.html"
+                        title="next chapter">Loop control statements</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Collections.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Loop_Control_Statements.html" title="Loop control statements"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Selection_Control_Statements.html" title="Selection control statements"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,724 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Object-oriented programming &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Packaging and testing" href="Packaging_and_Testing.html" />
+    <link rel="prev" title="Classes" href="Classes.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Packaging_and_Testing.html" title="Packaging and testing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Classes.html" title="Classes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="object-oriented-programming">
+<h1>Object-oriented programming<a class="headerlink" href="#object-oriented-programming" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>As you have seen from the earliest code examples in this course, it is not compulsory to organise your code into classes when you program in Python.  You can use functions by themselves, in what is called a <em>procedural</em> programming approach.  However, while a procedural style can suffice for writing short, simple programs, an object-oriented programming (OOP) approach becomes more valuable the more your program grows in size and complexity.</p>
+<p>The more data and functions comprise your code, the more important it is to arrange them into logical subgroups, making sure that data and functions which are related are grouped together and that data and functions which are not related don’t interfere with each other.  Modular code is easier to understand and modify, and lends itself more to reuse – and code reuse is valuable because it reduces development time.</p>
+<p>As a worst-case scenario, imagine a program with a hundred functions and a hundred separate global variables all in the same file.  This would be a very difficult program to maintain.  All the variables could potentially be modified by all the functions even if they shouldn’t be, and in order to pick unique names for all the variables, some of which might have a very similar purpose but be used by different functions, we would probably have to resort to poor naming practices.  It would probably be easy to confuse these variables with each other, since it would be difficult to see which functions use which variables.</p>
+<p>We could try to make this code more modular even without object orientation.  We could group related variables together into aggregate data structures.  In the past, some other languages, like C++, introduced a <code class="docutils literal notranslate"><span class="pre">struct</span></code> type which eventually became indistinguishable from a class, but which initially didn’t have any methods – only attributes.  This allowed programmers to construct compound variables out of many individual variables, and was the first step towards object orientation.  In Python, we often use dictionaries for ad-hoc grouping of related data.</p>
+<p>We could also split up the functions and data into separate <em>namespaces</em> instead of having them all defined inside the same <em>global namespace</em>.  This often coincides with splitting the code physically into multiple files.  In Python we do this by splitting code up into <em>modules</em>.</p>
+<p>The main additional advantage of object orientation, as we saw in the previous chapter, is that it combines data with the functions which act upon that data in a single structure.  This makes it easy for us to find related parts of our code, since they are physically defined in close proximity to one another, and also makes it easier for us to write our code in such a way that the data inside each object is accessed as much as possible only through that object’s methods.  We will discuss this principle, which we call <em>encapsulation</em>, in the next section.</p>
+<p>Some people believe that OOP is a more intuitive programming style to learn, because people find it easy to reason about objects and relationships between them.  OOP is thus sometimes considered to be a superior approach because it allows new programmers to become proficient more quickly.</p>
+<div class="section" id="basic-oop-principles">
+<h3>Basic OOP principles<a class="headerlink" href="#basic-oop-principles" title="Permalink to this headline">¶</a></h3>
+<p>The most important principle of object orientation is <em>encapsulation</em>: the idea that data inside the object should only be accessed through a public <em>interface</em> – that is, the object’s methods.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">age</span></code> function we saw in the previous chapter is a good example of this philosophy.  If we want to use the data stored in an object to perform an action or calculate a derived value, we define a method associated with the object which does this. Then whenever we want to perform this action we call the method on the object. We consider it bad practice to retrieve the information from inside the object and write separate code to perform the action outside of the object.</p>
+<p>Encapsulation is a good idea for several reasons:</p>
+<ul class="simple">
+<li>the functionality is defined <em>in one place</em> and not in multiple places.</li>
+<li>it is defined in a logical place – the place where the data is kept.</li>
+<li>data inside our object is not modified unexpectedly by external code in a completely different part of our program.</li>
+<li>when we use a method, we only need to know what result the method will produce – we don’t need to know details about the object’s internals in order to use it.  We could switch to using another object which is completely different on the inside, and not have to change any code because both objects have the same interface.</li>
+</ul>
+<p>We can say that the object “knows how” to do things with its own data, and it’s a bad idea for us to access its internals and do things with the data ourselves.  If an object doesn’t have an interface method which does what we want to do, we should add a new method or update an existing one.</p>
+<p>Some languages have features which allow us to enforce encapsulation strictly.  In Java or C++, we can define access permissions on object attributes, and make it illegal for them to be accessed from outside the object’s methods.  In Java it is also considered good practice to write setters and getters for all attributes, even if the getter simply retrieves the attribute and the setter just assigns it the value of the parameter which you pass in.</p>
+<p>In Python, encapsulation is not enforced by the language, but there is a convention that we can use to indicate that a property is intended to be private and is not part of the object’s public interface: we begin its name with an underscore.</p>
+<p>It is also customary to set and get simple attribute values directly, and only write setter and getter methods for values which require some kind of calculation.  In the last chapter we learned how to use the property decorator to replace a simple attribute with a method without changing the object’s interface.</p>
+</div>
+<div class="section" id="relationships-between-objects">
+<h3>Relationships between objects<a class="headerlink" href="#relationships-between-objects" title="Permalink to this headline">¶</a></h3>
+<p>In the next section we will look at different ways that classes can be related to each other.  In Python, there are two main types of relationships between classes: <em>composition</em> and <em>inheritance</em>.</p>
+</div>
+</div>
+<div class="section" id="composition">
+<h2>Composition<a class="headerlink" href="#composition" title="Permalink to this headline">¶</a></h2>
+<p>Composition is a way of <em>aggregating</em> objects together by making some objects attributes of other objects.  We saw in the previous chapter how we can make a <code class="docutils literal notranslate"><span class="pre">datetime.date</span></code> object an attribute of our <code class="docutils literal notranslate"><span class="pre">Person</span></code> object, and use it to store a person’s birthdate.  We can say that a person <em>has a</em> birthdate – if we can express a relationship between two classes using the phrase <em>has-a</em>, it is a composition relationship.</p>
+<p>Relationships like this can be one-to-one, one-to-many or many-to-many, and they can be unidirectional or bidirectional, depending on the specifics of the the roles which the objects fulfil.</p>
+<p>According to some formal definitions the term <em>composition</em> implies that the two objects are quite strongly linked – one object can be thought of as <em>belonging</em> exclusively to the other object.  If the owner object ceases to exist, the owned object will probably cease to exist as well.  If the link between two objects is weaker, and neither object has exclusive ownership of the other, it can also be called <em>aggregation</em>.</p>
+<p>Here are four classes which show several examples of aggregation and composition:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">student_number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_number</span> <span class="o">=</span> <span class="n">student_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">enrol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course_running</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course_running</span><span class="p">)</span>
+        <span class="n">course_running</span><span class="o">.</span><span class="n">add_student</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Department</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">department_code</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">department_code</span> <span class="o">=</span> <span class="n">department_code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">add_course</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">course_code</span><span class="p">,</span> <span class="n">credits</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">[</span><span class="n">course_code</span><span class="p">]</span> <span class="o">=</span> <span class="n">Course</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="n">course_code</span><span class="p">,</span> <span class="n">credits</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">[</span><span class="n">course_code</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">course_code</span><span class="p">,</span> <span class="n">credits</span><span class="p">,</span> <span class="n">department</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_code</span> <span class="o">=</span> <span class="n">course_code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">credits</span> <span class="o">=</span> <span class="n">credits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">department</span> <span class="o">=</span> <span class="n">department</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">department</span><span class="o">.</span><span class="n">add_course</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">runnings</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_running</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runnings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CourseRunning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">year</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">runnings</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">CourseRunning</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course</span> <span class="o">=</span> <span class="n">course</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">students</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">student</span><span class="p">)</span>
+
+
+<span class="n">maths_dept</span> <span class="o">=</span> <span class="n">Department</span><span class="p">(</span><span class="s2">&quot;Mathematics and Applied Mathematics&quot;</span><span class="p">,</span> <span class="s2">&quot;MAM&quot;</span><span class="p">)</span>
+<span class="n">mam1000w</span> <span class="o">=</span> <span class="n">maths_dept</span><span class="o">.</span><span class="n">add_course</span><span class="p">(</span><span class="s2">&quot;Mathematics 1000&quot;</span><span class="p">,</span> <span class="s2">&quot;MAM1000W&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">mam1000w_2013</span> <span class="o">=</span> <span class="n">mam1000w</span><span class="o">.</span><span class="n">add_running</span><span class="p">(</span><span class="mi">2013</span><span class="p">)</span>
+
+<span class="n">bob</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">)</span>
+<span class="n">bob</span><span class="o">.</span><span class="n">enrol</span><span class="p">(</span><span class="n">mam1000w_2013</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Why are there two classes which both describe a course?  This is an example of the way that translation of real-life concepts into objects in your code may not always be as straightforward as it appears.  Would it have made sense to have a single course object which has both description, code and department attributes and a list of students?</p>
+<p>There are two distinct concepts, both of which can be called a “course”,  that we need to represent: one is the theoretical <em>idea</em> of a course, which is offered by a department every year and always has the same name and code, and the other is the course as it is run <em>in a particular year</em>, each time with a different group of enrolled students.  We have represented these two concepts by two separate classes which are linked to each other.  <code class="docutils literal notranslate"><span class="pre">Course</span></code> is the theoretical description of a course, and <code class="docutils literal notranslate"><span class="pre">CourseRunning</span></code> is the concrete instance of a course.</p>
+<p>We have defined several relationships between these classes:</p>
+<ul class="simple">
+<li>A student can be enrolled in several courses (<code class="docutils literal notranslate"><span class="pre">CourseRunning</span></code> objects), and a course (<code class="docutils literal notranslate"><span class="pre">CourseRunning</span></code>) can have multiple students enrolled in it in a particular year, so this is a many-to-many relationship.  A student knows about all his or her courses, and a course has a record of all enrolled students, so this is a bidirectional relationship.  These objects aren’t very strongly coupled – a student can exist independently of a course, and a course can exist independently of a student.</li>
+<li>A department offers multiple courses (<code class="docutils literal notranslate"><span class="pre">Course</span></code> objects), but in our implementation a course can only have a single department – this is a one-to-many relationship.  It is also bidirectional.  Furthermore, these objects are more strongly coupled – you can say that a department <em>owns</em> a course.  The course cannot exist without the department.</li>
+<li>A similar relationship exists between a course and its “runnings”: it is also bidirectional, one-to-many and strongly coupled – it wouldn’t make sense for “MAM1000W run in 2013” to exist on its own in the absence of “MAM1000W”.</li>
+</ul>
+<p>What words like “exist” and “owns” actually mean for our code can vary.  An object which “owns” another object could be responsible for creating that object when it requires it and destroying it when it is no longer needed – but these words can also be used to describe a logical relationship between concepts which is not necessarily literally implemented in that way in the code.</p>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Briefly describe a possible collection of classes which can be used to represent a music collection (for example, inside a music player), focusing on how they would be related by composition.  You should include classes for songs, artists, albums and playlists.  Hint: write down the four class names, draw a line between each pair of classes which you think should have a relationship, and decide what kind of relationship would be the most appropriate.</p>
+<p>For simplicity you can assume that any song or album has a single “artist” value (which could represent more than one person), but you should include compilation albums (which contain songs by a selection of different artists).  The “artist” of a compilation album can be a special value like “Various Artists”.  You can also assume that each song is associated with a single album, but that multiple copies of the same song (which are included in different albums) can exist.</p>
+</li>
+<li><p class="first">Write a simple implementation of this model which clearly shows how the different classes are composed.  Write some example code to show how you would use your classes to create an album and add all its songs to a playlist.  Hint: if two objects are related to each other bidirectionally, you will have to decide how this link should be formed – one of the objects will have to be created before the other, so you can’t link them to each other in both directions simultaneously!</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="inheritance">
+<h2>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this headline">¶</a></h2>
+<p><em>Inheritance</em> is a way of arranging objects in a hierarchy from the most general to the most specific.  An object which <em>inherits</em> from another object is considered to be a <em>subtype</em> of that object.  As we saw in the previous chapter, all objects in Python inherit from <code class="docutils literal notranslate"><span class="pre">object</span></code>.  We can say that a string, an integer or a <code class="docutils literal notranslate"><span class="pre">Person</span></code> instance <em>is an</em> <code class="docutils literal notranslate"><span class="pre">object</span></code> instance.  When we can describe the relationship between two objects using the phrase <em>is-a</em>, that relationship is inheritance.</p>
+<p>We also often say that a class is a <em>subclass</em> or <em>child class</em> of a class from which it inherits, or that the other class is its <em>superclass</em> or <em>parent class</em>.  We can refer to the most generic class at the base of a hierarchy as a <em>base class</em>.</p>
+<p>Inheritance can help us to represent objects which have some differences and some similarities in the way they work.  We can put all the functionality that the objects have in common in a base class, and then define one or more subclasses with their own custom functionality.</p>
+<p>Inheritance is also a way of reusing existing code easily.  If we already have a class which does <em>almost</em> what we want, we can create a subclass in which we partially override some of its behaviour, or perhaps add some new functionality.</p>
+<p>Here is a simple example of inheritance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+
+
+<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+    <span class="n">UNDERGRADUATE</span><span class="p">,</span> <span class="n">POSTGRADUATE</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student_type</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_type</span> <span class="o">=</span> <span class="n">student_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Student</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">enrol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">StaffMember</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+    <span class="n">PERMANENT</span><span class="p">,</span> <span class="n">TEMPORARY</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">employment_type</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">employment_type</span> <span class="o">=</span> <span class="n">employment_type</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StaffMember</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Lecturer</span><span class="p">(</span><span class="n">StaffMember</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses_taught</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Lecturer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">assign_teaching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses_taught</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="n">Student</span><span class="o">.</span><span class="n">POSTGRADUATE</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;SMTJNX045&quot;</span><span class="p">)</span>
+<span class="n">jane</span><span class="o">.</span><span class="n">enrol</span><span class="p">(</span><span class="n">a_postgrad_course</span><span class="p">)</span>
+
+<span class="n">bob</span> <span class="o">=</span> <span class="n">Lecturer</span><span class="p">(</span><span class="n">StaffMember</span><span class="o">.</span><span class="n">PERMANENT</span><span class="p">,</span> <span class="s2">&quot;Bob&quot;</span><span class="p">,</span> <span class="s2">&quot;Jones&quot;</span><span class="p">,</span> <span class="s2">&quot;123456789&quot;</span><span class="p">)</span>
+<span class="n">bob</span><span class="o">.</span><span class="n">assign_teaching</span><span class="p">(</span><span class="n">an_undergrad_course</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Our base class is <code class="docutils literal notranslate"><span class="pre">Person</span></code>, which represents any person associated with a university.  We create a subclass to represent students and one to represent staff members, and then a subclass of <code class="docutils literal notranslate"><span class="pre">StaffMember</span></code> for people who teach courses (as opposed to staff members who have administrative positions.)</p>
+<p>We represent both student numbers and staff numbers by a single attribute, <code class="docutils literal notranslate"><span class="pre">number</span></code>, which we define in the base class, because it makes sense for us to treat them as a unified form of identification for any person.  We use different attributes for the kind of student (undergraduate or postgraduate) that someone is and whether a staff member is a permanent or a temporary employee, because these are different sets of options.</p>
+<p>We have also added a method to <code class="docutils literal notranslate"><span class="pre">Student</span></code> for enrolling a student in a course, and a method to <code class="docutils literal notranslate"><span class="pre">Lecturer</span></code> for assigning a course to be taught by a lecturer.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method of the base class initialises all the instance variables that are common to all subclasses.  In each subclass we <em>override</em> the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method so that we can use it to initialise that class’s attributes – but we want the parent class’s attributes to be initialised as well, so we need to call the parent’s <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method from ours.  To find the right method, we use the <code class="docutils literal notranslate"><span class="pre">super</span></code> function – when we pass in the current class and object as parameters, it will return a proxy object with the correct <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method, which we can then call.</p>
+<p>In each of our overridden <code class="docutils literal notranslate"><span class="pre">__init__</span></code> methods we use those of the method’s parameters which are specific to our class inside the method, and then pass the remaining parameters to the parent class’s <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method.  A common convention is to add the specific parameters for each successive subclass to the <em>beginning</em> of the parameter list, and define all the other parameters using <code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> – then the subclass doesn’t need to know the details about the parent class’s parameters.  Because of this, if we add a new parameter to the superclass’s <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, we will only need to add it to all the places where we create that class or one of its subclasses – we won’t also have to update all the child class definitions to include the new parameter.</p>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">A very common use case for inheritance is the creation of a custom exception hierarchy.  Because we use the class of an exception to determine whether it should be caught by a particular <code class="docutils literal notranslate"><span class="pre">except</span></code> block, it is useful for us to define custom classes for exceptions which we want to raise in our code.  Using inheritance in our classes is useful because if an <code class="docutils literal notranslate"><span class="pre">except</span></code> block catches a particular exception class, it will also catch its child classes (because a child class <em>is</em> its parent class).  That means that we can efficiently write <code class="docutils literal notranslate"><span class="pre">except</span></code> blocks which handle groups of related exceptions, just by arranging them in a logical hierarchy.  Our exception classes should inherit from Python’s built-in exception classes. They often won’t need to contain any additional attributes or methods.</p>
+<p>Write a simple program which loops over a list of user data (tuples containing a username, email and age) and adds each user to a directory if the user is at least 16 years old.  You do not need to store the age.  Write a simple exception hierarchy which defines a different exception for each of these error conditions:</p>
+<ol class="arabic simple">
+<li>the username is not unique</li>
+<li>the age is not a positive integer</li>
+<li>the user is under 16</li>
+<li>the email address is not valid (a simple check for a username, the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> symbol and a domain name is sufficient)</li>
+</ol>
+<p>Raise these exceptions in your program where appropriate. Whenever an exception occurs, your program should move onto the next set of data in the list. Print a different error message for each different kind of exception.</p>
+<p>Think about where else it would be a good idea to use a custom class, and what kind of collection type would be most appropriate for your directory.</p>
+<p>You can consider an email address to be valid if it contains one <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> symbol and has a non-empty username and domain name – you don’t need to check for valid characters.  You can assume that the age is already an integer value.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="more-about-inheritance">
+<h2>More about inheritance<a class="headerlink" href="#more-about-inheritance" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="multiple-inheritance">
+<h3>Multiple inheritance<a class="headerlink" href="#multiple-inheritance" title="Permalink to this headline">¶</a></h3>
+<p>The previous example might seem like a good way to represent students and staff members at first glance, but if we started to extend this system we would soon encounter some complications.  At a real university, the divisions between staff and students and administrative and teaching staff are not always clear-cut.  A student who tutors a course is also a kind of temporary staff member.  A staff member can enrol in a course.  A staff member can have <em>both</em> an administrative role in the department <em>and</em> a teaching position.</p>
+<p>In Python it is possible for a class to inherit from multiple other classes.  We could, for example, create a class called <code class="docutils literal notranslate"><span class="pre">Tutor</span></code>, which inherits from both <code class="docutils literal notranslate"><span class="pre">Student</span></code> and <code class="docutils literal notranslate"><span class="pre">StaffMember</span></code>.  Multiple inheritance isn’t too difficult to understand if a class inherits from multiple classes which have completely different properties, but things get complicated if two parent classes implement the same method or attribute.</p>
+<p>If classes <code class="docutils literal notranslate"><span class="pre">B</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span></code> inherit from <code class="docutils literal notranslate"><span class="pre">A</span></code> and class <code class="docutils literal notranslate"><span class="pre">D</span></code> inherits from <code class="docutils literal notranslate"><span class="pre">B</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span></code>, and both <code class="docutils literal notranslate"><span class="pre">B</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span></code> have a method <code class="docutils literal notranslate"><span class="pre">do_something</span></code>, which <code class="docutils literal notranslate"><span class="pre">do_something</span></code> will <code class="docutils literal notranslate"><span class="pre">D</span></code> inherit?  This ambiguity is known as the <em>diamond problem</em>, and different languages resolve it in different ways.  In our <code class="docutils literal notranslate"><span class="pre">Tutor</span></code> class we would encounter this problem with the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method.</p>
+<p>Fortunately the <code class="docutils literal notranslate"><span class="pre">super</span></code> function knows how to deal gracefully with multiple inheritance. If we use it inside the <code class="docutils literal notranslate"><span class="pre">Tutor</span></code> class’s <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method, all of the parent classes’ <code class="docutils literal notranslate"><span class="pre">__init__</span></code> methods should be called in a sensible order.  We would then end up with a class which has all the attributes and methods found in both <code class="docutils literal notranslate"><span class="pre">Student</span></code> and <code class="docutils literal notranslate"><span class="pre">StaffMember</span></code>.</p>
+</div>
+<div class="section" id="mix-ins">
+<h3>Mix-ins<a class="headerlink" href="#mix-ins" title="Permalink to this headline">¶</a></h3>
+<p>If we use multiple inheritance, it is often a good idea for us to design our classes in a way which avoids the kind of ambiguity described above.  One way of doing this is to split up optional functionality into <em>mix-ins</em>.  A Mix-in is a class which is not intended to stand on its own – it exists to add extra functionality to another class through multiple inheritance.  For example, let us try to rewrite the example above so that each set of related things that a person can do at a university is written as a mix-in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+
+
+<span class="k">class</span> <span class="nc">LearnerMixin</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">enrol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">TeacherMixin</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses_taught</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">assign_teaching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses_taught</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Tutor</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">LearnerMixin</span><span class="p">,</span> <span class="n">TeacherMixin</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Tutor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Tutor</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;SMTJNX045&quot;</span><span class="p">)</span>
+<span class="n">jane</span><span class="o">.</span><span class="n">enrol</span><span class="p">(</span><span class="n">a_postgrad_course</span><span class="p">)</span>
+<span class="n">jane</span><span class="o">.</span><span class="n">assign_teaching</span><span class="p">(</span><span class="n">an_undergrad_course</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now Tutor inherits from one “main” class, <code class="docutils literal notranslate"><span class="pre">Person</span></code>, and two mix-ins which are not related to <code class="docutils literal notranslate"><span class="pre">Person</span></code>.  Each mix-in is responsible for providing a specific piece of optional functionality.  Our mix-ins still have <code class="docutils literal notranslate"><span class="pre">__init__</span></code> methods, because each one has to initialise a list of courses (we saw in the previous chapter that we can’t do this with a class attribute).  Many mix-ins just provide additional methods and don’t initialise anything. This sometimes means that they depend on other properties which already exist in the class which inherits from them.</p>
+<p>We could extend this example with more mix-ins which represent the ability to pay fees, the ability to get paid for services, and so on – we could then create a relatively flat hierarchy of classes for different kinds of people which inherit from <code class="docutils literal notranslate"><span class="pre">Person</span></code> and some number of mix-ins.</p>
+</div>
+<div class="section" id="abstract-classes-and-interfaces">
+<h3>Abstract classes and interfaces<a class="headerlink" href="#abstract-classes-and-interfaces" title="Permalink to this headline">¶</a></h3>
+<p>In some languages it is possible to create a class which can’t be instantiated.  That means that we can’t use this class directly to create an object – we can only inherit from the class, and use the subclasses to create objects.</p>
+<p>Why would we want to do this?  Sometimes we want to specify a set of properties that an object needs to have in order to be suitable for some task – for example, we may have written a function which expects one of its parameters to be an object with certain methods that our function will need to use.  We can create a class which serves as a <em>template</em> for suitable objects by defining a list of methods that these objects must implement.  This class is not intended to be instantiated because all our method definitions are empty – all the <em>insides</em> of the methods must be implemented in a subclass.</p>
+<p>The abstract class is thus an <em>interface</em> definition – some languages also have a type of structure called an interface, which is very similar.  We say that a class <em>implements</em> an interface if it inherits from the class which specifies that interface.</p>
+<p>In Python we can’t prevent anyone from instantiating a class, but we can create something similar to an abstract class by using <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> inside our method definitions.  For example, here are some “abstract” classes which can be used as templates for shapes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Shape2D</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Shape3D</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Any two-dimensional shape has an area, and any three-dimensional shape has a volume.  The formulae for working out area and volume differ depending on what shape we have, and objects for different shapes may have completely different attributes.</p>
+<p>If an object inherits from <code class="docutils literal notranslate"><span class="pre">2DShape</span></code>, it will gain that class’s default <code class="docutils literal notranslate"><span class="pre">area</span></code> method – but the default method raises an error which makes it clear to the user that a custom method must be defined in the child object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Square</span><span class="p">(</span><span class="n">Shape2D</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">**</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write an “abstract” class, <code class="docutils literal notranslate"><span class="pre">Box</span></code>, and use it to define some methods which any box object should have: <code class="docutils literal notranslate"><span class="pre">add</span></code>, for adding any number of items to the box, <code class="docutils literal notranslate"><span class="pre">empty</span></code>, for taking all the items out of the box and returning them as a list, and <code class="docutils literal notranslate"><span class="pre">count</span></code>, for counting the items which are currently in the box.  Write a simple <code class="docutils literal notranslate"><span class="pre">Item</span></code> class which has a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute and a <code class="docutils literal notranslate"><span class="pre">value</span></code> attribute – you can assume that all the items you will use will be <code class="docutils literal notranslate"><span class="pre">Item</span></code> objects.  Now write two subclasses of <code class="docutils literal notranslate"><span class="pre">Box</span></code> which use different underlying collections to store items: <code class="docutils literal notranslate"><span class="pre">ListBox</span></code> should use a list, and <code class="docutils literal notranslate"><span class="pre">DictBox</span></code> should use a dict.</li>
+<li>Write a function, <code class="docutils literal notranslate"><span class="pre">repack_boxes</span></code>, which takes any number of boxes as parameters, gathers up all the items they contain, and redistributes them as evenly as possible over all the boxes.  Order is unimportant.  There are multiple ways of doing this.  Test your code with a <code class="docutils literal notranslate"><span class="pre">ListBox</span></code> with 20 items, a <code class="docutils literal notranslate"><span class="pre">ListBox</span></code> with 9 items and a <code class="docutils literal notranslate"><span class="pre">DictBox</span></code> with 5 items.  You should end up with two boxes with 11 items each, and one box with 12 items.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="avoiding-inheritance">
+<h2>Avoiding inheritance<a class="headerlink" href="#avoiding-inheritance" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance can be a useful technique, but it can also be an unnecessary complication.  As we have already discussed, multiple inheritance can cause a lot of ambiguity and confusion, and hierarchies which use multiple inheritance should be designed carefully to minimise this.</p>
+<p>A deep hierarchy with many layers of subclasses may be difficult to read and understand.  In our first inheritance example, to understand how the <code class="docutils literal notranslate"><span class="pre">Lecturer</span></code> class works we have to read through <em>three</em> different classes instead of one.  If our classes are long and split into several different files, it can be hard to figure out which subclass is responsible for a particular piece of behaviour.  You should avoid creating hierarchies which are more than one or two classes deep.</p>
+<p>In some statically typed languages inheritance is very popular because it allows the programmer to work around some of the restrictions of static typing.  If a lecturer and a student are both a kind of person, we can write a function which accepts a parameter of type <code class="docutils literal notranslate"><span class="pre">Person</span></code> and have it work on both lecturer and student objects because they both inherit from <code class="docutils literal notranslate"><span class="pre">Person</span></code>.  This is known as <em>polymorphism</em>.</p>
+<p>In Python inheritance is not compulsory for polymorphism, because Python is not statically typed.  A function can work on both lecturer and student objects if they both have the appropriate attributes and methods even if these objects <em>don’t</em> share a parent class, and are completely unrelated.  When you check parameters yourself, you are encouraged not to check an object’s type directly, but instead to check for the presence of the methods and attributes that your function needs to use – that way you are not forcing the parameter objects into an inheritance hierarchy when this is unnecessary.</p>
+<div class="section" id="replacing-inheritance-with-composition">
+<h3>Replacing inheritance with composition<a class="headerlink" href="#replacing-inheritance-with-composition" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes we can replace inheritance with composition and achieve a similar result – this approach is sometimes considered preferable.  In the mix-in example, we split up the possible behaviours of a person into logical groups.  Instead of implementing these sets of behaviours as mix-ins and having our class inherit from them, we can add them as <em>attributes</em> to the <code class="docutils literal notranslate"><span class="pre">Person</span></code> class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Learner</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">enrol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Teacher</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses_taught</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">assign_teaching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses_taught</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">learner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">teacher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">learner</span> <span class="o">=</span> <span class="n">learner</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">teacher</span> <span class="o">=</span> <span class="n">teacher</span>
+
+<span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;SMTJNX045&quot;</span><span class="p">,</span> <span class="n">Learner</span><span class="p">(),</span> <span class="n">Teacher</span><span class="p">())</span>
+<span class="n">jane</span><span class="o">.</span><span class="n">learner</span><span class="o">.</span><span class="n">enrol</span><span class="p">(</span><span class="n">a_postgrad_course</span><span class="p">)</span>
+<span class="n">jane</span><span class="o">.</span><span class="n">teacher</span><span class="o">.</span><span class="n">assign_teaching</span><span class="p">(</span><span class="n">an_undergrad_course</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now instead of calling the <code class="docutils literal notranslate"><span class="pre">enrol</span></code> and <code class="docutils literal notranslate"><span class="pre">assign_teaching</span></code> methods on our person object directly, we <em>delegate</em> to the object’s <code class="docutils literal notranslate"><span class="pre">learner</span></code> and <code class="docutils literal notranslate"><span class="pre">teacher</span></code> attributes.</p>
+</div>
+<div class="section" id="exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Rewrite the <code class="docutils literal notranslate"><span class="pre">Person</span></code> class in the last example, implementing additional methods called <code class="docutils literal notranslate"><span class="pre">enrol</span></code> and <code class="docutils literal notranslate"><span class="pre">assign_teaching</span></code> which hide the delegation.  These methods should raise an appropriate error message if the delegation cannot be performed because the corresponding attribute has not been set.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">The following relationships should exist between the four classes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a one-to-many relationship between albums and songs – this is likely to be bidirectional, since songs and albums are quite closely coupled.</li>
+<li>a one-to-many relationship between artists and songs.  This can be unidirectional or bidirectional.  We don’t really need to store links to all of an artist’s songs on an artist object, since a reference to the artist from each song is enough for us to search our songs by artist, but if the music collection is very large it may be a good idea to cache this list.</li>
+<li>a one-to-many relationship between artists and albums, which can be unidirectional or bidirectional for the same reasons.</li>
+<li>a one-to-many relationship between playlists and songs – this is likely to be unidirectional, since it’s uncommon to keep track of all the playlists on which a particular song appears.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Song</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">track_number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">artist</span> <span class="o">=</span> <span class="n">artist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">album</span> <span class="o">=</span> <span class="n">album</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">track_number</span> <span class="o">=</span> <span class="n">track_number</span>
+
+        <span class="n">artist</span><span class="o">.</span><span class="n">add_song</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Album</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">artist</span> <span class="o">=</span> <span class="n">artist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="n">year</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">artist</span><span class="o">.</span><span class="n">add_album</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">artist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">artist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">artist</span>
+
+        <span class="n">track_number</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracks</span><span class="p">)</span>
+
+        <span class="n">song</span> <span class="o">=</span> <span class="n">Song</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">track_number</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Artist</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">albums</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">songs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_album</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">album</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">albums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_song</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">song</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">songs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Playlist</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">songs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add_song</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">song</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">songs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+
+<span class="n">band</span> <span class="o">=</span> <span class="n">Artist</span><span class="p">(</span><span class="s2">&quot;Bob&#39;s Awesome Band&quot;</span><span class="p">)</span>
+<span class="n">album</span> <span class="o">=</span> <span class="n">Album</span><span class="p">(</span><span class="s2">&quot;Bob&#39;s First Single&quot;</span><span class="p">,</span> <span class="n">band</span><span class="p">,</span> <span class="mi">2013</span><span class="p">)</span>
+<span class="n">album</span><span class="o">.</span><span class="n">add_track</span><span class="p">(</span><span class="s2">&quot;A Ballad about Cheese&quot;</span><span class="p">)</span>
+<span class="n">album</span><span class="o">.</span><span class="n">add_track</span><span class="p">(</span><span class="s2">&quot;A Ballad about Cheese (dance remix)&quot;</span><span class="p">)</span>
+<span class="n">album</span><span class="o">.</span><span class="n">add_track</span><span class="p">(</span><span class="s2">&quot;A Third Song to Use Up the Rest of the Space&quot;</span><span class="p">)</span>
+
+<span class="n">playlist</span> <span class="o">=</span> <span class="n">Playlist</span><span class="p">(</span><span class="s2">&quot;My Favourite Songs&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">album</span><span class="o">.</span><span class="n">tracks</span><span class="p">:</span>
+    <span class="n">playlist</span><span class="o">.</span><span class="n">add_song</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Exceptions</span>
+
+<span class="k">class</span> <span class="nc">DuplicateUsernameError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">InvalidAgeError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">UnderageError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">InvalidEmailError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c1"># A class for a user&#39;s data</span>
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span>
+
+<span class="n">example_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;jane&quot;</span><span class="p">,</span> <span class="s2">&quot;jane@example.com&quot;</span><span class="p">,</span> <span class="mi">21</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;bob&quot;</span><span class="p">,</span> <span class="s2">&quot;bob@example&quot;</span><span class="p">,</span> <span class="mi">19</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;jane&quot;</span><span class="p">,</span> <span class="s2">&quot;jane2@example.com&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;steve&quot;</span><span class="p">,</span> <span class="s2">&quot;steve@somewhere&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;joe&quot;</span><span class="p">,</span> <span class="s2">&quot;joe&quot;</span><span class="p">,</span> <span class="mi">23</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;anna&quot;</span><span class="p">,</span> <span class="s2">&quot;anna@example.com&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">directory</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">age</span> <span class="ow">in</span> <span class="n">example_list</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">username</span> <span class="ow">in</span> <span class="n">directory</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DuplicateUsernameError</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidAgeError</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnderageError</span><span class="p">()</span>
+
+        <span class="n">email_parts</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">email_parts</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">email_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">email_parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">InvalidEmailError</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="n">DuplicateUsernameError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Username &#39;</span><span class="si">%s</span><span class="s2">&#39; is in use.&quot;</span> <span class="o">%</span> <span class="n">username</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">InvalidAgeError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid age: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">age</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">UnderageError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User </span><span class="si">%s</span><span class="s2"> is underage.&quot;</span> <span class="o">%</span> <span class="n">username</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">InvalidEmailError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; is not a valid email address.&quot;</span> <span class="o">%</span> <span class="n">email</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">directory</span><span class="p">[</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Box</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">items</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Item</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+
+<span class="k">class</span> <span class="nc">ListBox</span><span class="p">(</span><span class="n">Box</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">items</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">items</span>
+
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DictBox</span><span class="p">(</span><span class="n">Box</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">items</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">((</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">return</span> <span class="n">items</span>
+
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">repack_boxes</span><span class="p">(</span><span class="o">*</span><span class="n">boxes</span><span class="p">):</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">boxes</span><span class="p">:</span>
+        <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">empty</span><span class="p">())</span>
+
+    <span class="k">while</span> <span class="n">items</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">boxes</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">box</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">break</span>
+
+<span class="n">box1</span> <span class="o">=</span> <span class="n">ListBox</span><span class="p">()</span>
+<span class="n">box1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+
+<span class="n">box2</span> <span class="o">=</span> <span class="n">ListBox</span><span class="p">()</span>
+<span class="n">box2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+
+<span class="n">box1</span> <span class="o">=</span> <span class="n">DictBox</span><span class="p">()</span>
+<span class="n">box1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Item</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">repack_boxes</span><span class="p">(</span><span class="n">box1</span><span class="p">,</span> <span class="n">box2</span><span class="p">,</span> <span class="n">box3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">box1</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">box2</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">box3</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-4">
+<h3>Answer to exercise 4<a class="headerlink" href="#answer-to-exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">learner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">teacher</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">learner</span> <span class="o">=</span> <span class="n">learner</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">teacher</span> <span class="o">=</span> <span class="n">teacher</span>
+
+    <span class="k">def</span> <span class="nf">enrol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;learner&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">learner</span><span class="o">.</span><span class="n">enrol</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">assign_teaching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;teacher&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">teacher</span><span class="o">.</span><span class="n">assign_teaching</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Object-oriented programming</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li><a class="reference internal" href="#basic-oop-principles">Basic OOP principles</a></li>
+<li><a class="reference internal" href="#relationships-between-objects">Relationships between objects</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#composition">Composition</a><ul>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inheritance">Inheritance</a><ul>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#more-about-inheritance">More about inheritance</a><ul>
+<li><a class="reference internal" href="#multiple-inheritance">Multiple inheritance</a></li>
+<li><a class="reference internal" href="#mix-ins">Mix-ins</a></li>
+<li><a class="reference internal" href="#abstract-classes-and-interfaces">Abstract classes and interfaces</a></li>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#avoiding-inheritance">Avoiding inheritance</a><ul>
+<li><a class="reference internal" href="#replacing-inheritance-with-composition">Replacing inheritance with composition</a></li>
+<li><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-4">Answer to exercise 4</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Classes.html"
+                        title="previous chapter">Classes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Packaging_and_Testing.html"
+                        title="next chapter">Packaging and testing</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Object_Oriented_Programming.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Packaging_and_Testing.html" title="Packaging and testing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Classes.html" title="Classes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

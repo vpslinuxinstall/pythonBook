@@ -1,0 +1,746 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Useful modules in the Standard Library &#8212; Object-Oriented Programming in Python 1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction to GUI programming with tkinter" href="Introduction_to_GUI_Programming.html" />
+    <link rel="prev" title="Packaging and testing" href="Packaging_and_Testing.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Introduction_to_GUI_Programming.html" title="Introduction to GUI programming with tkinter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Packaging_and_Testing.html" title="Packaging and testing"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="useful-modules-in-the-standard-library">
+<h1>Useful modules in the Standard Library<a class="headerlink" href="#useful-modules-in-the-standard-library" title="Permalink to this headline">¶</a></h1>
+<p>Python comes with a built-in selection of modules which provide commonly used functionality.  We have encountered some of these modules in previous chapters – for example, <code class="docutils literal notranslate"><span class="pre">itertools</span></code>, <code class="docutils literal notranslate"><span class="pre">logging</span></code>, <code class="docutils literal notranslate"><span class="pre">pdb</span></code> and <code class="docutils literal notranslate"><span class="pre">unittest</span></code>.  We will look at a few more examples in this chapter.  This is only a brief overview of a small subset of the available modules –  you can see the full list, and find out more details about each one, by reading the <a class="reference external" href="http://docs.python.org/3.3/library/index.html">Python Standard Library documentation</a>.</p>
+<div class="section" id="date-and-time-datetime">
+<h2>Date and time: <code class="docutils literal notranslate"><span class="pre">datetime</span></code><a class="headerlink" href="#date-and-time-datetime" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">datetime</span></code> module provides us with objects which we can use to store information about dates and times:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">datetime.date</span></code> is used to create dates which are not associated with a time.</li>
+<li><code class="docutils literal notranslate"><span class="pre">datetime.time</span></code> is used for times which are independent of a date.</li>
+<li><code class="docutils literal notranslate"><span class="pre">datetime.datetime</span></code> is used for objects which have both a date and a time.</li>
+<li><code class="docutils literal notranslate"><span class="pre">datetime.timedelta</span></code> objects store <em>differences</em> between dates or datetimes – if we subtract one datetime from another, the result will be a timedelta.</li>
+<li><code class="docutils literal notranslate"><span class="pre">datetime.timezone</span></code> objects represent time zone adjustments as offsets from UTC.  This class is a subclass of <code class="docutils literal notranslate"><span class="pre">datetime.tzinfo</span></code>, which is not meant to be used directly.</li>
+</ul>
+<p>We can query these objects for a particular component (like the year, month, hour or minute), perform arithmetic on them, and extract printable string versions from them if we need to display them.  Here are a few examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c1"># this class method creates a datetime object with the current date and time</span>
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">hour</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">weekday</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%a</span><span class="s2">, </span><span class="si">%d</span><span class="s2"> %B %Y&quot;</span><span class="p">))</span>
+
+<span class="n">long_ago</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1999</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">58</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">long_ago</span><span class="p">)</span> <span class="c1"># remember that this calls str automatically</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">long_ago</span> <span class="o">&lt;</span> <span class="n">now</span><span class="p">)</span>
+
+<span class="n">difference</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="n">long_ago</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">difference</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">difference</span><span class="p">)</span> <span class="c1"># remember that this calls str automatically</span>
+</pre></div>
+</div>
+<div class="section" id="exercise-1">
+<h3>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Print ten dates, each two a week apart, starting from today, in the form <em>YYYY-MM-DD</em>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="mathematical-functions-math">
+<h2>Mathematical functions: <code class="docutils literal notranslate"><span class="pre">math</span></code><a class="headerlink" href="#mathematical-functions-math" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">math</span></code> module is a collection of mathematical functions.  They can be used on floats or integers, but are mostly intended to be used on floats, and usually return floats.  Here are a few examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="c1"># These are constant attributes, not functions</span>
+<span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">math</span><span class="o">.</span><span class="n">e</span>
+
+<span class="c1"># round a float up or down</span>
+<span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">3.3</span><span class="p">)</span>
+<span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mf">3.3</span><span class="p">)</span>
+
+<span class="c1"># natural logarithm</span>
+<span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1"># logarithm with base 10</span>
+<span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># this function is slightly more accurate</span>
+
+<span class="c1"># square root</span>
+<span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># trigonometric functions</span>
+<span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># convert between radians and degrees</span>
+<span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you need mathematical functions to use on complex numbers, you should use the <code class="docutils literal notranslate"><span class="pre">cmath</span></code> module instead.</p>
+<div class="section" id="exercise-2">
+<h3>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write an object which represents a sphere of a given radius. Write a method which calculates the sphere’s volume, and one which calculates its surface area.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="pseudo-random-numbers-random">
+<h2>Pseudo-random numbers: <code class="docutils literal notranslate"><span class="pre">random</span></code><a class="headerlink" href="#pseudo-random-numbers-random" title="Permalink to this headline">¶</a></h2>
+<p>We call a sequence of numbers <em>pseudo-random</em> when it appears in some sense to be random, but actually isn’t.  Pseudo-random number sequences are generated by some kind of predictable algorithm, but they possess enough of the properties of truly random sequences that they can be used in many applications that call for random numbers.</p>
+<p>It is difficult for a computer to generate numbers which are genuinely random.  It is possible to gather truly random input using hardware, from sources such as the user’s keystrokes or tiny fluctuations in voltage measurements, and use that input to generate random numbers, but this process is more complicated and expensive than pseudo-random number generation, which can be done purely in software.</p>
+<p>Because pseudo-random sequences aren’t actually random, it is also possible to reproduce the exact same sequence twice.  That isn’t something we would want to do by accident, but it is a useful thing to be able to deliberately while debugging software, or in an automated test.</p>
+<p>In Python can we use the <code class="docutils literal notranslate"><span class="pre">random</span></code> module to generate pseudo-random numbers, and do a few more things which depend on randomness.  The core function of the module generates a random float between 0 and 1, and most of the other functions are derived from it.  Here are a few examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># a random float from 0 to 1 (excluding 1)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+
+<span class="n">pets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="s2">&quot;fish&quot;</span><span class="p">]</span>
+<span class="c1"># a random element from a sequence</span>
+<span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pets</span><span class="p">)</span>
+<span class="c1"># shuffle a list (in place)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">pets</span><span class="p">)</span>
+
+<span class="c1"># a random integer from 1 to 10 (inclusive)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When we load the <code class="docutils literal notranslate"><span class="pre">random</span></code> module we can <em>seed</em> it before we start generating values.  We can think of this as picking a place in the pseudo-random sequence where we want to start.  We normally want to start in a different place every time – by default, the module is seeded with a value taken from the system clock.  If we want to reproduce the same random sequence multiple times – for example, inside a unit test – we need to pass the same integer or string as parameter to <code class="docutils literal notranslate"><span class="pre">seed</span></code> each time:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># set a predictable seed</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+
+<span class="c1"># now try it again</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+
+<span class="c1"># and now try a different seed</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="s2">&quot;something completely different&quot;</span><span class="p">)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="exercise-3">
+<h3>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a program which randomly picks an integer from 1 to 100.  Your program should prompt the user for guesses – if the user guesses incorrectly, it should print whether the guess is too high or too low. If the user guesses correctly, the program should print how many guesses the user took to guess the right answer. You can assume that the user will enter valid input.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="matching-string-patterns-re">
+<h2>Matching string patterns: <code class="docutils literal notranslate"><span class="pre">re</span></code><a class="headerlink" href="#matching-string-patterns-re" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">re</span></code> module allows us to write <em>regular expressions</em>.  Regular expressions are a mini-language for matching strings, and can be used to find and possibly replace text.  If you learn how to use regular expressions in Python, you will find that they are quite similar to use in other languages.</p>
+<p>The full range of capabilities of regular expressions is quite extensive, and they are often criticised for their potential complexity, but with the knowledge of only a few basic concepts we can perform some very powerful string manipulation easily.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Regular expressions are good for use on plain text, but a bad fit for parsing more structured text formats like XML – you should always use a more specialised parsing library for those.</p>
+</div>
+<p>The Python documentation for the <code class="docutils literal notranslate"><span class="pre">re</span></code> module not only explains how to use the module, but also contains a reference for the complete regular expression syntax which Python supports.</p>
+<div class="section" id="a-regular-expression-primer">
+<h3>A regular expression primer<a class="headerlink" href="#a-regular-expression-primer" title="Permalink to this headline">¶</a></h3>
+<p>A regular expression is a string which describes a pattern.  This pattern is compared to other strings, which may or may not match it.  A regular expression can contain normal characters (which are treated literally as specific letters, numbers or other symbols) as well as special symbols which have different meanings within the expression.</p>
+<p>Because many special symbols use the backslash (<code class="docutils literal notranslate"><span class="pre">\</span></code>) character, we often use <em>raw strings</em> to represent regular expressions in Python.  This eliminates the need to use extra backslashes to escape backslashes, which would make complicated regular expressions much more difficult to read. If a regular expression doesn’t contain any backslashes, it doesn’t matter whether we use a raw string or a normal string.</p>
+<p>Here are some very simple examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this regular expression contains no special symbols</span>
+<span class="c1"># it won&#39;t match anything except &#39;cat&#39;</span>
+<span class="s2">&quot;cat&quot;</span>
+
+<span class="c1"># a . stands for any single character (except the newline, by default)</span>
+<span class="c1"># this will match &#39;cat&#39;, &#39;cbt&#39;, &#39;c3t&#39;, &#39;c!t&#39; ...</span>
+<span class="s2">&quot;c.t&quot;</span>
+
+<span class="c1"># a * repeats the previous character 0 or more times</span>
+<span class="c1"># it can be used after a normal character, or a special symbol like .</span>
+<span class="c1"># this will match &#39;ct&#39;, &#39;cat&#39;, &#39;caat&#39;, &#39;caaaaaaaaat&#39; ...</span>
+<span class="s2">&quot;ca*t&quot;</span>
+<span class="c1"># this will match &#39;sc&#39;, &#39;sac&#39;, &#39;sic&#39;, &#39;supercalifragilistic&#39; ...</span>
+<span class="s2">&quot;s.*c&quot;</span>
+
+<span class="c1"># + is like *, but the character must occur at least once</span>
+<span class="c1"># there must be at least one &#39;a&#39;</span>
+<span class="s2">&quot;ca+t&quot;</span>
+
+<span class="c1"># more generally, we can use curly brackets {} to specify any number of repeats</span>
+<span class="c1"># or a minimum and maximum</span>
+<span class="c1"># this will match any five-letter word which starts with &#39;c&#39; and ends with &#39;t&#39;</span>
+<span class="s2">&quot;c.</span><span class="si">{3}</span><span class="s2">t&quot;</span>
+<span class="c1"># this will match any five-, six-, or seven-letter word ...</span>
+<span class="s2">&quot;c.{3,5}t&quot;</span>
+
+<span class="c1"># One of the uses for ? is matching the previous character zero or one times</span>
+<span class="c1"># this will match &#39;http&#39; or &#39;https&#39;</span>
+<span class="s2">&quot;https?&quot;</span>
+
+<span class="c1"># square brackets [] define a set of allowed values for a character</span>
+<span class="c1"># they can contain normal characters, or ranges</span>
+<span class="c1"># if ^ is the first character in the brackets, it *negates* the contents</span>
+<span class="c1"># the character between &#39;c&#39; and &#39;t&#39; must be a vowel</span>
+<span class="s2">&quot;c[aeiou]t&quot;</span>
+<span class="c1"># this matches any character that *isn&#39;t* a vowel, three times</span>
+<span class="s2">&quot;[^aeiou]</span><span class="si">{3}</span><span class="s2">&quot;</span>
+<span class="c1"># This matches an uppercase UCT student number</span>
+<span class="s2">&quot;[B-DF-HJ-NP-TV-Z]</span><span class="si">{3}</span><span class="s2">[A-Z]</span><span class="si">{3}</span><span class="s2">[0-9]</span><span class="si">{3}</span><span class="s2">&quot;</span>
+
+<span class="c1"># we use \ to escape any special regular expression character</span>
+<span class="c1"># this would match &#39;c*t&#39;</span>
+<span class="sa">r</span><span class="s2">&quot;c\*t&quot;</span>
+<span class="c1"># note that we have used a raw string, so that we can write a literal backslash</span>
+
+<span class="c1"># there are also some shorthand symbols for certain allowed subsets of characters:</span>
+<span class="c1"># \d matches any digit</span>
+<span class="c1"># \s matches any whitespace character, like space, tab or newline</span>
+<span class="c1"># \w matches alphanumeric characters -- letters, digits or the underscore</span>
+<span class="c1"># \D, \S and \W are the opposites of \d, \s and \w</span>
+
+<span class="c1"># we can use round brackets () to *capture* portions of the pattern</span>
+<span class="c1"># this is useful if we want to search and replace</span>
+<span class="c1"># we can retrieve the contents of the capture in the replace step</span>
+<span class="c1"># this will capture whatever would be matched by .*</span>
+<span class="s2">&quot;c(.*)t&quot;</span>
+
+<span class="c1"># ^ and $ denote the beginning or end of a string</span>
+<span class="c1"># this will match a string which starts with &#39;c&#39; and ends in &#39;t&#39;</span>
+<span class="s2">&quot;^c.*t$&quot;</span>
+
+<span class="c1"># | means &quot;or&quot; -- it lets us choose between multiple options.</span>
+<span class="s2">&quot;cat|dog&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-the-re-module">
+<h3>Using the <code class="docutils literal notranslate"><span class="pre">re</span></code> module<a class="headerlink" href="#using-the-re-module" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have seen how to construct regular expression strings, we can start using them.  The <code class="docutils literal notranslate"><span class="pre">re</span></code> module provides us with several functions which allow us to use regular expressions in different ways:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">search</span></code> searches for the regular expression inside a string – the regular expression will match if any subset of the string matches.</li>
+<li><code class="docutils literal notranslate"><span class="pre">match</span></code> matches a regular expression against the entire string – the regular expression will only match if the <em>whole string</em> matches.  <code class="docutils literal notranslate"><span class="pre">re.match('something',</span> <span class="pre">some_string)</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">re.search('^something$',</span> <span class="pre">some_string)</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">sub</span></code> searches for the regular expression and replaces it with the provided replacement expression.</li>
+<li><code class="docutils literal notranslate"><span class="pre">findall</span></code> searches for all matches of the regular expression within the string.</li>
+<li><code class="docutils literal notranslate"><span class="pre">split</span></code> splits a string using any regular expression as a delimiter.</li>
+<li><code class="docutils literal notranslate"><span class="pre">compile</span></code> allows us to convert our regular expression string to a pre-compiled regular expression <em>object</em>, which has methods analogous to the <code class="docutils literal notranslate"><span class="pre">re</span></code> module. Using this object is slightly more efficient.</li>
+</ul>
+<p>As you can see, this module provides more powerful versions of some simple string operations: for example, we can also split a string or replace a substring using the built-in <code class="docutils literal notranslate"><span class="pre">split</span></code> and <code class="docutils literal notranslate"><span class="pre">replace</span></code> methods – but we can only use them with <em>fixed</em> delimiters or search patterns and replacements.  With <code class="docutils literal notranslate"><span class="pre">re.sub</span></code> and <code class="docutils literal notranslate"><span class="pre">re.split</span></code> we can specify variable patterns instead of fixed strings.</p>
+<p>All of the functions take a regular expression as the first parameter.  <code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">search</span></code>, <code class="docutils literal notranslate"><span class="pre">findall</span></code> and <code class="docutils literal notranslate"><span class="pre">split</span></code> also take the string to be searched as the second parameter – but in the <code class="docutils literal notranslate"><span class="pre">sub</span></code> function this is the third parameter, the second being the replacement string.  All the functions also take an keyword parameter which specifies optional <em>flags</em>, which we will discuss shortly.</p>
+<p><code class="docutils literal notranslate"><span class="pre">match</span></code> and <code class="docutils literal notranslate"><span class="pre">search</span></code> both return match objects which store information such as the contents of captured groups.  <code class="docutils literal notranslate"><span class="pre">sub</span></code> returns a modified copy of the original string. <code class="docutils literal notranslate"><span class="pre">findall</span></code> and <code class="docutils literal notranslate"><span class="pre">split</span></code> return a list of strings.  <code class="docutils literal notranslate"><span class="pre">compile</span></code> returns a compiled regular expression object.</p>
+<p>The methods of a regular expression object are very similar to the functions of the module, but the first parameter (the regular expression string) of each method is dropped – because it has already been compiled into the object.</p>
+<p>Here are some usage examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># match and search are quite similar</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;c.*t&quot;</span><span class="p">,</span> <span class="s2">&quot;cravat&quot;</span><span class="p">))</span> <span class="c1"># this will match</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;c.*t&quot;</span><span class="p">,</span> <span class="s2">&quot;I have a cravat&quot;</span><span class="p">))</span> <span class="c1"># this won&#39;t</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;c.*t&quot;</span><span class="p">,</span> <span class="s2">&quot;I have a cravat&quot;</span><span class="p">))</span> <span class="c1"># this will</span>
+
+<span class="c1"># We can use a static string as a replacement...</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;lamb&quot;</span><span class="p">,</span> <span class="s2">&quot;squirrel&quot;</span><span class="p">,</span> <span class="s2">&quot;Mary had a little lamb.&quot;</span><span class="p">))</span>
+<span class="c1"># Or we can capture groups, and substitute their contents back in.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;(.*) (BITES) (.*)&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\3 \2 \1&quot;</span><span class="p">,</span> <span class="s2">&quot;DOG BITES MAN&quot;</span><span class="p">))</span>
+<span class="c1"># count is a keyword parameter which we can use to limit replacements</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;aaaaaaaaaa&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;aaaaaaaaaa&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Here&#39;s a closer look at a match object.</span>
+<span class="n">my_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;(.*) (BITES) (.*)&quot;</span><span class="p">,</span> <span class="s2">&quot;DOG BITES MAN&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_match</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># We can name groups.</span>
+<span class="n">my_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;(?P&lt;subject&gt;.*) (?P&lt;verb&gt;BITES) (?P&lt;object&gt;.*)&quot;</span><span class="p">,</span> <span class="s2">&quot;DOG BITES MAN&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;subject&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">())</span>
+<span class="c1"># We can still access named groups by their positions.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Sometimes we want to find all the matches in a string.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;[^ ]+@[^ ]+&quot;</span><span class="p">,</span> <span class="s2">&quot;Bob &lt;bob@example.com&gt;, Jane &lt;jane.doe@example.com&gt;&quot;</span><span class="p">))</span>
+
+<span class="c1"># Sometimes we want to split a string.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, *&quot;</span><span class="p">,</span> <span class="s2">&quot;one,two,  three, four&quot;</span><span class="p">))</span>
+
+<span class="c1"># We can compile a regular expression to an object</span>
+<span class="n">my_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;(.*) (BITES) (.*)&quot;</span><span class="p">)</span>
+<span class="c1"># now we can use it in a very similar way to the module</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_regex</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\3 \2 \1&quot;</span><span class="p">,</span> <span class="s2">&quot;DOG BITES MAN&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="greed">
+<h3>Greed<a class="headerlink" href="#greed" title="Permalink to this headline">¶</a></h3>
+<p>Regular expressions are <em>greedy</em> by default – this means that if a part of a regular expression can match a variable number of characters, it will always try to match as many characters as possible.  That means that we sometimes need to take special care to make sure that a regular expression doesn’t match too much.  For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is going to match everything between the first and last &#39;&quot;&#39;</span>
+<span class="c1"># but that&#39;s not what we want!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;&quot;.*&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot;&#39;</span><span class="p">))</span>
+
+<span class="c1"># This is a common trick</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;&quot;[^&quot;]*&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot;&#39;</span><span class="p">))</span>
+
+<span class="c1"># We can also use ? after * or other expressions to make them *not greedy*</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;&quot;.*?&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;one&quot; &quot;two&quot; &quot;three&quot; &quot;four&quot;&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions-as-replacements">
+<h3>Functions as replacements<a class="headerlink" href="#functions-as-replacements" title="Permalink to this headline">¶</a></h3>
+<p>We can also use <code class="docutils literal notranslate"><span class="pre">re.sub</span></code> to apply a <em>function</em> to a match instead of a string replacement.  The function must take a match object as a parameter, and return a string.  We can use this functionality to perform modifications which may be difficult or impossible to express as a replacement string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+    <span class="n">verb</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;verb&quot;</span><span class="p">)</span>
+    <span class="nb">object</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;subject&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">verb</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;(?P&lt;subject&gt;.*) (?P&lt;verb&gt;.*) (?P&lt;object&gt;.*)!&quot;</span><span class="p">,</span> <span class="n">swap</span><span class="p">,</span> <span class="s2">&quot;Dog bites man!&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="flags">
+<h3>Flags<a class="headerlink" href="#flags" title="Permalink to this headline">¶</a></h3>
+<p>Regular expressions have historically tended to be applied to text line by line – newlines have usually required special handling.  In Python, the text is treated as a single unit by default, but we can change this and a few other options using <em>flags</em>.  These are the most commonly used:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">re.IGNORECASE</span></code> – make the regular expression case-insensitive.  It is case-sensitive by default.</li>
+<li><code class="docutils literal notranslate"><span class="pre">re.MULTILINE</span></code> – make <code class="docutils literal notranslate"><span class="pre">^</span></code> and <code class="docutils literal notranslate"><span class="pre">$</span></code> match the beginning and end of each line (excluding the newline at the end), as well as the beginning and end of the whole string (which is the default).</li>
+<li><code class="docutils literal notranslate"><span class="pre">re.DOTALL</span></code> – make <code class="docutils literal notranslate"><span class="pre">.</span></code> match any character (by default it does not match newlines).</li>
+</ul>
+<p>Here are a few examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;Cat&quot;</span><span class="p">))</span> <span class="c1"># this won&#39;t match</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;Cat&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">))</span> <span class="c1"># this will</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;numbers = &#39;one,</span>
+<span class="s2">two,</span>
+<span class="s2">three&#39;</span>
+<span class="s2">numbers = &#39;four,</span>
+<span class="s2">five,</span>
+<span class="s2">six&#39;</span>
+<span class="s2">not_numbers = &#39;cat,</span>
+<span class="s2">dog&#39;&quot;&quot;&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;^numbers = &#39;.*?&#39;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span> <span class="c1"># this won&#39;t find anything</span>
+<span class="c1"># we need both DOTALL and MULTILINE</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;^numbers = &#39;.*?&#39;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">re</span></code> functions only have a single keyword parameter for flags, but we can combine multiple flags into one using the <code class="docutils literal notranslate"><span class="pre">|</span></code> operator (bitwise <em>or</em>) – this is because the values of these constants are actually integer powers of two.</p>
+</div>
+</div>
+<div class="section" id="exercise-4">
+<h3>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a function which takes a string parameter and returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the string is a valid Python variable name or <code class="docutils literal notranslate"><span class="pre">False</span></code> if it isn’t.  You don’t have to check whether the string is a reserved keyword in Python – just whether it is otherwise syntactically valid.  Test it using all the examples of valid and invalid variable names described in the first chapter.</li>
+<li>Write a function which takes a string which contains two words separated by any amount and type of whitespace, and returns a string in which the words are swapped around and the whitespace is preserved.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="parsing-csv-files-csv">
+<h2>Parsing CSV files: <code class="docutils literal notranslate"><span class="pre">csv</span></code><a class="headerlink" href="#parsing-csv-files-csv" title="Permalink to this headline">¶</a></h2>
+<p>CSV stands for <em>comma-separated values</em> – it’s a very simple file format for storing tabular data.  Most spreadsheets can easily be converted to and from CSV format.</p>
+<p>In a typical CSV file, each line represents a row of values in the table, with the columns separated by commas.  Field values are often enclosed in double quotes, so that any literal commas or newlines inside them can be escaped:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;one&quot;</span><span class="p">,</span><span class="s2">&quot;two&quot;</span><span class="p">,</span><span class="s2">&quot;three&quot;</span>
+<span class="s2">&quot;four, five&quot;</span><span class="p">,</span><span class="s2">&quot;six&quot;</span><span class="p">,</span><span class="s2">&quot;seven&quot;</span>
+</pre></div>
+</div>
+<p>Python’s <code class="docutils literal notranslate"><span class="pre">csv</span></code> module takes care of all this in the background, and allows us to manipulate the data in a CSV file in a simple way, using the <code class="docutils literal notranslate"><span class="pre">reader</span></code> class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;numbers.csv&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">row</span>
+</pre></div>
+</div>
+<p>There is no single CSV standard – the comma may be replaced with a different delimiter (such as a tab), and a different quote character may be used.  Both of these can be specified as optional keyword parameters to <code class="docutils literal notranslate"><span class="pre">reader</span></code>.</p>
+<p>Similarly, we can <em>write</em> to a CSV file using the <code class="docutils literal notranslate"><span class="pre">writer</span></code> class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;pets.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Fluffy&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">])</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Max&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>We can use optional parameters to <code class="docutils literal notranslate"><span class="pre">writer</span></code> to specify the delimiter and quote character, and also whether to quote all fields or only fields with characters which need to be escaped.</p>
+<div class="section" id="exercise-5">
+<h3>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Open a CSV file which contains three columns of numbers.  Write out the data to a new CSV file, swapping around the second and third columns and adding a fourth column which contains the sum of the first three.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="writing-scripts-sys-and-argparse">
+<h2>Writing scripts: <code class="docutils literal notranslate"><span class="pre">sys</span></code> and <code class="docutils literal notranslate"><span class="pre">argparse</span></code><a class="headerlink" href="#writing-scripts-sys-and-argparse" title="Permalink to this headline">¶</a></h2>
+<p>We have already seen a few scripts.  Technically speaking, any Python file can be considered a script, since it can be executed without compilation.  When we call a Python program a script, however, we usually mean that it contains statements other than function and class definitions – scripts <em>do something</em> other than define structures to be reused.</p>
+<div class="section" id="scripts-vs-libraries">
+<h3>Scripts vs libraries<a class="headerlink" href="#scripts-vs-libraries" title="Permalink to this headline">¶</a></h3>
+<p>We can combine class and function definitions with statements that use them in the same file, but in a large project it is considered good practice to keep them separate: to define all our classes in <em>library</em> files, and import them into the main program.  If we do put both classes and main program in one file, we can ensure that the program is only executed when the file is run as a script and not if it is imported from another file – we saw an example of this earlier:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">MyOtherClass</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">my_object</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+    <span class="c1"># do more things</span>
+</pre></div>
+</div>
+<p>If our file is written purely for use as a script, and will never be imported, including this conditional statement is considered unnecessary.</p>
+</div>
+<div class="section" id="simple-command-line-parameters">
+<h3>Simple command-line parameters<a class="headerlink" href="#simple-command-line-parameters" title="Permalink to this headline">¶</a></h3>
+<p>When we run a program on the commandline, we often want to pass in parameters, or <em>arguments</em>, just as we would pass parameters to a function inside our code.  For example, when we use the Python interpreter to run a file, we pass the filename in as an argument.  Unlike parameters passed to a function in Python, arguments passed to an application on the commandline are separated by spaces and listed after the program name without any brackets.</p>
+<p>The simplest way to access commandline arguments inside a script is through the <code class="docutils literal notranslate"><span class="pre">sys</span></code> module.  All the arguments in order are stored in the module’s <code class="docutils literal notranslate"><span class="pre">argv</span></code> attribute.  We must remember that the first argument is always the name of the script file, and that all the arguments will be provided in string format.  Try saving this simple script and calling it with various arguments after the script name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="nb">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="complex-command-line-parameters">
+<h3>Complex command-line parameters<a class="headerlink" href="#complex-command-line-parameters" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">sys</span></code> module is good enough when we only have a few simple arguments – perhaps the name of a file to open, or a number which tells us how many times to execute a loop.  When we want to provide a variety of complicated arguments, some of them optional, we need a better solution.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">argparse</span></code> module allows us to define a wide range of compulsory and optional arguments.  A commonly used type of argument is the <em>flag</em>, which we can think of as equivalent to a keyword argument in Python.  A flag is optional, it has a name (sometimes both a long name and a short name) and it may have a value.  In Linux and OSX programs, flag names often start with a dash (long names usually start with two), and this convention is sometimes followed by Windows programs too.</p>
+<p>Here is a simple example of a program which uses <code class="docutils literal notranslate"><span class="pre">argparse</span></code> to define two positional arguments which must be integers, a flag which specifies an operation to be performed on the two numbers, and a flag to turn on verbose output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="c1"># two integers</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;num1&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the first number&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;num2&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the second number&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="c1"># a string, limited to a list of options</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;op&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the desired arithmetic operation&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;div&#39;</span><span class="p">])</span>
+<span class="c1"># an optional flag, true by default, with a short and a long name</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;--verbose&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;turn on verbose output&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+
+<span class="n">opts</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;First number: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">opts</span><span class="o">.</span><span class="n">num1</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Second number: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">opts</span><span class="o">.</span><span class="n">num2</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Operation: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">opts</span><span class="o">.</span><span class="n">op</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;add&quot;</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">num1</span> <span class="o">+</span> <span class="n">opts</span><span class="o">.</span><span class="n">num2</span>
+<span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;sub&quot;</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">num1</span> <span class="o">-</span> <span class="n">opts</span><span class="o">.</span><span class="n">num2</span>
+<span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;mul&quot;</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">num1</span> <span class="o">*</span> <span class="n">opts</span><span class="o">.</span><span class="n">num2</span>
+<span class="k">elif</span> <span class="n">opts</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;div&quot;</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">num1</span> <span class="o">/</span> <span class="n">opts</span><span class="o">.</span><span class="n">num2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">argparse</span></code> automatically defines a <code class="docutils literal notranslate"><span class="pre">help</span></code> parameter, which causes the program’s usage instructions to be printed when we pass <code class="docutils literal notranslate"><span class="pre">-h</span></code> or <code class="docutils literal notranslate"><span class="pre">--help</span></code> to the script.  These instructions are automatically generated from the descriptions we supply in all the argument definitions.  We will also see informative error output if we don’t pass in the correct arguments.  Try calling the script above with different arguments!</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">if we are using Linux or OSX, we can turn our scripts into <em>executable files</em>.  Then we can execute them directly instead of passing them as parameters to Python.  To make our script executable we must mark it as executable using a system tool (<code class="docutils literal notranslate"><span class="pre">chmod</span></code>).  We must also add a line to the beginning of the file to let the operating system know that it should use Python to execute it.  This is typically <code class="docutils literal notranslate"><span class="pre">#!/usr/bin/env</span> <span class="pre">python</span></code>.</p>
+</div>
+</div>
+<div class="section" id="exercise-6">
+<h3>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Write a script which reorders the columns in a CSV file. It should take as parameters the path of the original CSV file, a string listing the indices of the columns in the order that they should appear, and optionally a path to the destination file (by default it should have the same name as the original file, but with a suffix).  The script should return an error if the list of indices cannot be parsed or if any of the indices are not valid (too low or too high).  You may allow indices to be negative or repeated.  You should include usage instructions.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="answers-to-exercises">
+<h2>Answers to exercises<a class="headerlink" href="#answers-to-exercises" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="answer-to-exercise-1">
+<h3>Answer to exercise 1<a class="headerlink" href="#answer-to-exercise-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">today</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="n">w</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">day</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-2">
+<h3>Answer to exercise 2<a class="headerlink" href="#answer-to-exercise-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">class</span> <span class="nc">Sphere</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+
+    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">surface_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-3">
+<h3>Answer to exercise 3<a class="headerlink" href="#answer-to-exercise-3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">secret_number</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">guess</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">num_guesses</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">guess</span> <span class="o">==</span> <span class="n">secret_number</span><span class="p">:</span>
+    <span class="n">guess</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Guess a number from 1 to 100: &quot;</span><span class="p">))</span>
+    <span class="n">num_guesses</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">guess</span> <span class="o">==</span> <span class="n">secret_number</span><span class="p">:</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">num_guesses</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;es&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Congratulations! You guessed the number after </span><span class="si">%d</span><span class="s2"> guess</span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_guesses</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+        <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">guess</span> <span class="o">&lt;</span> <span class="n">secret_number</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too low!&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too high!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-4">
+<h3>Answer to exercise 4<a class="headerlink" href="#answer-to-exercise-4" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><div class="first highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">VALID_VARIABLE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;[a-zA-Z_][a-zA-Z0-9_]*&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">validate_variable_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">VALID_VARIABLE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><div class="first highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">WORDS</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(\S+)(\s+)(\S+)&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">swap_words</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">WORDS</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\3\2\1&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-5">
+<h3>Answer to exercise 5<a class="headerlink" href="#answer-to-exercise-5" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;numbers.csv&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_in</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;numbers_new.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_out</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f_in</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f_out</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">row</span><span class="p">)])</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="answer-to-exercise-6">
+<h3>Answer to exercise 6<a class="headerlink" href="#answer-to-exercise-6" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Here is an example program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the input CSV file&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;order&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the desired column order; comma-separated; starting from zero&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;the destination CSV file&quot;</span><span class="p">)</span>
+
+<span class="n">opts</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="n">output_file</span> <span class="o">=</span> <span class="n">opts</span><span class="o">.</span><span class="n">output</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">output_file</span><span class="p">:</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;\.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;_reordered.csv&quot;</span><span class="p">,</span> <span class="n">opts</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">new_row_indices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">order</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Unable to parse column list.&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">input</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_in</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_out</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f_in</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f_out</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+            <span class="n">new_row</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">new_row_indices</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">new_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;Invalid column: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Useful modules in the Standard Library</a><ul>
+<li><a class="reference internal" href="#date-and-time-datetime">Date and time: <code class="docutils literal notranslate"><span class="pre">datetime</span></code></a><ul>
+<li><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mathematical-functions-math">Mathematical functions: <code class="docutils literal notranslate"><span class="pre">math</span></code></a><ul>
+<li><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pseudo-random-numbers-random">Pseudo-random numbers: <code class="docutils literal notranslate"><span class="pre">random</span></code></a><ul>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#matching-string-patterns-re">Matching string patterns: <code class="docutils literal notranslate"><span class="pre">re</span></code></a><ul>
+<li><a class="reference internal" href="#a-regular-expression-primer">A regular expression primer</a></li>
+<li><a class="reference internal" href="#using-the-re-module">Using the <code class="docutils literal notranslate"><span class="pre">re</span></code> module</a></li>
+<li><a class="reference internal" href="#greed">Greed</a></li>
+<li><a class="reference internal" href="#functions-as-replacements">Functions as replacements</a></li>
+<li><a class="reference internal" href="#flags">Flags</a></li>
+<li><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#parsing-csv-files-csv">Parsing CSV files: <code class="docutils literal notranslate"><span class="pre">csv</span></code></a><ul>
+<li><a class="reference internal" href="#exercise-5">Exercise 5</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#writing-scripts-sys-and-argparse">Writing scripts: <code class="docutils literal notranslate"><span class="pre">sys</span></code> and <code class="docutils literal notranslate"><span class="pre">argparse</span></code></a><ul>
+<li><a class="reference internal" href="#scripts-vs-libraries">Scripts vs libraries</a></li>
+<li><a class="reference internal" href="#simple-command-line-parameters">Simple command-line parameters</a></li>
+<li><a class="reference internal" href="#complex-command-line-parameters">Complex command-line parameters</a></li>
+<li><a class="reference internal" href="#exercise-6">Exercise 6</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#answers-to-exercises">Answers to exercises</a><ul>
+<li><a class="reference internal" href="#answer-to-exercise-1">Answer to exercise 1</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-2">Answer to exercise 2</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-3">Answer to exercise 3</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-4">Answer to exercise 4</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-5">Answer to exercise 5</a></li>
+<li><a class="reference internal" href="#answer-to-exercise-6">Answer to exercise 6</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Packaging_and_Testing.html"
+                        title="previous chapter">Packaging and testing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Introduction_to_GUI_Programming.html"
+                        title="next chapter">Introduction to GUI programming with <code class="docutils literal notranslate"><span class="pre">tkinter</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Useful_Libraries.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Introduction_to_GUI_Programming.html" title="Introduction to GUI programming with tkinter"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Packaging_and_Testing.html" title="Packaging and testing"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Object-Oriented Programming in Python 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2013, 2014, University of Cape Town and individual contributors. This work is released under the CC BY-SA 4.0 licence.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>
